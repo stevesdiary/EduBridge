@@ -1,0 +1,52 @@
+// src/models/hospital.model.ts
+import { 
+  Table, 
+  Column, 
+  Model, 
+  DataType, 
+  HasMany, 
+  ForeignKey
+} from 'sequelize-typescript';
+import { Module } from '../models/module.model';
+import { Progress } from '../models/progress.model';
+import { User } from './user.model';
+import { Course } from './course.model';
+
+@Table({
+  tableName: 'courses',
+  timestamps: true,
+  paranoid: true
+})
+export class CourseEnrollment extends Model {
+  @Column({
+    type: DataType.UUID,
+    defaultValue: DataType.UUIDV4,
+    primaryKey: true
+  })
+  id?: string;
+
+  @ForeignKey(() => User)
+  @Column({
+    type: DataType.UUID,
+    allowNull: false
+  })
+  user_id?: string;
+
+  @ForeignKey(() => Course)
+  @Column({
+    type: DataType.UUID,
+    allowNull: false
+  })
+  course_id?: string;
+
+  @Column({
+    type: DataType.DATE
+  })
+  enrollment_date?: Date;
+
+  @HasMany(() => Module)
+  modules: Module[] = [];
+
+  @HasMany(() => Progress)
+  progresses?: Progress[];
+}

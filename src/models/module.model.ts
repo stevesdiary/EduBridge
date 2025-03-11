@@ -1,0 +1,55 @@
+import { Column, Table, Model, IsUUID, DataType, Default, PrimaryKey, AllowNull, HasMany, ForeignKey, BelongsTo } from "sequelize-typescript";
+import { User } from "../models/user.model";
+import { Course } from "./course.model";
+import { Lesson } from '../models/lesson.model';
+
+
+@Table({
+  tableName: 'modules',
+  timestamps: true,
+  paranoid: true
+})
+export class Module extends Model {
+  @IsUUID(4)
+  @PrimaryKey
+  @Default(DataType.UUIDV4)
+  @Column(DataType.UUID)
+  id!: string;
+
+  @ForeignKey(() => Course)
+  @Column({
+    type: DataType.STRING,
+    allowNull: false
+  })
+  course_id!: string;
+
+  @Column({
+    type: DataType.STRING,
+    defaultValue: false
+  })
+  title!: string;
+
+  @Column({
+    type: DataType.TEXT,
+    allowNull: false
+  })
+  description?: string
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true
+  })
+  notes?: string;
+
+  @Column({
+    type: DataType.DATEONLY,
+    allowNull: false
+  })
+  date_added?: Date;
+
+  @BelongsTo(() => Course)
+  courses: Course = new Course;
+
+  @HasMany(() => Lesson)
+  lessons: Lesson[] = [];
+}
