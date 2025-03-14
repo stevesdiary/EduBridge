@@ -3,7 +3,7 @@ import { Response, Request as ExpressRequest } from 'express';
 import { courseCreationSchema, idSchema, searchSchema, courseStatusSchema } from '../utils/validator';
 import { CourseCreationData } from '../types/type';
 import courseService from '../services/course.service';
-import { CourseStatus } from '@/models/course.model';
+import { CourseStatus } from '../models/course.model';
 
 const courseController = {
   createCourse: async (req: ExpressRequest, res: Response) => {
