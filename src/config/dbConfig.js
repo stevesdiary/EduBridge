@@ -9,7 +9,7 @@ const config = {
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   database: process.env.DB_NAME,
-  logging: console.log,
+  logging: true,
   ssl: {
     require: true,
     rejectUnauthorized: false,

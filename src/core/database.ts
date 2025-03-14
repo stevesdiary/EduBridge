@@ -19,6 +19,13 @@ const sequelize = new Sequelize({
   username: process.env.DB_USER || 'postgres',
   password: process.env.DB_PASSWORD || 'postgres',
   database: process.env.DB_NAME || 'your_database',
+  logging: console.log,
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false
+    }
+  },
   models: [User, Certificate, Lesson, Course, Module, Enrollment, Profile, Progress, Badge, UserBadge],
 });
 
