@@ -26,14 +26,14 @@ userRouter.post("/resendcode",
 
 userRouter.get('/all',
   authentication,
-  checkRole(['admin']), 
+  checkRole(['admin', 'user', 'student']), 
   async (req: ExpressRequest, res: Response) => {
   await userController.getAllUsers(req, res)
 });
 
 userRouter.get('/one/:id', 
   authentication,
-  checkRole(['admin']), 
+  checkRole(['admin', 'user', 'student']), 
   async (req: ExpressRequest, res: Response) => {
   await userController.getOneUser(req, res);
 });
