@@ -6,13 +6,34 @@ import {
   HasMany 
 } from 'sequelize-typescript';
 import { Module } from '../models/module.model';
-import { CourseEnrollment } from './enrollment.model';
+import { Enrollment } from './enrollment.model';
+
+export enum DifficultyLevel {
+  beginner = 'beginner', 
+  intermediate = 'inntermediate', 
+  advanced = 'advanced', 
+  professional = 'professional'
+}
+
+export enum CourseStatus {
+  draft = 'draft',
+  published = 'published',
+  archived = 'archived'
+}
+
+export enum Category {
+  soft_skill = 'soft_skill',
+  curriculum = 'curriculum',
+  digital_skill = 'digital_skill',
+  exam_preparation = 'exam_preparation'
+}
 
 @Table({
   tableName: 'courses',
   timestamps: true,
   paranoid: true
 })
+
 export class Course extends Model {
   @Column({
     type: DataType.UUID,
@@ -34,29 +55,55 @@ export class Course extends Model {
   description?: string;
 
   @Column({
+    type: DataType.TEXT
+  })
+  transcription?: string;
+
+  @Column({
+    type: DataType.STRING
+  })
+  duration?: string; 
+
+  @Column({
+    type: DataType.STRING
+  })
+  thumbnail_url?: string;
+  
+  @Column({
     type: DataType.BOOLEAN,
     defaultValue: true
   })
   available_offline?: boolean;
 
   @Column({
-    type: DataType.ENUM('digital_skill', 'soft_skill', 'exam_prep')
+    type: DataType.ENUM(...Object.values(Category))
   })
   category!: string;
-
+  
   @Column({
-    type: DataType.ENUM('beginner', 'advanced', 'professional')
+    type: DataType.ENUM(...Object.values(CourseStatus))
   })
-  difficulty_level!: string;
+  status!: string;
+
+  // @Column({
+  //   type: DataType.ENUM('beginner', 'advanced', 'professional')
+  // })
+  // difficulty_level!: string;
+
 
   @Column({
     type: DataType.INTEGER
   })
-  rating?: number
+  rating?: number;
+
+  @Column({
+    type: DataType.STRING
+  })
+  instructor?: string;
 
   @HasMany(() => Module)
   modules: Module[] = [];
 
-  @HasMany(() => CourseEnrollment)
-  enrollments?: CourseEnrollment[];
+  @HasMany(() => Enrollment)
+  enrollments?: Enrollment[];
 }

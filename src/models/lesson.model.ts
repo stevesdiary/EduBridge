@@ -3,53 +3,59 @@ import {
   Column, 
   Model, 
   DataType, 
-  BelongsTo,
-  ForeignKey
+  PrimaryKey, 
+  Default,
+  ForeignKey,
+  BelongsTo
 } from 'sequelize-typescript';
-import { Module } from '../models/module.model';
+import { Course } from './course.model';
+import { Module } from './module.model';
 
 @Table({
   tableName: 'lessons',
-  timestamps: true,
-  paranoid: true
+  timestamps: true
 })
 export class Lesson extends Model {
-  @Column({
-    type: DataType.UUID,
-    defaultValue: DataType.UUIDV4,
-    primaryKey: true
-  })
-  id?: string;
+  @PrimaryKey
+  @Column(DataType.UUID)
+  id!: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: false
   })
-  title?: string;
+  title!: string;
 
   @Column({
     type: DataType.TEXT,
     allowNull: false
   })
-  content?: string;
+  content!: string;
+
+  @ForeignKey(() => Course)
+  @Column({
+    type: DataType.UUID,
+    allowNull: false
+  })
+  course_id!: string;
 
   @ForeignKey(() => Module)
   @Column({
-    type: DataType.STRING,
-    defaultValue: true
+    type: DataType.UUID,
+    allowNull: false
   })
   module_id?: string;
 
-  @Column({
-    type: DataType.STRING
-  })
-  resource_url?: string;
+  @BelongsTo(() => Course)
+  course?: Course;
 
   @Column({
-    type: DataType.BOOLEAN
+    type: DataType.INTEGER,
+    allowNull: true
   })
-  is_downloadable?: boolean;
+  duration?: number;
 
-  @BelongsTo(() => Module)
-  modules: Module = new Module;
+  @Default(DataType.NOW)
+  @Column(DataType.DATE)
+  date_added?: Date;
 }

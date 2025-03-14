@@ -17,7 +17,7 @@ import { Course } from './course.model';
   timestamps: true,
   paranoid: true
 })
-export class CourseEnrollment extends Model {
+export class Enrollment extends Model {
   @Column({
     type: DataType.UUID,
     defaultValue: DataType.UUIDV4,
@@ -44,9 +44,9 @@ export class CourseEnrollment extends Model {
   })
   enrollment_date?: Date;
 
-  @HasMany(() => Module)
-  modules: Module[] = [];
+  // @HasMany(() => Module)
+  // modules?: Module[];
 
-  @HasMany(() => Progress)
-  progresses?: Progress[];
+  // @HasMany(() => Progress)
+  // progresses?: Progress[];
 }

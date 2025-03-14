@@ -22,17 +22,11 @@ export class Profile extends Model {
   })
   id?: string;
 
-  @Column({
-    type: DataType.STRING,
-    allowNull: false
-  })
-  first_name?: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: false
-  })
-  last_name?: string;
+  // @Column({
+  //   type: DataType.STRING,
+  //   allowNull: false
+  // })
+  // last_name?: string;
 
   @Column({
     type: DataType.STRING,
@@ -40,21 +34,26 @@ export class Profile extends Model {
   })
   phone?: string;
 
-  @Column({
-    type: DataType.ARRAY
-  })
-  professional_interests?: string[];
-
   // @Column({
-  //   type: DataType.STRING,
-  //   defaultValue: 'user'
+  //   type: DataType.STRING
   // })
-  // role?: string;
+  // professional_interests?: string;
+
+  @Column({
+    type: DataType.DATE
+  })
+  date_of_birth?: Date;
 
   @Column({
     type: DataType.STRING,
   })
   location?: string;
+
+  @Column({
+    type: DataType.BOOLEAN,
+    defaultValue: true
+  })
+  is_active!: boolean;
 
   @ForeignKey(() => User)
   @Column({

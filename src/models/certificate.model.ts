@@ -2,7 +2,11 @@ import { Column, Table, Model, IsUUID, DataType, Default, PrimaryKey, AllowNull,
 import { User } from "./user.model";
 import { Course } from "./course.model";
 
-
+export enum CertificateStatus {
+  PENNDING = 'PENDING',
+  ISSUED = 'ISSUED',
+  REVOKED = 'REVOKED'
+}
 @Table({
   tableName: 'certificates',
   timestamps: true,
@@ -47,9 +51,15 @@ export class Certificate extends Model {
   })
   date_added?: Date;
 
+  @Column({
+    type: DataType.ENUM(...Object.values(CertificateStatus)),
+    // defaultValue: CertificateStatus.ISSUED
+  })
+  status!: string
+
   @BelongsTo(() => Course)
   course: Course = new Course;
 
-  @HasMany(() => User)
-  user: User = new User;
+  @BelongsTo(() => User)
+  user?: User;
 }
