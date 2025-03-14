@@ -1,5 +1,6 @@
 import { Column, Table, Model, IsUUID, DataType, Default, PrimaryKey, AllowNull, HasMany, ForeignKey, BelongsTo } from "sequelize-typescript";
 import { User } from "./user.model";
+import { UserBadge } from "./user-badge.model";
 
 
 @Table({
@@ -21,6 +22,12 @@ export class Badge extends Model {
   })
   name!: string;
 
+  @ForeignKey(() => UserBadge)
+  @Column({
+    type: DataType.UUID
+  })
+  user_badge_id?: string;
+  
   @Column({
     type: DataType.UUID,
     defaultValue: false
@@ -32,4 +39,7 @@ export class Badge extends Model {
     allowNull: false
   })
   icon_url?: string;
+
+  @HasMany(() => UserBadge)
+  user_badges?: UserBadge; 
 }

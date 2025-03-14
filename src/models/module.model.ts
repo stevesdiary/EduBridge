@@ -1,15 +1,14 @@
 import { Column, Table, Model, IsUUID, DataType, Default, PrimaryKey, AllowNull, HasMany, ForeignKey, BelongsTo } from "sequelize-typescript";
-import { User } from "../models/user.model";
 import { Course } from "./course.model";
-import { Lesson } from '../models/lesson.model';
-
+import { Lesson } from './lesson.model';
+import { ModuleAttributes, ModuleCreationAttributes } from '../types/module.type';
 
 @Table({
   tableName: 'modules',
   timestamps: true,
   paranoid: true
 })
-export class Module extends Model {
+export class Module extends Model<ModuleAttributes, ModuleCreationAttributes>  {
   @IsUUID(4)
   @PrimaryKey
   @Default(DataType.UUIDV4)
@@ -35,11 +34,11 @@ export class Module extends Model {
   })
   description?: string
 
-  @Column({
-    type: DataType.STRING,
-    allowNull: true
-  })
-  notes?: string;
+  // @Column({
+  //   type: DataType.STRING,
+  //   allowNull: true
+  // })
+  // notes?: string;
 
   @Column({
     type: DataType.DATEONLY,
@@ -51,5 +50,5 @@ export class Module extends Model {
   courses: Course = new Course;
 
   @HasMany(() => Lesson)
-  lessons: Lesson[] = [];
+  lessons?: Lesson[];
 }

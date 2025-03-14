@@ -9,7 +9,7 @@ import { Badge } from '../models/badge.model';
   timestamps: true,
   paranoid: true
 })
-export class Certificate extends Model {
+export class UserBadge extends Model {
   @IsUUID(4)
   @PrimaryKey
   @Default(DataType.UUIDV4)
@@ -47,9 +47,9 @@ export class Certificate extends Model {
   })
   date_added?: Date;
 
-  @BelongsTo(() => Course)
-  course: Course = new Course;
+  // @BelongsTo(() => Course)
+  // course: Course = new Course;
 
   @HasMany(() => Badge)
-  badges: Badge = new Badge;
+  badges?: Badge = new Badge;
 }

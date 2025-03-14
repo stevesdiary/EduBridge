@@ -5,16 +5,13 @@ ER Diagram
  link: 
 
 
-# eduBridge 🏥
+# EduBridge 📚
 
 ## Overview
-eduBridge is an open-source educare management platform designed to streamline medical appointments, patient management, and educare provider coordination.
+EduBridge is an open-source educational platform designed to cater for the unnderserved students in some commuities and for those who wat to learn new digital skills.
 
 ### Key Features
-- 🩺 Doctor Appointment Booking
-- 📋 Patient Management
-- 🏥 Hospital/Provider Network
-- 🔐 Secure User Authentication
+- 
 
 ### Tech Stack
 - Backend: Node.js, TypeScript

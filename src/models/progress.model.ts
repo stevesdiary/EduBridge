@@ -3,12 +3,11 @@ import {
   Table, 
   Column, 
   Model, 
-  DataType, 
-  HasMany, 
+  DataType,
   BelongsTo,
   ForeignKey
 } from 'sequelize-typescript';
-import { CourseEnrollment } from '../models/enrollment.model'
+import { Enrollment } from '../models/enrollment.model'
 import { User } from './user.model';
 import { Lesson } from '../models/lesson.model'
 
@@ -23,14 +22,14 @@ export class Progress extends Model {
     defaultValue: DataType.UUIDV4,
     primaryKey: true
   })
-  id?: string;
+  id!: string;
 
   @ForeignKey(() => User)
   @Column({
     type: DataType.UUID,
     allowNull: false
   })
-  user_id?: string;
+  user_i!: string;
 
   @Column({
     type: DataType.UUID,
@@ -49,16 +48,14 @@ export class Progress extends Model {
   completion_percentage?: number;
 
   @Column({
-    type: DataType.DATE
+    type: DataType.DATE,
+    allowNull: false
   })
-  last_accessed_date?: Date
+  last_accessed_at?: Date
 
   @BelongsTo (()=> User )
   users?: User
 
-  @BelongsTo(() => CourseEnrollment)
-  enrollments?: CourseEnrollment[];
-
-  @BelongsTo(() => Lesson)
-  lastCompletedLesson: Lesson = new Lesson;
+  // @BelongsTo(() => Enrollment)
+  // enrollments?: Enrollment[];
 }
