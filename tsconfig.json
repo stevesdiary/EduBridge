@@ -7,7 +7,7 @@
     "sourceMap": true,
     "declaration": true,
     "removeComments": true,
-    "rootDir": "./src",
+    "rootDir": "./",
     "outDir": "dist",
     "strict": true,
     "noImplicitAny": true,
