@@ -12,16 +12,14 @@ userRouter.post("/register", async (req: UserRequest, res: Response) => {
   await userRegistration.register(req, res);
 });
 
-userRouter.post("/verify", 
-  authentication,
-  checkRole(['admin', 'user']), 
+userRouter.post("/verify",  
   async (req: ExpressRequest, res: Response) => {
   await userRegistration.verifyUser(req, res);
 });
 
 userRouter.post("/resendcode", 
-  authentication,
-  checkRole(['admin']), 
+  // authentication,
+  // checkRole(['admin']), 
   async (req: ExpressRequest, res: Response) => {
   await userRegistration.resendCode(req, res);
 });
