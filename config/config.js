@@ -13,10 +13,12 @@ const databaseConnection = {
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   port: process.env.DB_PORT,
-  // ssl: {
-  //   rejectUnauthorized: false,
-  //   ca: process.env.DB_SSL_CA,
-  // },
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: true
+    }
+  }
 }
 
 module.exports = {
