@@ -6,16 +6,16 @@ import {
   HasMany,
   HasOne
 } from 'sequelize-typescript';
-import { CourseEnrollment } from './enrollment.model';
+import { Enrollment } from './enrollment.model';
 import { Progress } from './progress.model';
 import { Certificate } from './certificate.model'
 import { Profile } from './profile.model';
+import { UserBadge } from './user-badge.model';
 
-export enum UserRole {
-  STUDENT = 'STUDENT',
-  ADMIN = 'ADMIN',
-  PROFESSIONAL = 'PROFESSIONAL',
-  MODERATOR = 'MODERATOR'
+export enum Role {
+  STUDENT = 'student',
+  ADMIN = 'admin',
+  INSTRUCTOR = 'instructor',
 }
 
 @Table({
@@ -62,20 +62,10 @@ export class User extends Model {
   password?: string;
 
   @Column({
-    type: DataType.ENUM(...Object.values(UserRole)),
-    defaultValue: UserRole.STUDENT
+    type: DataType.ENUM(...Object.values(Role)),
+    defaultValue: Role.STUDENT
   })
-  role?: UserRole;
-
-  @Column({
-    type: DataType.STRING
-  })
-  phone?: string;
-
-  @Column({
-    type: DataType.DATE
-  })
-  date_of_birth?: Date;
+  role?: Role;
 
   @Column({
     type: DataType.BOOLEAN,
@@ -84,22 +74,25 @@ export class User extends Model {
   })
   verified?: boolean;
 
-  @Column({
-    type: DataType.BOOLEAN,
-    allowNull: false,
-    defaultValue: true
-  })
-  is_active?: boolean;
+  // @Column({
+  //   type: DataType.BOOLEAN,
+  //   allowNull: false,
+  //   defaultValue: true
+  // })
+  // is_active?: boolean;
 
   @HasOne(() => Profile)
   profile?: Profile;
 
-  @HasMany(() => CourseEnrollment)
-  courseEnrollments: CourseEnrollment[] = [];
+  @HasMany(() => Enrollment)
+  courseEnrollments: Enrollment[] = [];
 
   @HasMany(() => Progress)
   progresses?: Progress[] = [];
 
+  @HasMany(() => UserBadge)
+  userBadges?: UserBadge[];
+
   @HasMany(() => Certificate)
-  certificates: Certificate[] = [];
+  certificates?: Certificate[];
 }
