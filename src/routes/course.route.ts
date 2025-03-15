@@ -7,7 +7,10 @@ import authentication from '../middlewares/authentication';
 
 const courseRouter = Router();
 
-courseRouter.post('/create', authentication, checkRole(['professional', 'admin']), async (req: ExpressRequest, res: Response) => {
+courseRouter.post('/create', 
+  // authentication, 
+  // checkRole(['professional', 'admin']), 
+  async (req: ExpressRequest, res: Response) => {
   await courseController.createCourse(req, res);
 })
 
@@ -15,7 +18,10 @@ courseRouter.post('/create', authentication, checkRole(['professional', 'admin']
 //   await cloudinary.upload(req, res);
 // })
 
-courseRouter.get('/all', authentication, checkRole(['user', 'admin']), async (req: ExpressRequest, res: Response) => {
+courseRouter.get('/all', 
+  // authentication, 
+  // checkRole(['user', 'admin']), 
+  async (req: ExpressRequest, res: Response) => {
   await courseController.getAllCourses(req, res);
 })
 

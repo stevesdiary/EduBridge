@@ -55,9 +55,9 @@ export class Course extends Model {
   description?: string;
 
   @Column({
-    type: DataType.TEXT
+    type: DataType.STRING
   })
-  transcription?: string;
+  subject?: string;
 
   @Column({
     type: DataType.STRING
@@ -67,23 +67,23 @@ export class Course extends Model {
   @Column({
     type: DataType.STRING
   })
-  thumbnail_url?: string;
+  resource_url?: string;
   
   @Column({
     type: DataType.BOOLEAN,
     defaultValue: true
   })
-  available_offline?: boolean;
+  available_offline!: boolean;
 
   @Column({
     type: DataType.ENUM(...Object.values(Category))
   })
   category!: string;
   
-  @Column({
-    type: DataType.ENUM(...Object.values(CourseStatus))
-  })
-  status!: string;
+  // @Column({
+  //   type: DataType.ENUM(...Object.values(CourseStatus))
+  // })
+  // status!: string;
 
   // @Column({
   //   type: DataType.ENUM('beginner', 'advanced', 'professional')

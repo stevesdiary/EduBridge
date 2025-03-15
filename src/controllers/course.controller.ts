@@ -8,11 +8,12 @@ import { CourseStatus } from '../models/course.model';
 const courseController = {
   createCourse: async (req: ExpressRequest, res: Response) => {
     try {
-      const validatedData = await courseCreationSchema.validate(req.body, {
-        abortEarly: false,
-        stripUnknown: true
-      });
-
+      // const validatedData = await courseCreationSchema.validate(req.body, {
+      //   abortEarly: false,
+      //   stripUnknown: true
+      // });
+      const validatedData = req.body;
+        console.log("VALIDATED COURSE DATA", validatedData)
       const courseData: CourseCreationData = {
         title: validatedData.title,
         description: validatedData.description,
@@ -22,23 +23,23 @@ const courseController = {
         instructor: validatedData.instructor || ''
       };
   
-      const result = await courseService.createCourse(courseData);
+      const result = await courseService.createCourse(validatedData);
       return res.status(result.statusCode).json({
         status: result.status,
         message: result.message,
         data: result.data
       });
     } catch (error) {
-      if (error instanceof yup.ValidationError) {
-        return res.status(400).json({
-          status: 'error',
-          message: 'Validation failed',
-          errors: error.inner.map(err => ({
-            field: err.path || 'unknown',
-            message: err.message
-          }))
-        });
-      }
+      // if (error instanceof yup.ValidationError) {
+      //   return res.status(400).json({
+      //     status: 'error',
+      //     message: 'Validation failed',
+      //     errors: error.inner.map(err => ({
+      //       field: err.path || 'unknown',
+      //       message: err.message
+      //     }))
+      //   });
+      // }
   
       console.error('Course Creation Error:', error);
       return res.status(500).json({
