@@ -27,7 +27,7 @@ export class Badge extends Model {
   @Column({
     type: DataType.UUID
   })
-  user_badge_id?: string;
+  userBadgeId?: string;
   
   @Column({
     type: DataType.UUID,

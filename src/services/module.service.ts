@@ -17,6 +17,7 @@ class ModuleService {
         title: moduleData.title,
         description: moduleData.description,
         courseId: moduleData.courseId,
+        dateAdded: new Date(),
         resourceUrl: moduleData.resourceUrl || 'https://resourceurl.com'
       });
       

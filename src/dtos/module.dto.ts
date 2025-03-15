@@ -22,10 +22,11 @@ export interface ModuleAttributes {
   title: string;
   description: string;
   courseId: string;
+  dateAdded: Date;
   resourceUrl?: string;
   duration?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  created_at?: Date;
+  updated_at?: Date;
 }
 export interface ModuleResponse extends ModuleAttributes {
   course?: {
@@ -38,4 +39,4 @@ export interface ModuleResponse extends ModuleAttributes {
   }[];
 }
 
-export type ModuleCreationAttributes = Optional<ModuleAttributes, 'id'>;
+export type ModuleCreationAttributes = Optional<ModuleAttributes, 'id' | 'dateAdded'>;

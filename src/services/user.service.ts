@@ -6,15 +6,15 @@ import { UserResponseData } from "../types/type";
 export const getAllUsers = async (): Promise<UserResponseData> => {
   try {
     let key = "fetch:allUsers";
-    let fetchUsers: string | null = await getFromRedis(key);
-    if (fetchUsers) {
-      return {
-        statusCode: 200,
-        status: "success",
-        message: "Users fetched from cache",
-        data: JSON.parse(fetchUsers),
-      };
-    }
+    // let fetchUsers: string | null = await getFromRedis(key);
+    // if (fetchUsers) {
+    //   return {
+    //     statusCode: 200,
+    //     status: "success",
+    //     message: "Users fetched from cache",
+    //     data: JSON.parse(fetchUsers),
+    //   };
+    // }
     const users = await User.findAll({
       attributes: {
         exclude: ["password", "createdAt", "updatedAt"],
@@ -22,7 +22,7 @@ export const getAllUsers = async (): Promise<UserResponseData> => {
     });
 
     if (users && users.length > 0) {
-      await saveToRedis(key, JSON.stringify(users), 900);
+      // await saveToRedis(key, JSON.stringify(users), 900);
       return {
         statusCode: 200,
         status: "success",

@@ -26,12 +26,14 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
+      title: {
+        type: Sequelize.STRING
+      },
       content: {
         type: Sequelize.TEXT
       },
       resource_url: {
         type: Sequelize.STRING,
-        allowNull: false
       },
       duration: {
         type: Sequelize.STRING
