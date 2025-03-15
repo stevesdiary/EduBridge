@@ -12,7 +12,8 @@ import { User } from './user.model';
 
 @Table({
   tableName: 'profiles',
-  timestamps: true
+  timestamps: true,
+  underscored: true
 })
 export class Profile extends Model {
   @Column({

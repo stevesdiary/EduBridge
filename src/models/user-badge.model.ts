@@ -7,7 +7,8 @@ import { Badge } from '../models/badge.model';
 @Table({
   tableName: 'user-badges',
   timestamps: true,
-  paranoid: true
+  paranoid: true,
+  underscored: true
 })
 export class UserBadge extends Model {
   @IsUUID(4)
