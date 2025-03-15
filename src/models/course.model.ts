@@ -3,10 +3,12 @@ import {
   Column, 
   Model, 
   DataType, 
-  HasMany 
+  HasMany,
+  ForeignKey
 } from 'sequelize-typescript';
 import { Module } from '../models/module.model';
 import { Enrollment } from './enrollment.model';
+import { Reference } from 'yup';
 
 export enum DifficultyLevel {
   beginner = 'beginner', 
@@ -31,6 +33,7 @@ export enum Category {
 @Table({
   tableName: 'courses',
   timestamps: true,
+  underscored: true,
   paranoid: true
 })
 
@@ -67,13 +70,20 @@ export class Course extends Model {
   @Column({
     type: DataType.STRING
   })
-  resource_url?: string;
+  resourceUrl?: string;
   
   @Column({
     type: DataType.BOOLEAN,
     defaultValue: true
   })
   available_offline!: boolean;
+
+  @ForeignKey(() => Course)
+  @Column({
+    type: DataType.UUID,
+    allowNull: false
+  })
+  courseId?: string;
 
   @Column({
     type: DataType.ENUM(...Object.values(Category))

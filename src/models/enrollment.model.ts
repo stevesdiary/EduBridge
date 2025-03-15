@@ -15,6 +15,7 @@ import { Course } from './course.model';
 @Table({
   tableName: 'courses',
   timestamps: true,
+  underscored: true,
   paranoid: true
 })
 export class Enrollment extends Model {
@@ -37,7 +38,7 @@ export class Enrollment extends Model {
     type: DataType.UUID,
     allowNull: false
   })
-  course_id?: string;
+  courseId?: string;
 
   @Column({
     type: DataType.DATE
