@@ -23,11 +23,11 @@ export class Module extends Model<ModuleAttributes, ModuleCreationAttributes>  {
   })
   courseId!: string;
 
-  @Column({
-    type: DataType.STRING,
-    defaultValue: false
-  })
-  title!: string;
+  // @Column({
+  //   type: DataType.STRING,
+  //   defaultValue: false
+  // })
+  // title!: string;
 
   @Column({
     type: DataType.TEXT,
@@ -41,10 +41,9 @@ export class Module extends Model<ModuleAttributes, ModuleCreationAttributes>  {
   duration?: string;
 
   @Column({
-    type: DataType.DATEONLY,
-    allowNull: false
+    type: DataType.DATE,
   })
-  date_added?: Date;
+  dateAdded?: Date;
 
   @BelongsTo(() => Course)
   courses: Course = new Course;

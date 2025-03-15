@@ -5,6 +5,7 @@ export interface ModuleAttributes {
   description: string;
   courseId: string;
   resourceUrl?: string;
+  dateAdded?: Date;
   createdAt?: Date;
   updatedAt?: Date;
 }
