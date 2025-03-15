@@ -39,15 +39,15 @@ module.exports = {
       resource_url: {
         type: Sequelize.STRING
       },
-      createdAt: {
+      created_at: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW
       },
-      updatedAt: {
+      updated_at: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW
       },
-      deletedAt: {
+      deleted_at: {
         type: Sequelize.DATE
       }
     })
