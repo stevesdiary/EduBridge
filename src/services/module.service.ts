@@ -17,7 +17,7 @@ class ModuleService {
         title: moduleData.title,
         description: moduleData.description,
         courseId: moduleData.courseId,
-        resourceUrl: 'https://rul.com'
+        resourceUrl: moduleData.resourceUrl || 'https://resourceurl.com'
       });
       
       return {
