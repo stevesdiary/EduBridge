@@ -78,13 +78,6 @@ export class Course extends Model {
   })
   available_offline!: boolean;
 
-  @ForeignKey(() => Course)
-  @Column({
-    type: DataType.UUID,
-    allowNull: false
-  })
-  courseId?: string;
-
   @Column({
     type: DataType.ENUM(...Object.values(Category))
   })

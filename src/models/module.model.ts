@@ -20,7 +20,7 @@ export class Module extends Model<ModuleAttributes, ModuleCreationAttributes>  {
     type: DataType.STRING,
     allowNull: false
   })
-  course_id!: string;
+  courseId!: string;
 
   @Column({
     type: DataType.STRING,
