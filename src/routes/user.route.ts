@@ -8,7 +8,8 @@ import authentication from '../middlewares/authentication';
 
 const userRouter = Router();
 
-userRouter.post("/register", async (req: UserRequest, res: Response) => {
+userRouter.post("/register", 
+  async (req: UserRequest, res: Response) => {
   await userRegistration.register(req, res);
 });
 
@@ -39,15 +40,15 @@ userRouter.get('/one/:id',
 });
 
 userRouter.put('/update/:id',
-  authentication,
-  checkRole(['admin']),
+  // authentication,
+  // checkRole(['admin']),
   async (req: ExpressRequest, res: Response) => {
   await userController.updateUser(req, res);
 })
 
 userRouter.delete('/delete/:id', 
-  authentication,
-  checkRole(['admin']), 
+  // authentication,
+  // checkRole(['admin']), 
   async (req: ExpressRequest, res: Response) => {
   await userController.deleteUser(req, res);
 })
