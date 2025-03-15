@@ -1,18 +1,20 @@
 import { Optional } from 'sequelize';
 
 export interface ModuleAttributes {
-  id: string;
   title: string;
   description: string;
-  date_added: Date;
   courseId: string;
+  resourceUrl?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface ModuleCreationDto {
   title: string;
   description: string;
-  courseId: string;
-  date_added?: Date;  // Optional since we can set default
+  course_id: string;
+  date_added?: Date; 
+  resource_url?: string;
 }
 
-export type ModuleCreationAttributes = Optional<ModuleAttributes, 'id' | 'date_added'>;
+export type ModuleCreationAttributes = Optional<ModuleAttributes, 'resourceUrl'>;
