@@ -31,14 +31,22 @@ module.exports = {
       difficulty_level: {
         type: Sequelize.STRING
       },
+      subject: {
+        type: Sequelize.STRING
+      },
+      transcription: {
+        type: Sequelize.TEXT
+      },
       instructor: {
-        type: Sequelize.STRING,
-        allowNull: false
+        type: Sequelize.STRING
       },
       duration: {
         type: Sequelize.STRING
       },
-      thumbbnail_url: {
+      resource_url: {
+        type: Sequelize.STRING
+      },
+      duration: {
         type: Sequelize.STRING
       },
       rating: {
