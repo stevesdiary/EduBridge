@@ -5,11 +5,9 @@ import { CreateLessonDto, LessonCreationAttributes, LessonResponse } from '../ty
 class LessonService {
   async createLesson(lessonData: CreateLessonDto): Promise<ApiResponse<LessonResponse>> {
     try {
-      // Ensure an ID is generated if not provided
       const lessonToCreate: LessonCreationAttributes = {
         ...lessonData,
-        id: lessonData.id,
-        date_added: lessonData.date_added || new Date()
+        dateAdded: lessonData.dateAdded || new Date()
       };
 
       const lesson = await Lesson.create(lessonToCreate);
@@ -31,7 +29,7 @@ class LessonService {
     const { count, rows } = await Lesson.findAndCountAll({
       limit,
       offset,
-      include: ['course']
+      // include: ['course']
     });
     
     return {
