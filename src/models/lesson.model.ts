@@ -13,7 +13,8 @@ import { Module } from './module.model';
 
 @Table({
   tableName: 'lessons',
-  timestamps: true
+  timestamps: true,
+  underscored: true
 })
 export class Lesson extends Model {
   @PrimaryKey

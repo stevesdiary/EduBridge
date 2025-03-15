@@ -6,7 +6,8 @@ import { ModuleAttributes, ModuleCreationAttributes } from '../types/module.type
 @Table({
   tableName: 'modules',
   timestamps: true,
-  paranoid: true
+  paranoid: true,
+  underscored: true
 })
 export class Module extends Model<ModuleAttributes, ModuleCreationAttributes>  {
   @IsUUID(4)

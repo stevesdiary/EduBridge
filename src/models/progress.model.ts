@@ -14,7 +14,8 @@ import { Lesson } from '../models/lesson.model'
 @Table({
   tableName: 'progresses',
   timestamps: true,
-  paranoid: true
+  paranoid: true,
+  underscored: true
 })
 export class Progress extends Model {
   @Column({

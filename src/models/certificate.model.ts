@@ -10,7 +10,8 @@ export enum CertificateStatus {
 @Table({
   tableName: 'certificates',
   timestamps: true,
-  paranoid: true
+  paranoid: true,
+  underscored: true
 })
 export class Certificate extends Model {
   @IsUUID(4)

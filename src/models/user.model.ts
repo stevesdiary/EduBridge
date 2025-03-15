@@ -20,7 +20,8 @@ export enum Role {
 
 @Table({
   tableName: 'users',
-  timestamps: true
+  timestamps: true,
+  underscored: true
 })
 export class User extends Model {
   @Column({
