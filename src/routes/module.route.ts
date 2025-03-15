@@ -5,20 +5,35 @@ import authentication from "../middlewares/authentication";
 import { moduleController } from '../controllers/module.controller';
 const moduleRouter = Router()
 
-moduleRouter.post('/register', async (req: ExpressRequest, res: Response) => {
+moduleRouter.post('/register',
+  // authentication,
+  // checkRole(['admin']), 
+  async (req: ExpressRequest, res: Response) => {
   await moduleController.createModule(req, res);
 });
 
-moduleRouter.get('/all', async (req: ExpressRequest, res: Response) => {
+moduleRouter.get('/all', 
+  // authentication,
+  // checkRole(['admin']),
+  async (req: ExpressRequest, res: Response) => {
   await moduleController.getAllModules(req, res);
 })
-moduleRouter.get('/one/:id', async (req: ExpressRequest, res: Response) => {
+moduleRouter.get('/one/:id',
+  // authentication,
+  // checkRole(['admin']), 
+  async (req: ExpressRequest, res: Response) => {
   await moduleController.getModuleById(req, res);
 })
-moduleRouter.put('/update/:id', async (req: ExpressRequest, res: Response) => {
+moduleRouter.put('/update/:id', 
+  // authentication,
+  // checkRole(['admin']),
+  async (req: ExpressRequest, res: Response) => {
   await moduleController.updateModule(req, res);
 })
-moduleRouter.delete('/delete/:id', async (req: ExpressRequest, res: Response) => {
+moduleRouter.delete('/delete/:id', 
+  // authentication,
+  // checkRole(['admin']),
+  async (req: ExpressRequest, res: Response) => {
   await moduleController.deleteModule(req, res);
 })
 

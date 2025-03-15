@@ -25,15 +25,24 @@ courseRouter.get('/all',
   await courseController.getAllCourses(req, res);
 })
 
-courseRouter.get('/one/:id', authentication, checkRole(['user', 'admin']), async (req: ExpressRequest, res: Response) => {
+courseRouter.get('/one/:id', 
+  // authentication, 
+  // checkRole(['user', 'admin']), 
+  async (req: ExpressRequest, res: Response) => {
   await courseController.getOneCourse(req, res);
 })
 
-courseRouter.put('/update/:id', authentication, checkRole(['professional', 'admin']), async (req: ExpressRequest, res: Response) => {
+courseRouter.put('/update/:id', 
+  // authentication, 
+  // checkRole(['professional', 'admin']), 
+  async (req: ExpressRequest, res: Response) => {
   await courseController.updateCourse(req, res);
 })
 
-courseRouter.delete('/delete', authentication, checkRole(['admin']), async (req: ExpressRequest, res: Response) => {
+courseRouter.delete('/delete', 
+  // authentication, 
+  // checkRole(['admin']), 
+  async (req: ExpressRequest, res: Response) => {
   await courseController.deleteCourseRecord(req, res);
 })
 
