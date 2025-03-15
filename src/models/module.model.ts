@@ -34,11 +34,10 @@ export class Module extends Model<ModuleAttributes, ModuleCreationAttributes>  {
   })
   description?: string
 
-  // @Column({
-  //   type: DataType.STRING,
-  //   allowNull: true
-  // })
-  // notes?: string;
+  @Column({
+    type: DataType.STRING
+  })
+  duration?: string;
 
   @Column({
     type: DataType.DATEONLY,

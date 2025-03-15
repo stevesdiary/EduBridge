@@ -26,20 +26,15 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      transcription: {
+      content: {
         type: Sequelize.TEXT
-      },
-      is_downloadable: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: true
-      },
-      notes: {
-        type: Sequelize.TEXT,
-        allowNull: true,
       },
       resource_url: {
         type: Sequelize.STRING,
         allowNull: false
+      },
+      duration: {
+        type: Sequelize.STRING
       },
       createdAt: {
         type: Sequelize.DATE,

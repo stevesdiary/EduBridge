@@ -30,7 +30,13 @@ module.exports = {
       title: {
         type: Sequelize.STRING
       },
+      duration: {
+        type: Sequelize.STRING
+      },
       date_added: {
+        type: Sequelize.STRING
+      },
+      resource_url: {
         type: Sequelize.STRING
       },
       createdAt: {

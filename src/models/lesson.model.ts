@@ -27,17 +27,9 @@ export class Lesson extends Model {
   title!: string;
 
   @Column({
-    type: DataType.TEXT,
-    allowNull: false
+    type: DataType.TEXT
   })
   content!: string;
-
-  @ForeignKey(() => Course)
-  @Column({
-    type: DataType.UUID,
-    allowNull: false
-  })
-  course_id!: string;
 
   @ForeignKey(() => Module)
   @Column({
@@ -46,14 +38,11 @@ export class Lesson extends Model {
   })
   module_id?: string;
 
-  @BelongsTo(() => Course)
-  course?: Course;
-
   @Column({
     type: DataType.INTEGER,
     allowNull: true
   })
-  duration?: number;
+  duration?: string;
 
   @Default(DataType.NOW)
   @Column(DataType.DATE)

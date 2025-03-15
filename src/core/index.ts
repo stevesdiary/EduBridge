@@ -17,8 +17,8 @@ const limiter = rateLimit ({
 
 })
 
-server.get("/home", (req, res) => {
-  res.json({ message: "Hello, World! of tech." });
+server.get("/", (req, res) => {
+  res.json({ message: "Welcome to EduBridge!." });
 });
 
 server.use(limiter);
