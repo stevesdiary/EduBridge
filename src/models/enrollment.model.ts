@@ -31,7 +31,7 @@ export class Enrollment extends Model {
     type: DataType.UUID,
     allowNull: false
   })
-  user_id?: string;
+  userId?: string;
 
   @ForeignKey(() => Course)
   @Column({
@@ -43,7 +43,7 @@ export class Enrollment extends Model {
   @Column({
     type: DataType.DATE
   })
-  enrollment_date?: Date;
+  enrollmentDate?: Date;
 
   // @HasMany(() => Module)
   // modules?: Module[];

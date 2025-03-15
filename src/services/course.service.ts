@@ -57,7 +57,7 @@ const courseService = {
       };      
     } catch (error) { 
       console.error('Error in get course service:', error);
-      throw new Error('Failed to fetch hospitals');
+      throw new Error('Failed to fetch courses');
     }
   },
 

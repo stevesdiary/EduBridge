@@ -13,7 +13,7 @@ const courseController = {
       //   stripUnknown: true
       // });
       const validatedData = req.body;
-        console.log("VALIDATED COURSE DATA", validatedData)
+        // console.log("VALIDATED COURSE DATA", validatedData)
       const courseData: CourseCreationData = {
         title: validatedData.title,
         description: validatedData.description,
@@ -52,7 +52,8 @@ const courseController = {
 
   getAllCourses: async (req: ExpressRequest, res: Response) => {
     try {
-      const searchData = await searchSchema.validate(req.body, { abortEarly: false });
+      // const searchData = await searchSchema.validate(req.body, { abortEarly: false });
+      const searchData = req.body; 
       const courses = await courseService.getCourses(searchData);
       return res.status(courses.statusCode).json({
         status: courses.status,
@@ -60,13 +61,13 @@ const courseController = {
         data: courses.data
       })
     } catch (error) {
-      if (error instanceof yup.ValidationError) {
-        return res.status(400).json({
-          status: 'error',
-          message: 'Validation failed',
-          errors: error.errors
-        });
-      }
+      // if (error instanceof yup.ValidationError) {
+      //   return res.status(400).json({
+      //     status: 'error',
+      //     message: 'Validation failed',
+      //     errors: error.errors
+      //   });
+      // }
       console.error('Error', error);
       return res.status(500).json({
         status: 'error',
