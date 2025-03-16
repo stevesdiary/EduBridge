@@ -4,18 +4,18 @@ export interface CreateLessonDto {
   id?: string;
   title: string;
   content: string;
-  course_id: string;
+  courseId: string;
   duration?: number;
-  date_added?: Date;
+  dateAdded?: Date;
 }
 
 export interface LessonResponse {
   id: string;
   title: string;
   content: string;
-  course_id: string;
+  courseId: string;
   duration?: number;
-  date_added?: Date;
+  dateAdded?: Date;
   createdAt: Date;
   updatedAt: Date;
 }

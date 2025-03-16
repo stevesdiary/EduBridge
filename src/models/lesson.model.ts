@@ -6,7 +6,8 @@ import {
   PrimaryKey, 
   Default,
   ForeignKey,
-  BelongsTo
+  BelongsTo,
+  IsUUID
 } from 'sequelize-typescript';
 import { Course } from './course.model';
 import { Module } from './module.model';
@@ -17,7 +18,9 @@ import { Module } from './module.model';
   underscored: true
 })
 export class Lesson extends Model {
+  @IsUUID(4)
   @PrimaryKey
+  @Default(DataType.UUIDV4)
   @Column(DataType.UUID)
   id!: string;
 
@@ -37,7 +40,7 @@ export class Lesson extends Model {
     type: DataType.UUID,
     allowNull: false
   })
-  module_id?: string;
+  moduleId?: string;
 
   @Column({
     type: DataType.INTEGER,
@@ -45,7 +48,7 @@ export class Lesson extends Model {
   })
   duration?: string;
 
-  @Default(DataType.NOW)
-  @Column(DataType.DATE)
-  date_added?: Date;
+  // @Default(DataType.NOW)
+  // @Column(DataType.DATE)
+  // date_added?: Date;
 }
