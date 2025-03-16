@@ -12,6 +12,13 @@ export const userRegistrationSchema = yup.object().shape({
   last_name: yup
     .string()
     .trim()
+    .optional()
+    .min(2, 'Last name must be at least 2 characters')
+    .max(50, 'Last name must be at most 50 characters'),
+
+  username: yup
+    .string()
+    .trim()
     .required('Last name is required')
     .min(2, 'Last name must be at least 2 characters')
     .max(50, 'Last name must be at most 50 characters'),
@@ -37,7 +44,7 @@ export const userRegistrationSchema = yup.object().shape({
     .oneOf([yup.ref('password')], 'Passwords must match')
 });
 
-export const idSchema = yup.string().required('Id is required');
+export const idSchema = yup.string().uuid().required('Id is required');
 
 export const userUpdateSchema = yup.object().shape({
   // name: yup.string().optional(),
