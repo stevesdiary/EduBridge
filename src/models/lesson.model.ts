@@ -40,7 +40,7 @@ export class Lesson extends Model {
     type: DataType.UUID,
     allowNull: false
   })
-  moduleId?: string;
+  moduleId!: string;
 
   @Column({
     type: DataType.INTEGER,
@@ -48,7 +48,11 @@ export class Lesson extends Model {
   })
   duration?: string;
 
-  // @Default(DataType.NOW)
+  @Column({
+    type: DataType.STRING
+  })
+  resourceUrl!: string;
+
   // @Column(DataType.DATE)
-  // date_added?: Date;
+  // dateAdded?: Date;
 }
