@@ -4,10 +4,14 @@ import rateLimit from 'express-rate-limit';
 import sequelize from './database';
 import router from '../router';
 const server = express();
+import { configureCors } from '../middlewares/cors.config';
+
+server.use(configureCors());
+server.use(express.json());
+server.use(express.urlencoded({ extended: true }));
 
 const port = process.env.LOCAL_PORT || 3000;
 
-server.use(express.json());
 const limiter = rateLimit ({
   windowMs: 10 * 60 * 1000,
   max: 100,

@@ -5,10 +5,10 @@ const lessonController = {
   createLesson: async (req: ExpressRequest, res: Response) => {
     try {
       const result = await lessonService.createLesson(req.body);
-      return res.status(201).json({
-        status: 'success',
-        message: 'Lesson created successfully',
-        data: result
+      return res.status(result.statusCode).json({
+        status: result.status,
+        message: result.message,
+        data: result.data
       });
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
