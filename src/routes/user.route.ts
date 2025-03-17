@@ -33,8 +33,8 @@ userRouter.get('/all',
 });
 
 userRouter.get('/one/:id', 
-  // authentication,
-  // checkRole(['admin', 'user', 'student']), 
+  authentication,
+  checkRole(['admin', 'user', 'student']), 
   async (req: ExpressRequest, res: Response) => {
   await userController.getOneUser(req, res);
 });
