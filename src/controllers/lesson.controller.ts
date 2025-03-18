@@ -1,202 +1,132 @@
-import { Request as ExpressRequest, Response } from 'express';
-import { lessonService } from '../services/lesson.service';
-import uploadService from '../services/upload.service';
-import { CreateLessonDto } from '../types/lesson.types';
+import { Response, Request as ExpressRequest } from 'express';
+import { lessonCreationSchema, idSchema } from '../utils/validator';
+import { LessonCreationData } from '../types/lesson.types';
+import lessonService from '../services/lesson.service';
+// import CloudinaryUploadService from '../services/cloudinaryUpload.service';
+import { error } from 'console';
 
 const lessonController = {
   createLesson: async (req: ExpressRequest, res: Response) => {
     try {
-
-      if (!req.file?.path) {
-        return res.status(400).json({
-          status: 'error',
-          message: 'No file uploaded'
-        });
+      if (!req.file){
+        throw error ('File not selected for upload');
       }
-      const resource_url = await uploadService.uploadFile(req.file.path)
-      // console.log('RESOURCE_URL', req.file.path, resource_url);
-      const lessonData: CreateLessonDto = {
-        moduleId: req.body.moduleId,
-        title: req.body.title,
-        content: req.body.content,
-        duration: req.body.duration,
-        resourceUrl: resource_url.url
-      } 
-      console.log('GGG', lessonData)
-      const result = await lessonService.createLesson(lessonData);
+      // const validatedData = await lessonCreationSchema.validate(req.body, {
+      //   abortEarly: false,
+      //   stripUnknown: true
+      // });
+      const validatedData = req.body;
+      // const resource_url = CloudinaryUploadService.uploadFile(
+        // req.file );
+      const lessonData: LessonCreationData = {
+        title: validatedData.title,
+        description: validatedData.description,
+        content: validatedData.content,
+        moduleId: validatedData.moduleId,
+        courseId: validatedData.courseId,
+        instructor: validatedData.instructor,
+        resourceUrl: validatedData.resource_url || 'resourceurl.com'
+      };
+  
+      const result = await lessonService.createLesson(validatedData);
       return res.status(result.statusCode).json({
         status: result.status,
         message: result.message,
         data: result.data
       });
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
-      return res.status(400).json({
+      console.error('Lesson Creation Error:', error);
+      return res.status(500).json({
         status: 'error',
-        message: errorMessage
+        message: 'Internal server error',
+        data: null
       });
     }
   },
 
   getAllLessons: async (req: ExpressRequest, res: Response) => {
     try {
-      const result = await lessonService.getAllLessons();
-      return res.status(200).json({
-        status: 'success',
-        message: 'Lessons retrieved successfully',
-        data: result
-      });
+      const lessons = await lessonService.getLessons();
+      return res.status(lessons.statusCode).json({
+        status: lessons.status,
+        message: lessons.message,
+        data: lessons.data
+      })
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+      console.error('Error', error);
       return res.status(500).json({
         status: 'error',
-        message: errorMessage
+        message: 'Internal server error'
       });
     }
   },
 
   getOneLesson: async (req: ExpressRequest, res: Response) => {
     try {
-      const { id } = req.params;
-      const result = await lessonService.getOneLesson(id);
-      return res.status(200).json({
-        status: 'success',
-        message: 'Lesson retrieved successfully',
-        data: result
+      const id = await idSchema.validate(req.params.id, {abortEarly: false});
+      const lesson = await lessonService.getOneLessonRecord(id);
+      
+      if (!lesson.data) {
+        return res.status(404).json({
+          status: 'fail',
+          message: 'Lesson not found',
+          data: null
+        });
+      }
+      
+      return res.status(lesson.statusCode).json({
+        status: lesson.status,
+        message: lesson.message,
+        data: lesson.data
       });
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
-      return res.status(404).json({
+      console.error('Error: ', error);
+      return res.status(500).json({
         status: 'error',
-        message: errorMessage
+        message: 'Internal server error'
       });
     }
   },
-  
-  // updateLessonResource: async (req: ExpressRequest, res: Response) => {
-  //   try {
-  //     const { lessonId } = req.params;
 
-  //     // Check if file exists
-  //     if (!req.file) {
-  //       return res.status(400).json({ error: 'No file uploaded' });
-  //     }
-
-  //     // Upload new file to Cloudinary
-  //     const uploadResult = await cloudinaryUploadService.uploadFile(req.file.path, {
-  //       folder: 'lessons'
-  //     });
-
-  //     // Get existing lesson to delete old resource if exists
-  //     const existingLesson = await lessonService.getOneLesson(lessonId);
+  updateLesson: async (req: ExpressRequest, res: Response) => {
+    try {
+      const id = await idSchema.validate(req.params.id, {abortEarly: false});
+      const updateData = req.body;
       
-  //     // Delete old Cloudinary resource if exists
-  //     if (existingLesson.resourcePublicId) {
-  //       await cloudinaryUploadService.deleteCloudinaryFile(existingLesson.resourcePublicId);
-  //     }
+      const updatedLesson = await lessonService.updateLesson(id, updateData);
+      
+      return res.status(updatedLesson.statusCode).json({
+        status: updatedLesson.status,
+        message: updatedLesson.message,
+        data: updatedLesson.data
+      });
+    } catch (error) {
+      console.error('Error:', error);
+      return res.status(500).json({
+        status: 'error',
+        message: 'Internal server error'
+      });
+    }
+  },
 
-  //     // Update lesson with new resource
-  //     const updatedLesson = await lessonService.updateLesson(lessonId, {
-  //       resourceUrl: uploadResult.url,
-  //       resourcePublicId: uploadResult.publicId
-  //     });
-
-  //     res.status(200).json({
-  //       message: 'Lesson resource updated successfully',
-  //       lesson: updatedLesson,
-  //       fileUrl: uploadResult.url
-  //     });
-  //   } catch (error) {
-  //     console.error('Lesson Update Error:', error);
-  //     res.status(500).json({ error: 'Failed to update lesson resource' });
-  //   }
-  // }
-};
+  deleteLesson: async (req: ExpressRequest, res: Response) => {
+    try {
+      const id = await idSchema.validate(req.params.id, {abortEarly: false});
+      const deletedLesson = await lessonService.deleteLesson(id);
+      
+      return res.status(deletedLesson.statusCode).json({
+        status: deletedLesson.status,
+        message: deletedLesson.message,
+        data: deletedLesson.data
+      });
+    } catch (error) {
+      console.error('Error: ', error);
+      return res.status(500).json({
+        status: 'error',
+        message: 'Internal server error'
+      });
+    }
+  }
+}
 
 export default lessonController;
-
-// import { Request, Response } from 'express';
-// import cloudinaryUploadService from '../services/cloudinaryUploadService';
-// import LessonService from '../services/lessonService'; // Your existing lesson service
-
-// class LessonController {
-//   /**
-//    * Create lesson with file upload
-//    */
-//   async createLesson(req: Request, res: Response) {
-//     try {
-//       // Check if file exists
-//       if (!req.file) {
-//         return res.status(400).json({ error: 'No file uploaded' });
-//       }
-
-//       // Upload file to Cloudinary
-//       const uploadResult = await cloudinaryUploadService.uploadFile(req.file.path, {
-//         folder: 'lessons'
-//       });
-
-//       // Prepare lesson payload
-//       const lessonPayload = {
-//         ...req.body,
-//         resourceUrl: uploadResult.url,
-//         resourcePublicId: uploadResult.publicId
-//       };
-
-//       // Create lesson using lesson service
-//       const lesson = await LessonService.createLesson(lessonPayload);
-
-//       res.status(201).json({
-//         message: 'Lesson created successfully',
-//         lesson,
-//         fileUrl: uploadResult.url
-//       });
-//     } catch (error) {
-//       console.error('Lesson Creation Error:', error);
-//       res.status(500).json({ error: 'Failed to create lesson' });
-//     }
-//   }
-
-//   /**
-//    * Update lesson resource
-//    */
-//   async updateLessonResource(req: Request, res: Response) {
-//     try {
-//       const { lessonId } = req.params;
-
-//       // Check if file exists
-//       if (!req.file) {
-//         return res.status(400).json({ error: 'No file uploaded' });
-//       }
-
-//       // Upload new file to Cloudinary
-//       const uploadResult = await cloudinaryUploadService.uploadFile(req.file.path, {
-//         folder: 'lessons'
-//       });
-
-//       // Get existing lesson to delete old resource if exists
-//       const existingLesson = await LessonService.getLessonById(lessonId);
-      
-//       // Delete old Cloudinary resource if exists
-//       if (existingLesson.resourcePublicId) {
-//         await cloudinaryUploadService.deleteCloudinaryFile(existingLesson.resourcePublicId);
-//       }
-
-//       // Update lesson with new resource
-//       const updatedLesson = await LessonService.updateLesson(lessonId, {
-//         resourceUrl: uploadResult.url,
-//         resourcePublicId: uploadResult.publicId
-//       });
-
-//       res.status(200).json({
-//         message: 'Lesson resource updated successfully',
-//         lesson: updatedLesson,
-//         fileUrl: uploadResult.url
-//       });
-//     } catch (error) {
-//       console.error('Lesson Update Error:', error);
-//       res.status(500).json({ error: 'Failed to update lesson resource' });
-//     }
-//   }
-// }
-
-// export default new LessonController();

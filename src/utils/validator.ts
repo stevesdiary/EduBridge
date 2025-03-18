@@ -154,3 +154,12 @@ export const updateEnrollmentSchema = yup.object().shape({
   completionDate: yup.date(),
   progress: yup.number().min(0).max(100)
 });
+
+export const lessonCreationSchema = yup.object().shape({
+  title: yup.string().required('Title is required'),
+  description: yup.string().required('Description is required'),
+  content: yup.string(),
+  moduleId: yup.string(),
+  courseId: yup.string(),
+  instructor: yup.string()
+});

@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser';
 import { Response } from 'express';
 import { User } from "../models/user.model";
 
-const jwtExpiry = process.env.JWT_EXPIRY || '1h';
+const jwtExpiry = process.env.JWT_EXPIRY || '2h';
 const jwtSecret = process.env.JWT_SECRET || 'secret';
 
 export const loginUser = async (email: string, password: string, res: Response) => {

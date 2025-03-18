@@ -14,19 +14,19 @@ lessonRouter.post('/create',
     await lessonController.createLesson(req, res);
 });
 
-lessonRouter.get('/all', 
-  // authentication, 
-  // checkRole(['user', 'admin']), 
-  async (req: ExpressRequest, res: Response) => {
-    await lessonController.getAllLessons(req, res);
-});
+// lessonRouter.get('/all', 
+//   // authentication, 
+//   // checkRole(['user', 'admin']), 
+//   async (req: ExpressRequest, res: Response) => {
+//     await lessonController.getAllLessons(req, res);
+// });
 
-lessonRouter.get('/:id', 
-  // authentication, 
-  // checkRole(['user', 'admin']), 
-  async (req: ExpressRequest, res: Response) => {
-    await lessonController.getOneLesson(req, res);
-});
+// lessonRouter.get('/:id', 
+//   // authentication, 
+//   // checkRole(['user', 'admin']), 
+//   async (req: ExpressRequest, res: Response) => {
+//     await lessonController.getOneLesson(req, res);
+// });
 
 // lessonRouter.put(
 //   '/lessons/:lessonId/resource', 

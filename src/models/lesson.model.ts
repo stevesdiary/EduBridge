@@ -51,7 +51,10 @@ export class Lesson extends Model {
   @Column({
     type: DataType.STRING
   })
-  resourceUrl!: string;
+  resourceUrl?: string;
+  description!: string;
+  courseId!: string;
+  instructor?: string;
 
   // @Column(DataType.DATE)
   // dateAdded?: Date;
