@@ -69,7 +69,7 @@ We're thrilled that you're interested in contributing to EduBridge. This documen
 3. Create a new branch:
 ```bash
 git checkout -b feature/your-feature-name
-```
+``` 
 
 #### 2. Development Workflow
 - Ensure code follows our style guide
