@@ -4,9 +4,9 @@ import { CorsOptions } from 'cors';
 const corsOptions: cors.CorsOptions = {
   origin: function (origin, callback) {
     const allowedOrigins = [
-      'http://localhost:3000',
+      'http://localhost:3000/',
       'https://edubridges.vercel.app/',
-      'https://edubridge-uwk9.onrender.com'
+      'https://edubridge-uwk9.onrender.com/'
     ];
 
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
