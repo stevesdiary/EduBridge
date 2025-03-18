@@ -25,26 +25,26 @@ export class Certificate extends Model {
     type: DataType.STRING,
     allowNull: false
   })
-  course_id?: string;
+  course_id!: string;
 
   @ForeignKey(() => User)
   @Column({
     type: DataType.UUID,
     defaultValue: false
   })
-  user_id?: string;
+  user_id!: string;
 
   @Column({
     type: DataType.DATE,
     allowNull: false
   })
-  issued_date?: Date
+  issued_date!: Date
 
   @Column({
     type: DataType.STRING,
     allowNull: true
   })
-  certificate_url?: string;
+  certificate_url!: string;
 
   @Column({
     type: DataType.DATEONLY,
@@ -54,7 +54,7 @@ export class Certificate extends Model {
 
   @Column({
     type: DataType.ENUM(...Object.values(CertificateStatus)),
-    // defaultValue: CertificateStatus.ISSUED
+    defaultValue: CertificateStatus.ISSUED
   })
   status!: string
 
@@ -62,5 +62,5 @@ export class Certificate extends Model {
   course: Course = new Course;
 
   @BelongsTo(() => User)
-  user?: User;
+  user!: User;
 }
