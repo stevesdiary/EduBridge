@@ -31,7 +31,7 @@ EduBridge is an open-source educational platform designed to cater for the unnde
 git clone https://github.com/stevesdiary/EduBridge.git
 
 # Navigate to project directory
-cd edu-bridge
+cd EduBridge
 
 # Install dependencies
 npm install
@@ -45,10 +45,6 @@ npm run migrate
 # Start development server
 npm run dev
 ```
-
-## Contributing Guidelines
-[Link to CONTRIBUTING.md]
-
 
 # Contributing to EduBridge
 
