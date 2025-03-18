@@ -15,7 +15,7 @@ EduBridge is an open-source educational platform designed to cater for the unnde
 
 ### Tech Stack
 - Backend: Node.js, TypeScript
-- Database: SQLite
+- Database: Postgres
 - ORM: Sequelize
 - Authentication: JWT
 - Containerization: Docker
@@ -24,15 +24,14 @@ EduBridge is an open-source educational platform designed to cater for the unnde
 
 ### Prerequisites
 - Node.js (v18+)
-- Docker (optional)
 
 ### Installation
 ```bash
 # Clone the repository
-git clone https://github.com/stevesdiary/edu-bridge.git
+git clone https://github.com/stevesdiary/EduBridge.git
 
 # Navigate to project directory
-cd edu-bridge
+cd EduBridge
 
 # Install dependencies
 npm install
@@ -46,10 +45,6 @@ npm run migrate
 # Start development server
 npm run dev
 ```
-
-## Contributing Guidelines
-[Link to CONTRIBUTING.md]
-
 
 # Contributing to EduBridge
 
@@ -127,40 +122,26 @@ git commit -m "feat: add patient appointment booking feature"
 ### Security Reporting
 For security vulnerabilities, please email security@edubridge.org
 
-# EduBridge Architecture
-
-## High-Level Architecture
-```mermaid
-graph TD
-    A[Frontend] --> B[API Gateway]
-    B --> C[Authentication Service]
-    B --> D[Appointment Service]
-    B --> E[User Management Service]
-    D --> F[Database]
-    E --> F
-    C --> F
-```
-
-## Microservices Overview
+## Key Microservices Overview
 1. **Authentication Service**
    - Handles user registration
    - Manages JWT tokens
    - Implements role-based access control
 
-2. **Appointment Service**
-   - Manages doctor-patient appointments
-   - Handles scheduling logic
-   - Implements reminder systems
+2. **Courses Modules and Lessons Service**
+   - Manages Courses, assessments and Exam preps creation
+   - Handles Course resource uploads logic
 
-3. **User Management Service**
-   - Manages patient and doctor profiles
-   - Handles user data updates
+3. **Progress Management Service**
+   - Manages course progress and badges awarding
+   - Handles Certificate awarding
 
 ## Database Schema
 [Link to database schema documentation]
 
 ## API Documentation
-[Link to Swagger/OpenAPI documentation]
+
+https://docs.google.com/document/d/1fMXKutrrkJhMXrADziAwNV7WXXtmfuQsU66eXM9lhr0/edit?usp=sharing
 
 
 
@@ -222,13 +203,13 @@ This is the repository for the TCU project. Follow the steps below to set up and
 1. **Clone the repository**  
    Open your terminal and run the following command:
 ```bash
-   git clone https://github.com/stevesdiary/edu-bridge.git
+   git clone https://github.com/stevesdiary/EduBridge.git
 ```
 
 2. **Navigate to the project directory**  
 Change your directory to the cloned repository:
 ```bash
-cd edu-bridge
+cd EduBridge
 ```
 3. **Install dependencies**  
 Run the following command to install the required packages:
