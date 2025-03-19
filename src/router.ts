@@ -16,8 +16,7 @@ const router = Router();
 const corsOptions = {
   origin: [
     'http://localhost:3000/',
-    'https://edubridges.vercel.app/',
-    'https://edubridge-uwk9.onrender.com/'
+    'https://edubridges.vercel.app/'
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: [
