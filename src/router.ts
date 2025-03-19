@@ -11,8 +11,20 @@ import verifyRouter from "./routes/verify.email";
 // import profileRouter from "./routes/profile.route";
 // import certificateRouter from "./routes/certificate.route";
 // import user_badgeRouter from "./routes/user-badge.route";
-
+import cors from 'cors';
 const router = Router();
+const corsOptions = {
+  origin: [
+    'http://localhost:3000', 
+    'https://yourdomain.com'
+  ],
+  methods: ['GET', 'HEAD', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+};
+
+router.use(cors(corsOptions));
+
 
 router.use("/user", userRouter);
 router.use("/log", loginRouter);
