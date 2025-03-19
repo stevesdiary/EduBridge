@@ -16,7 +16,7 @@ const corsOptions: CorsOptions = {
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 
-const port = process.env.LOCAL_PORT || 3000;
+const port = process.env.LOCAL_PORT || 3001;
 
 // const limiter = rateLimit ({
 //   windowMs: 10 * 60 * 1000,
