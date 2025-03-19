@@ -6,7 +6,6 @@ const corsOptions: cors.CorsOptions = {
     const allowedOrigins = [
       'http://localhost:3000/',
       'https://edubridges.vercel.app/',
-      'https://edubridge-uwk9.onrender.com/'
     ];
 
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
