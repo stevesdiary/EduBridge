@@ -14,10 +14,8 @@ import verifyRouter from "./routes/verify.email";
 import cors from 'cors';
 const router = Router();
 const corsOptions = {
-  origin: [
-    'http://localhost:3000',
-    'https://edubridges.vercel.app'
-  ],
+  origin: 'http://localhost:3000'
+  ,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: [
     'Content-Type', 
