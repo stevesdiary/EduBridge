@@ -15,11 +15,17 @@ import cors from 'cors';
 const router = Router();
 const corsOptions = {
   origin: [
-    'http://localhost:3000', 
-    'https://yourdomain.com'
+    'http://localhost:3000/',
+    'https://edubridges.vercel.app/',
+    'https://edubridge-uwk9.onrender.com/'
   ],
-  methods: ['GET', 'HEAD', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: [
+    'Content-Type', 
+    'Authorization', 
+    'Access-Control-Allow-Origin',
+    'Access-Control-Allow-Headers'
+  ],
   credentials: true
 };
 
