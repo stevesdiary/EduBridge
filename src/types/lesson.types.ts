@@ -2,9 +2,9 @@ import { Optional } from 'sequelize';
 export interface LessonCreationData {
   title: string;
   description: string;
-  content?: string;
-  moduleId?: string;
-  courseId?: string;
+  content: string;
+  moduleId: string;
+  courseId: string;
   instructor?: string;
   resourceUrl?: string;
 }
