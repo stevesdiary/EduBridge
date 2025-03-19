@@ -9,11 +9,11 @@ const corsOptions: cors.CorsOptions = {
       'https://edubridge-uwk9.onrender.com/'
     ];
 
-    // if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-    //   callback(null, true);
-    // } else {
-    //   callback(new Error('Not allowed by CORS'));
-    // }
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: [

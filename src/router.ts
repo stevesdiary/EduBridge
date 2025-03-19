@@ -11,8 +11,26 @@ import verifyRouter from "./routes/verify.email";
 // import profileRouter from "./routes/profile.route";
 // import certificateRouter from "./routes/certificate.route";
 // import user_badgeRouter from "./routes/user-badge.route";
-
+import cors from 'cors';
 const router = Router();
+const corsOptions = {
+  origin: [
+    'http://localhost:3000/',
+    'https://edubridges.vercel.app/',
+    'https://edubridge-uwk9.onrender.com/'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: [
+    'Content-Type', 
+    'Authorization', 
+    'Access-Control-Allow-Origin',
+    'Access-Control-Allow-Headers'
+  ],
+  credentials: true
+};
+
+router.use(cors(corsOptions));
+
 
 router.use("/user", userRouter);
 router.use("/log", loginRouter);
