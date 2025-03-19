@@ -19,7 +19,7 @@ export const userRegistrationSchema = yup.object().shape({
   username: yup
     .string()
     .trim()
-    .required('Last name is required')
+    .optional()
     .min(2, 'Last name must be at least 2 characters')
     .max(50, 'Last name must be at most 50 characters'),
   
