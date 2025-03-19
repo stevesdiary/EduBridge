@@ -1,28 +1,28 @@
-import cors from 'cors';
-import { CorsOptions } from 'cors';
+// import cors from 'cors';
+// import { CorsOptions } from 'cors';
 
-const corsOptions: cors.CorsOptions = {
-  origin: function (origin, callback) {
-    const allowedOrigins = [
-      'http://localhost:3000/',
-      'https://edubridges.vercel.app/',
-      'https://edubridge-uwk9.onrender.com/'
-    ];
+// const corsOptions: cors.CorsOptions = {
+//   origin: function (origin, callback) {
+//     const allowedOrigins = [
+//       'http://localhost:3000/',
+//       'https://edubridges.vercel.app/',
+//       'https://edubridge-uwk9.onrender.com/'
+//     ];
 
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: [
-    'Content-Type', 
-    'Authorization', 
-    'Access-Control-Allow-Origin',
-    'Access-Control-Allow-Headers'
-  ],
-  credentials: true
-};
+//     // if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+//     //   callback(null, true);
+//     // } else {
+//     //   callback(new Error('Not allowed by CORS'));
+//     // }
+//   },
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+//   allowedHeaders: [
+//     'Content-Type', 
+//     'Authorization', 
+//     'Access-Control-Allow-Origin',
+//     'Access-Control-Allow-Headers'
+//   ],
+//   credentials: true
+// };
 
-export const configureCors = () => cors(corsOptions);
+// export const configureCors = () => cors(corsOptions);
