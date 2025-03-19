@@ -15,8 +15,8 @@ import cors from 'cors';
 const router = Router();
 const corsOptions = {
   origin: [
-    'http://localhost:3000/',
-    'https://edubridges.vercel.app/'
+    'http://localhost:3000',
+    'https://edubridges.vercel.app'
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: [
@@ -25,7 +25,8 @@ const corsOptions = {
     'Access-Control-Allow-Origin',
     'Access-Control-Allow-Headers'
   ],
-  credentials: true
+  credentials: true,
+  optionsSuccessStatus: 200
 };
 
 router.use(cors(corsOptions));
