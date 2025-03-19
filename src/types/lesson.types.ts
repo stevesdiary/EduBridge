@@ -4,7 +4,6 @@ export interface LessonCreationData {
   description: string;
   content: string;
   moduleId: string;
-  courseId: string;
   instructor?: string;
   resourceUrl?: string;
 }
@@ -15,7 +14,6 @@ export interface LessonAttributes {
   description: string;
   content: string;
   moduleId: string;
-  courseId: string;
   instructor?: string;
   resourceUrl?: string;
   createdAt?: Date;
@@ -28,7 +26,6 @@ export interface LessonResponse {
   description: string;
   content: string;
   moduleId: string;
-  courseId: string;
   instructor?: string;
   resourceUrl?: string;
 }
