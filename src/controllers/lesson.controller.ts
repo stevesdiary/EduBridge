@@ -9,7 +9,7 @@ const lessonController = {
   createLesson: async (req: ExpressRequest, res: Response) => {
     try {
       if (!req.file){
-        throw error ('File not selected for upload');
+        return ('File not selected for upload');
       }
 
       // const resource_url = uploadPdf(
