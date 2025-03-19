@@ -4,9 +4,15 @@ import rateLimit from 'express-rate-limit';
 import sequelize from './database';
 import router from '../router';
 const server = express();
-import { configureCors } from '../middlewares/cors.config';
+import cors from 'cors';
+import { CorsOptions } from 'cors';
+const corsOptions: CorsOptions = {
+  credentials: true,
+  origin:
+    ['http://localhost:3000/', 'https://edubridges.vercel.app/'],
+    allowedHeaders: [ 'Content-Type', 'Authorization', 'Access-Control-Allow-Origin', 'Access-Control-Allow-Headers' ],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']}
 
-server.use(configureCors());
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 
