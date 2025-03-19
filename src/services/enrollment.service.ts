@@ -9,9 +9,27 @@ class EnrollmentService {
   deleteEnrollment: any;
   async createEnrollment(enrollmentData: CreateEnrollmentDto) {
     try {
-      // Implementation for creating enrollment
-      // You'll need to add your database logic here
-      return enrollmentData;
+      const checkEnrollment = await Enrollment.findOne({
+        where: {
+          courseId: enrollmentData.courseId,
+          userId: enrollmentData.userId
+        }
+      });
+
+      if (checkEnrollment) {
+        return {
+          statusCode: 400,
+          status: 'fail',
+          message: 'User already enrolled in this course',
+          data: null
+        };
+      }
+      const result = await Enrollment.create({
+        courseId: enrollmentData.courseId,
+        userId: enrollmentData.userId,
+        status: enrollmentData.status || 'ENROLLED'
+      });
+      return result;
     } catch (error) {
       throw error;
     }
