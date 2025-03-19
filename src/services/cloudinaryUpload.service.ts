@@ -110,3 +110,15 @@
 // }
 
 // export default new CloudinaryUploadService();
+
+
+const cloudinary = require('./cloudinary.config');
+
+const generatePdfUrl = (pdfFileName: string) => {
+  return cloudinary.url(pdfFileName, {
+    resource_type: 'raw',
+    format: 'pdf',
+  });
+};
+
+module.exports = { generatePdfUrl };
