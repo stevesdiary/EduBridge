@@ -28,7 +28,7 @@ export const registerUser = async (userData: CreationAttributes<User>) => {
       };
     }
     const hashed = await bcrypt.hash(userData.password, salt);
-    const username = userData.email.split('@')[0]; // usercreationdata.username
+    const username = userData.email.split('@')[0]; // userData.username
     let userCreationData = {
       username: username,
       first_name: userData.first_name,
@@ -74,7 +74,7 @@ export const verifyUser = async ({email, code}: {email: string, code: string}) =
       return {
         statusCode: 200,
         status: "success",
-        message: "User verified",
+        message: `${email} is now verified`,
         data: null
       };
     }
@@ -90,7 +90,7 @@ export const verifyUser = async ({email, code}: {email: string, code: string}) =
       return {
         statusCode: 200,
         status: "success",
-        message: "User already verified",
+        message: `${email} already verified`,
         data: null
       };
     }

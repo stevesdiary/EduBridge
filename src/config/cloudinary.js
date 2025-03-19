@@ -90,3 +90,45 @@
 //   }
 // });
 
+// Step 1: Configuring Cloudinary
+// First, you need to configure Cloudinary with your cloud name, API key, and API secret.
+
+// Create a new file called cloudinary.config.js with the following content:
+
+
+// const cloudinary = require('cloudinary').v2;
+
+// cloudinary.config({
+//   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+//   api_key: process.env.CLOUDINARY_API_KEY,
+//   api_secret: process.env.CLOUDINARY_API_SECRET,
+// });
+
+// module.exports = cloudinary;
+
+
+// Replace your-cloud-name, your-api-key, and your-api-secret with your actual Cloudinary credentials.
+
+// Step 2: Creating a Method to Generate the URL
+// Create a new file called cloudinary.utils.js with the following content:
+
+
+// const cloudinary = require('./cloudinary.config');
+// cloudinary.config.js
+// This file should be in the root of your project and should contain your Cloudinary credentials:
+
+
+// const cloudinary = require('cloudinary').v2;
+
+// cloudinary.config({
+//   cloud_name: 'your-cloud-name',
+//   api_key: 'your-api-key',
+//   api_secret: 'your-api-secret',
+// });
+
+// module.exports = cloudinary;
+
+
+// cloudinary.utils.js
+// This file should be in the same directory as your main application file and should contain the functions for uploading and getting the file:
+

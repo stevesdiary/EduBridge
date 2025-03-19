@@ -2,7 +2,7 @@ import { Response, Request as ExpressRequest } from 'express';
 import { lessonCreationSchema, idSchema } from '../utils/validator';
 import { LessonCreationData } from '../types/lesson.types';
 import lessonService from '../services/lesson.service';
-// import CloudinaryUploadService from '../services/cloudinaryUpload.service';
+// import { uploadPdf } from '../services/upload.service';
 import { error } from 'console';
 
 const lessonController = {
@@ -11,13 +11,17 @@ const lessonController = {
       if (!req.file){
         throw error ('File not selected for upload');
       }
-      // const validatedData = await lessonCreationSchema.validate(req.body, {
-      //   abortEarly: false,
-      //   stripUnknown: true
-      // });
-      const validatedData = req.body;
-      // const resource_url = CloudinaryUploadService.uploadFile(
-        // req.file );
+
+      // const resource_url = uploadPdf(
+      //   req.file.filename );
+      // console.log('resource_url', resource_url);
+
+      const validatedData = await lessonCreationSchema.validate(req.body, {
+        abortEarly: false,
+        stripUnknown: true
+      });
+      // const validatedData = req.body;
+      
       const lessonData: LessonCreationData = {
         title: validatedData.title,
         description: validatedData.description,
@@ -25,15 +29,15 @@ const lessonController = {
         moduleId: validatedData.moduleId,
         courseId: validatedData.courseId,
         instructor: validatedData.instructor,
-        resourceUrl: validatedData.resource_url || 'resourceurl.com'
+        resourceUrl:'resourceurl.com'
       };
   
-      const result = await lessonService.createLesson(validatedData);
-      return res.status(result.statusCode).json({
-        status: result.status,
-        message: result.message,
-        data: result.data
-      });
+      // const result = await lessonService.createLesson(validatedData);
+      // return res.status(result.statusCode).json({
+      //   status: result.status,
+      //   message: result.message,
+      //   data: result.data
+      // });
     } catch (error) {
       console.error('Lesson Creation Error:', error);
       return res.status(500).json({
