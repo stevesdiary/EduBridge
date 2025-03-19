@@ -30,36 +30,36 @@ lessonRouter.post('/create',
 // });
 
 
-// lessonRouter.post('/upload-pdf', upload.single('file'), async (req: ExpressRequest, res: Response) => {
-//   try {
-//     if (!req.file){ 
-//       res.status(400).send({ message: 'File not selected for upload' });
-//       return;
-//     }
-//     const pdfFilePath = req.file.path;
-//     const uploadResult = await uploadPdf(pdfFilePath);
-//     const publicId = uploadResult.url;
-//     console.log('RESULT', uploadResult)
+// lessonRouter.post('/create', upload.single('file'), async (req: ExpressRequest, res: Response) => {
+  // try {
+  //   if (!req.file){ 
+  //     res.status(400).send({ message: 'File not selected for upload' });
+  //     return;
+  //   }
+  //   const pdfFilePath = req.file.path;
+  //   const uploadResult = await uploadPdf(pdfFilePath);
+  //   const publicId = uploadResult.url;
+  //   console.log('RESULT', uploadResult)
     
-//     res.send({ publicId });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send({ message: 'Error uploading PDF' });
-//   }
+  //   res.send({ publicId });
+  // } catch (error) {
+  //   console.error(error);
+  //   res.status(500).send({ message: 'Error uploading PDF' });
+  // }
 // });
-// lessonRouter.get('/all', 
-//   // authentication, 
-//   // checkRole(['user', 'admin']), 
-//   async (req: ExpressRequest, res: Response) => {
-//     await lessonController.getAllLessons(req, res);
-// });
+lessonRouter.get('/all', 
+  // authentication, 
+  // checkRole(['user', 'admin']), 
+  async (req: ExpressRequest, res: Response) => {
+    await lessonController.getAllLessons(req, res);
+});
 
-// lessonRouter.get('/:id', 
-//   // authentication, 
-//   // checkRole(['user', 'admin']), 
-//   async (req: ExpressRequest, res: Response) => {
-//     await lessonController.getOneLesson(req, res);
-// });
+lessonRouter.get('/:id', 
+  // authentication, 
+  // checkRole(['user', 'admin']), 
+  async (req: ExpressRequest, res: Response) => {
+    await lessonController.getOneLesson(req, res);
+});
 
 // lessonRouter.put(
 //   '/lessons/:lessonId/resource', 

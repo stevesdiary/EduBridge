@@ -8,9 +8,9 @@ import { error } from 'console';
 const lessonController = {
   createLesson: async (req: ExpressRequest, res: Response) => {
     try {
-      if (!req.file){
-        throw error ('File not selected for upload');
-      }
+      // if (!req.file){
+      //   return ('File not selected for upload');
+      // }
 
       // const resource_url = uploadPdf(
       //   req.file.filename );
@@ -25,19 +25,19 @@ const lessonController = {
       const lessonData: LessonCreationData = {
         title: validatedData.title,
         description: validatedData.description,
-        content: validatedData.content,
-        moduleId: validatedData.moduleId,
-        courseId: validatedData.courseId,
+        content: validatedData.content || '',
+        moduleId: validatedData.moduleId || '',
+        courseId: validatedData.courseId || '',
         instructor: validatedData.instructor,
         resourceUrl:'resourceurl.com'
       };
   
-      // const result = await lessonService.createLesson(validatedData);
-      // return res.status(result.statusCode).json({
-      //   status: result.status,
-      //   message: result.message,
-      //   data: result.data
-      // });
+      const result = await lessonService.createLesson(lessonData);
+      return res.status(result.statusCode).json({
+        status: result.status,
+        message: result.message,
+        data: result.data
+      });
     } catch (error) {
       console.error('Lesson Creation Error:', error);
       return res.status(500).json({
