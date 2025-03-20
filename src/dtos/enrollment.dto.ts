@@ -1,7 +1,6 @@
 export interface CreateEnrollmentDto {
   userId: string;
   courseId: string;
-  startDate?: Date;
   status: 'ENROLLED' | 'COMPLETED' | 'WITHDRAWN';
 }
 
