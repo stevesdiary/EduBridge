@@ -13,13 +13,10 @@ const courseController = {
       //   stripUnknown: true
       // });
       const validatedData = req.body;
-        // console.log("VALIDATED COURSE DATA", validatedData)
       const courseData: CourseCreationData = {
         title: validatedData.title,
         description: validatedData.description,
-        // available_offline: validatedData.available_offline,
         category: validatedData.category,
-        // difficulty_level: validatedData.difficulty_level,
         instructor: validatedData.instructor || ''
       };
   
