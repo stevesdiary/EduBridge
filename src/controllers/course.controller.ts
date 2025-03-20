@@ -5,6 +5,7 @@ import { CourseCreationData } from '../types/type';
 import courseService from '../services/course.service';
 import { CourseStatus } from '../models/course.model';
 
+
 const courseController = {
   createCourse: async (req: ExpressRequest, res: Response) => {
     try {
@@ -50,7 +51,12 @@ const courseController = {
   getAllCourses: async (req: ExpressRequest, res: Response) => {
     try {
       // const searchData = await searchSchema.validate(req.body, { abortEarly: false });
-      const searchData = req.body; 
+      const searchData = {
+        category: req.query.category as string || '',
+        subject: req.query.subject as string || '',
+        page: parseInt(req.query.page as string) || 1,
+        limit: parseInt(req.query.limit as string) || 10
+      }; 
       const courses = await courseService.getCourses(searchData);
       return res.status(courses.statusCode).json({
         status: courses.status,
@@ -72,6 +78,58 @@ const courseController = {
       });
     }
   },
+
+  getByCategories: async (req: ExpressRequest, res: Response) => {
+    try {
+      const category = req.query.category as string;
+      const searchData = {
+        category: req.query.category as string || '',
+        page: parseInt(req.query.page as string) || 1,
+        limit: parseInt(req.query.limit as string) || 10
+      }
+      
+      if(!category) {
+        return ("category is required")
+      }
+      const courses = await courseService.getCoursesByCategory(searchData);
+      if (Array.isArray(courses)) {
+        return res.status(200).json({
+          status: 'success',
+          message: 'Courses retrieved successfully',
+          data: courses
+        });
+      }
+      return res.status(courses.statusCode).json({
+        status: courses.status,
+        message: courses.message,
+        data: courses.data
+      });
+  } catch (error) {
+      console.error('Error', error);
+      return res.status(500).json({
+        status: 'error',
+        message: 'Internal server error'
+      });
+    }
+  },
+
+  getBySubject: async (req: ExpressRequest, res: Response) => {
+    try {
+      const subject = req.query.subject as string;
+      if(!subject) {
+        return ("subjectis required")
+      }
+      const courses = await courseService.getCoursesBySubject(subject);
+  } catch (error) {
+      console.error('Error', error);
+      return res.status(500).json({
+        status: 'error',
+        message: 'Internal server error'
+      });
+    }
+  },
+
+
 
   getOneCourse: async (req: ExpressRequest, res: Response) => {
     try {

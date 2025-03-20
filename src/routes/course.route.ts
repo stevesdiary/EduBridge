@@ -14,9 +14,13 @@ courseRouter.post('/create',
   await courseController.createCourse(req, res);
 })
 
-// courseRouter.post('/upload', async (req: ExpressRequest, res: Response) => {
-//   await cloudinary.upload(req, res);
-// })
+courseRouter.get('/by-category', async (req: ExpressRequest, res: Response) => {
+  await courseController.getByCategories(req, res);
+})
+
+courseRouter.get('/by-subject', async (req: ExpressRequest, res: Response) => {
+  await courseController.getBySubject(req, res);
+})
 
 courseRouter.get('/all', 
   // authentication, 

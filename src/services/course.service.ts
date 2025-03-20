@@ -5,6 +5,7 @@ import { User } from '../models/user.model';
 import { Course } from '../models/course.model';
 // import { CourseCreateDTO, CourseStatus, CourseResponse, ApiResponse } from '../types/type';
 import { Profile } from '../models/profile.model';
+import { Sequelize, Model, DataTypes } from 'sequelize';
 import { ApiResponse, CourseCreationData, SearchData, CourseResponse } from '../types/type';
 import sequelize from '../core/database';
 
@@ -56,7 +57,9 @@ const courseService = {
 
   getCourses: async (SearchData: SearchData) => {
     try {
-      const courses = await Course.findAll();
+      const courses = await Course.findAll( {
+        where : { subject : { [Op.like]: `%${SearchData.subject}%` } },
+      });
       if (! courseService || courses.length === 0) {
         return {
           statusCode: 404,
@@ -74,6 +77,44 @@ const courseService = {
     } catch (error) { 
       console.error('Error in get course service:', error);
       throw new Error('Failed to fetch courses');
+    }
+  },
+
+  getCoursesByCategory: async (SearchData: SearchData) => {
+    try {
+      const categories = await Course.findAll({
+        where : { subject : { [Op.like]: `%${SearchData.category}%` } },
+      });
+      if (!Course || Course.length === 0) {
+        return {
+          statusCode: 404,
+          status: 'fail',
+          message: 'No course found',
+          data: null,
+        };        
+      }
+      return categories;
+    } catch (error) {
+      console.error('Error fetching unique categories:', error);
+      throw error;
+    }
+  },
+
+  getCoursesBySubject: async (subject: string) => {
+    try {
+      const subjects = await Course.findAll({
+        attributes: [
+          [Sequelize.fn('DISTINCT', Sequelize.col('subject')), 'subject']
+        ],
+        raw: true
+      }).then(results => 
+          results.map(result => result.subject).filter(Boolean)
+        );
+        
+      return subjects;
+    } catch (error) {
+      console.error('Error fetching unique subjects:', error);
+      throw error;
     }
   },
 
