@@ -4,6 +4,23 @@ import { ApiResponse, LessonCreationAttributes, LessonCreationData, LessonRespon
 const lessonService = {
   createLesson: async (lessonData: LessonCreationAttributes): Promise<ApiResponse<LessonResponse>> => {
     try {
+
+      const existingLesson = await Lesson.findOne({
+        where: {
+          title: lessonData.title,
+          description: lessonData.description,
+          moduleId: lessonData.moduleId
+        }
+      });
+
+      if (existingLesson) {
+        return {
+          statusCode: 409,
+          status: 'fail',
+          message: 'Lesson already exists',
+          data: null
+        };
+      }
       const lesson = await Lesson.create(lessonData);
       
       const lessonResponse: LessonResponse = {

@@ -13,6 +13,22 @@ import sequelize from '../core/database';
 const courseService = {
   createCourse: async (courseData: CourseCreationData): Promise<ApiResponse<CourseResponse>> => {
     try {
+      const existigCourse = await Course.findOne({
+        where: {
+          title: courseData.title,
+          category: courseData.category,
+          description: courseData.description,
+          instructor: courseData.instructor
+        }
+      });
+      if (existigCourse) {
+        return {
+          statusCode: 409,
+          status: 'fail',
+          message: 'Course already exists',
+          data: null
+        }
+      }
       const course = await Course.create(courseData);
       
       // Transform the course data to ensure all required fields are present
