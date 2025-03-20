@@ -5,7 +5,8 @@ import {
   Model, 
   DataType, 
   HasMany, 
-  ForeignKey
+  ForeignKey,
+  BelongsTo
 } from 'sequelize-typescript';
 import { Module } from '../models/module.model';
 import { Progress } from '../models/progress.model';
@@ -45,6 +46,11 @@ export class Enrollment extends Model {
   })
   enrollmentDate?: Date;
 
+  @BelongsTo(() => User)
+  user?: User;
+
+  @BelongsTo(() => Course)
+  course?: Course;
   // @HasMany(() => Module)
   // modules?: Module[];
 

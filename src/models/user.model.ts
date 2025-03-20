@@ -86,7 +86,7 @@ export class User extends Model {
   profile?: Profile;
 
   @HasMany(() => Enrollment)
-  courseEnrollments: Enrollment[] = [];
+  enrollments: Enrollment[] = [];
 
   @HasMany(() => Progress)
   progresses?: Progress[] = [];

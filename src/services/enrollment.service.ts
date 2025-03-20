@@ -60,7 +60,7 @@ class EnrollmentService {
         include: [
           {
             model: User,
-            attributes: ['id', 'name', 'email']
+            attributes: ['id', 'first_name', 'last_name', 'email']
           },
           {
             model: Course,
