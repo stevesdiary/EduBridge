@@ -5,7 +5,8 @@ import {
   Model, 
   DataType, 
   HasMany, 
-  ForeignKey
+  ForeignKey,
+  BelongsTo
 } from 'sequelize-typescript';
 import { Module } from '../models/module.model';
 import { Progress } from '../models/progress.model';
@@ -13,7 +14,7 @@ import { User } from './user.model';
 import { Course } from './course.model';
 
 @Table({
-  tableName: 'courses',
+  tableName: 'enrollments',
   timestamps: true,
   underscored: true,
   paranoid: true
@@ -31,20 +32,25 @@ export class Enrollment extends Model {
     type: DataType.UUID,
     allowNull: false
   })
-  userId?: string;
+  userId!: string;
 
   @ForeignKey(() => Course)
   @Column({
     type: DataType.UUID,
     allowNull: false
   })
-  courseId?: string;
+  courseId!: string;
 
   @Column({
     type: DataType.DATE
   })
   enrollmentDate?: Date;
 
+  @BelongsTo(() => User)
+  user?: User;
+
+  @BelongsTo(() => Course)
+  course?: Course;
   // @HasMany(() => Module)
   // modules?: Module[];
 

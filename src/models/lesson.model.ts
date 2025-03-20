@@ -53,7 +53,7 @@ export class Lesson extends Model {
   })
   resourceUrl?: string;
   description!: string;
-  courseId!: string;
+  // courseId!: string;
   instructor?: string;
 
   // @Column(DataType.DATE)

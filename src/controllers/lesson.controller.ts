@@ -27,7 +27,6 @@ const lessonController = {
         description: validatedData.description,
         content: validatedData.content || '',
         moduleId: validatedData.moduleId || '',
-        courseId: validatedData.courseId || '',
         instructor: validatedData.instructor,
         resourceUrl:'resourceurl.com'
       };

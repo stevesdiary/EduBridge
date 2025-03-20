@@ -12,7 +12,6 @@ const lessonService = {
         description: lesson.description,
         content: lesson.content,
         moduleId: lesson.moduleId,
-        courseId: lesson.courseId,
         instructor: lesson.instructor
       };
 

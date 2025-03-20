@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { enrollmentService } from '../services/enrollment.service';
 import { CreateEnrollmentDto, UpdateEnrollmentDto } from '../dtos/enrollment.dto';
-import { string } from 'yup';
 
 export class EnrollmentController {
   async createEnrollment(req: Request, res: Response): Promise<void> {
@@ -10,7 +9,6 @@ export class EnrollmentController {
       const enrollment = await enrollmentService.createEnrollment(enrollmentData);
       
       res.status(201).json({
-        message: 'Enrollment created successfully',
         enrollment
       });
     } catch (error) {

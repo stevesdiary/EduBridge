@@ -9,9 +9,28 @@ class EnrollmentService {
   deleteEnrollment: any;
   async createEnrollment(enrollmentData: CreateEnrollmentDto) {
     try {
-      // Implementation for creating enrollment
-      // You'll need to add your database logic here
-      return enrollmentData;
+      const checkEnrollment = await Enrollment.findOne({
+        where: {
+          course_id: enrollmentData.courseId,
+          user_id: enrollmentData.userId
+        }
+      });
+
+      if (checkEnrollment !== null) {
+        return {
+          statusCode: 400,
+          status: 'fail',
+          message: 'User already enrolled in this course',
+          data: null
+        };
+      }
+      const result = await Enrollment.create({
+        courseId: enrollmentData.courseId,
+        userId: enrollmentData.userId,
+        status: enrollmentData.status || 'ENROLLED',
+        enrollmentDate: new Date()
+      });
+      return result;
     } catch (error) {
       throw error;
     }
@@ -41,7 +60,7 @@ class EnrollmentService {
         include: [
           {
             model: User,
-            attributes: ['id', 'name', 'email']
+            attributes: ['id', 'first_name', 'last_name', 'email']
           },
           {
             model: Course,
