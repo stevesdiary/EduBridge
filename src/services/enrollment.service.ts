@@ -16,7 +16,7 @@ class EnrollmentService {
         }
       });
 
-      if (checkEnrollment) {
+      if (checkEnrollment !== null) {
         return {
           statusCode: 400,
           status: 'fail',
@@ -25,9 +25,10 @@ class EnrollmentService {
         };
       }
       const result = await Enrollment.create({
-        course_id: enrollmentData.courseId,
-        user_id: enrollmentData.userId,
-        status: enrollmentData.status || 'ENROLLED'
+        courseId: enrollmentData.courseId,
+        userId: enrollmentData.userId,
+        status: enrollmentData.status || 'ENROLLED',
+        enrollmentDate: new Date()
       });
       return result;
     } catch (error) {

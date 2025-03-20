@@ -13,7 +13,7 @@ import { User } from './user.model';
 import { Course } from './course.model';
 
 @Table({
-  tableName: 'courses',
+  tableName: 'enrollments',
   timestamps: true,
   underscored: true,
   paranoid: true
@@ -31,14 +31,14 @@ export class Enrollment extends Model {
     type: DataType.UUID,
     allowNull: false
   })
-  userId?: string;
+  userId!: string;
 
   @ForeignKey(() => Course)
   @Column({
     type: DataType.UUID,
     allowNull: false
   })
-  courseId?: string;
+  courseId!: string;
 
   @Column({
     type: DataType.DATE
