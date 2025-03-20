@@ -11,8 +11,8 @@ class EnrollmentService {
     try {
       const checkEnrollment = await Enrollment.findOne({
         where: {
-          courseId: enrollmentData.courseId,
-          userId: enrollmentData.userId
+          course_id: enrollmentData.courseId,
+          user_id: enrollmentData.userId
         }
       });
 
@@ -25,8 +25,8 @@ class EnrollmentService {
         };
       }
       const result = await Enrollment.create({
-        courseId: enrollmentData.courseId,
-        userId: enrollmentData.userId,
+        course_id: enrollmentData.courseId,
+        user_id: enrollmentData.userId,
         status: enrollmentData.status || 'ENROLLED'
       });
       return result;
