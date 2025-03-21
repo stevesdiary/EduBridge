@@ -140,7 +140,7 @@ const courseController = {
       const response: ApiResponse<CourseResponse[]> = {
         statusCode: 200,
         status: 'success',
-        message: 'Courses retrieved successfully',
+        message: 'Courses retrieved based on subject grouping',
         data: courses
       };
 
