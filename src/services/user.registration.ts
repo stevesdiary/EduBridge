@@ -1,5 +1,4 @@
 import { customAlphabet } from "nanoid";
-import * as yup from 'yup';
 import bcrypt from "bcrypt";
 import {Op} from 'sequelize'
 
