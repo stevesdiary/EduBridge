@@ -36,6 +36,14 @@ export interface UserRequest extends Request {
   };
 }
 
+export interface ResetPasswordData extends Request {
+  body:{
+    email: string;
+    password: string;
+    confirm_password: string;
+  }
+}
+
 export interface UpdateUserRequest extends Request {
   body: {
     first_name?: string;
@@ -49,6 +57,7 @@ export interface UpdateUserRequest extends Request {
 }
 
 import { Optional } from 'sequelize';
+import resetPassword from '../services/password.reset.service';
 
 export interface CourseAttributes {
   id?: string;
