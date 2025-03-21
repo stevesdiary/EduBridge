@@ -26,10 +26,10 @@ export const loginUser = async (email: string, password: string, res: Response) 
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'strict',
-            maxAge: 3600000, // 1 hour
+            // maxAge: 7200000, // 2 hours
         });
 
-        return { statusCode: 200, status: "success", message: "User logged in", data: { token } };
+        return { statusCode: 200, status: "success", message: `Welcome ${user.first_name}`, data: { token } };
     } catch (error) {
         throw error;
     }

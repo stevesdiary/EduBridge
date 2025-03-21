@@ -4,6 +4,7 @@ import { courseCreationSchema, idSchema, searchSchema, courseStatusSchema } from
 import { CourseCreationData, ApiResponse, CourseResponse } from '../types/type';
 import courseService from '../services/course.service';
 import { CourseStatus, Category } from '../models/course.model';
+import { title } from 'process';
 
 
 const courseController = {
@@ -52,7 +53,7 @@ const courseController = {
     try {
       // const searchData = await searchSchema.validate(req.body, { abortEarly: false });
       const searchData = {
-        category: req.query.title as string || '',
+        search: req.query.search as string || '',
         page: parseInt(req.query.page as string) || 1,
         limit: parseInt(req.query.limit as string) || 10
       }; 

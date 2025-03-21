@@ -8,7 +8,6 @@ import {
 } from 'sequelize-typescript';
 import { Module } from '../models/module.model';
 import { Enrollment } from './enrollment.model';
-import { Reference } from 'yup';
 
 export enum DifficultyLevel {
   beginner = 'beginner', 
@@ -25,9 +24,9 @@ export enum CourseStatus {
 
 export enum Category {
   soft_skill = 'soft_skill',
-  curriculum = 'curriculum',
-  digital_skill = 'digital_skill',
-  exam_preparation = 'exam_preparation'
+  primary = 'primary',
+  secondary = 'secondary',
+  // exam_preparation = 'exam_preparation'
 }
 
 @Table({

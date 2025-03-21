@@ -33,14 +33,9 @@ async function initializeRedisConnection(): Promise<Redis> {
       }
     });
 
-    // Connection event handlers
     redisClient.on('connect', () => {
       console.log('Redis connected successfully');
     });
-
-    // redisClient.on('ready', () => {
-      
-    // });
 
     redisClient.on('error', (err) => {
       console.error('Redis client error:', err);
@@ -54,13 +49,13 @@ async function initializeRedisConnection(): Promise<Redis> {
       console.log(`Redis client reconnecting in ${delay}ms`);
     });
 
-    const shutdownSignals: NodeJS.Signals[] = ['SIGTERM', 'SIGINT', 'SIGUSR2'];
-    shutdownSignals.forEach(signal => {
-      process.once(signal, async () => {
-        console.log(`Received ${signal}, initiating graceful shutdown...`);
-        await gracefulShutdown();
-      });
-    });
+    // const shutdownSignals: NodeJS.Signals[] = ['SIGTERM', 'SIGINT', 'SIGUSR2'];
+    // shutdownSignals.forEach(signal => {
+    //   process.once(signal, async () => {
+    //     console.log(`Received ${signal}, initiating graceful shutdown...`);
+    //     await gracefulShutdown();
+    //   });
+    // });
   }
 
   return redisClient;
