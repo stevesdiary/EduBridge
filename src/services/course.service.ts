@@ -38,7 +38,7 @@ const courseService = {
         title: course.title || '',
         description: course.description || '',  // Provide default value if undefined
         category: course.category || '',
-        // difficulty_level: course.difficulty_level,
+        subject: course.subject || '',
         instructor: course.instructor || '',
         createdAt: course.createdAt,
         updatedAt: course.updatedAt
@@ -58,9 +58,9 @@ const courseService = {
   getCourses: async (SearchData: SearchData) => {
     try {
       const courses = await Course.findAll( {
-        where : { subject : { [Op.like]: `%${SearchData.subject}%` } },
+        where : { title : { [Op.iLike]: `%${SearchData.title}%` } },
       });
-      if (! courseService || courses.length === 0) {
+      if (! courses || courses.length === 0) {
         return {
           statusCode: 404,
           status: 'fail',
@@ -76,14 +76,14 @@ const courseService = {
       };      
     } catch (error) { 
       console.error('Error in get course service:', error);
-      throw new Error('Failed to fetch courses');
+      throw error;
     }
   },
 
   getCoursesByCategory: async (SearchData: SearchData) => {
     try {
       const categories = await Course.findAll({
-        where : { subject : { [Op.like]: `%${SearchData.category}%` } },
+        where : { category : { [Op.like]: `%${SearchData.category}%` } },
       });
       if (!Course || Course.length === 0) {
         return {
@@ -100,16 +100,26 @@ const courseService = {
     }
   },
 
-  getCoursesBySubject: async (subject: string) => {
+  getCoursesBySubject: async () => {
     try {
+      // const subjects = await Course.findAll({
+      //   attributes: [
+      //     [Sequelize.fn('DISTINCT', Sequelize.col('subject')), 'subject']
+      //   ],
+      //   where: {
+      //     subject: {
+      //       [Op.not]: null  // Use Sequelize.Op.not to exclude null values
+      //     }
+      //   },
+      //   raw: true
+      // }).then(results => 
+      //   results.map(result => result.subject)
+      // );
       const subjects = await Course.findAll({
-        attributes: [
-          [Sequelize.fn('DISTINCT', Sequelize.col('subject')), 'subject']
-        ],
+        attributes: ['subject'],
+        group: ['subject'],
         raw: true
-      }).then(results => 
-          results.map(result => result.subject).filter(Boolean)
-        );
+      });
         
       return subjects;
     } catch (error) {
