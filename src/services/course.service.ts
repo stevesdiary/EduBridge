@@ -3,10 +3,10 @@ import { Op } from 'sequelize';
 import { Module } from '../models/module.model';
 import { User } from '../models/user.model';
 import { Course } from '../models/course.model';
-// import { CourseCreateDTO, CourseStatus, CourseResponse, ApiResponse } from '../types/type';
+// import { CourseCreateDTO, CourseStatus, CourseResponse, ApiResponse, SearchData } from '../types/type';
 import { Profile } from '../models/profile.model';
 import { Sequelize, Model, DataTypes } from 'sequelize';
-import { ApiResponse, CourseCreationData, SearchData, CourseResponse } from '../types/type';
+import { ApiResponse, CourseCreationData, SearchData,  Search, CourseResponse } from '../types/type';
 import sequelize from '../core/database';
 
 
@@ -55,10 +55,14 @@ const courseService = {
     }
   },
 
-  getCourses: async (SearchData: SearchData) => {
+  getCourses: async (Search: Search) => {
     try {
       const courses = await Course.findAll( {
-        where : { title : { [Op.iLike]: `%${SearchData.title}%` } },
+        where : {[Op.or]: [
+          { title : { [Op.iLike]: `%${Search.search}%` } },
+          { category : { [Op.iLike]: `%${Search.search}%` } },
+          { subject : { [Op.iLike]: `%${Search.search}%` } },
+        ]}
       });
       if (! courses || courses.length === 0) {
         return {
