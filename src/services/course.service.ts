@@ -5,6 +5,7 @@ import { User } from '../models/user.model';
 import { Course } from '../models/course.model';
 // import { CourseCreateDTO, CourseStatus, CourseResponse, ApiResponse } from '../types/type';
 import { Profile } from '../models/profile.model';
+import { Sequelize, Model, DataTypes } from 'sequelize';
 import { ApiResponse, CourseCreationData, SearchData, CourseResponse } from '../types/type';
 import sequelize from '../core/database';
 
@@ -37,7 +38,7 @@ const courseService = {
         title: course.title || '',
         description: course.description || '',  // Provide default value if undefined
         category: course.category || '',
-        // difficulty_level: course.difficulty_level,
+        subject: course.subject || '',
         instructor: course.instructor || '',
         createdAt: course.createdAt,
         updatedAt: course.updatedAt
@@ -56,8 +57,10 @@ const courseService = {
 
   getCourses: async (SearchData: SearchData) => {
     try {
-      const courses = await Course.findAll();
-      if (! courseService || courses.length === 0) {
+      const courses = await Course.findAll( {
+        where : { title : { [Op.iLike]: `%${SearchData.title}%` } },
+      });
+      if (! courses || courses.length === 0) {
         return {
           statusCode: 404,
           status: 'fail',
@@ -73,7 +76,55 @@ const courseService = {
       };      
     } catch (error) { 
       console.error('Error in get course service:', error);
-      throw new Error('Failed to fetch courses');
+      throw error;
+    }
+  },
+
+  getCoursesByCategory: async (SearchData: SearchData) => {
+    try {
+      const categories = await Course.findAll({
+        where : { category : { [Op.like]: `%${SearchData.category}%` } },
+      });
+      if (!Course || Course.length === 0) {
+        return {
+          statusCode: 404,
+          status: 'fail',
+          message: 'No course found',
+          data: null,
+        };        
+      }
+      return categories;
+    } catch (error) {
+      console.error('Error fetching unique categories:', error);
+      throw error;
+    }
+  },
+
+  getCoursesBySubject: async () => {
+    try {
+      // const subjects = await Course.findAll({
+      //   attributes: [
+      //     [Sequelize.fn('DISTINCT', Sequelize.col('subject')), 'subject']
+      //   ],
+      //   where: {
+      //     subject: {
+      //       [Op.not]: null  // Use Sequelize.Op.not to exclude null values
+      //     }
+      //   },
+      //   raw: true
+      // }).then(results => 
+      //   results.map(result => result.subject)
+      // );
+      const subjects = await Course.findAll({
+        attributes: ['subject'],
+        group: ['subject'],
+        raw: true
+      });
+        
+      return subjects;
+    } catch (error) {
+      console.error('Error fetching unique subjects:', error);
+      throw error;
     }
   },
 

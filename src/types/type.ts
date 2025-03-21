@@ -18,12 +18,12 @@ export interface UserData extends Omit<UserAttributes, 'id'> {
 export interface CourseResponse {
   id: string;
   title: string;
-  description: string;  // Note: Required field
+  description: string | null;
+  subject: string;
+  instructor: string | null;
   category: string;
-  // difficulty_level: DifficultyLevel;
-  instructor: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface UserRequest extends Request {
@@ -47,11 +47,7 @@ export interface UpdateUserRequest extends Request {
 
   };
 }
-// export enum DifficultyLevel {
-//   BEGINNER = 'BEGINNER',
-//   INTERMEDIATE = 'INTERMEDIATE',
-//   ADVANCED = 'ADVANCED'
-// }
+
 import { Optional } from 'sequelize';
 
 export interface CourseAttributes {
@@ -66,7 +62,12 @@ export interface CourseAttributes {
 
 export type CourseCreationData = Optional<CourseAttributes, 'id' | 'createdAt' | 'updatedAt'>;
 
-
+export interface ApiResponse<T> {
+  statusCode: number;
+  status: 'success' | 'error' | 'fail';
+  message: string;
+  data: T | null;
+}
 
 export interface VerifyRequest extends Request {
   body: {
@@ -154,7 +155,9 @@ export interface JwtPayload {
 }
 
 export interface SearchData {
-  search?: string;
+  title?: string;
+  subject?: string;
+  category: string;
   page: number;
   limit: number;
 }

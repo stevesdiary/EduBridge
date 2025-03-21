@@ -1,3 +1,30 @@
+// {
+//   "compilerOptions": {
+//     "target": "es2017",
+//     "module": "commonjs",
+//     "outDir": "./dist",
+//     "rootDir": "./src",
+//     "strict": true,
+//     "esModuleInterop": true,
+//     "skipLibCheck": true,
+//     "forceConsistentCasingInFileNames": true,
+//     "declaration": true,
+//     "declarationDir": "./types",
+//     "removeComments": true
+//   },
+//   "include": ["src/**/*"],
+//   "exclude": [
+//     "node_modules",
+//     "dist",
+//     "build",
+//     "types",
+//     "**/*.spec.ts",
+//     "**/*.test.ts"
+//   ]
+// }
+
+
+
 {
   "compilerOptions": {
     "module": "commonjs",
@@ -21,6 +48,10 @@
     "typeRoots": ["node_modules/@types", "src/@types", "./types"]
   },
   "include": ["src/**/*"],
-  "exclude": ["dist", "node_modules"],
+  "exclude": [
+    "dist",
+    "build",
+    "node_modules"
+  ],
   "lib": ["es2015"]
 }
