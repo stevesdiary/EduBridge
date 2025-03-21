@@ -162,6 +162,12 @@ export interface SearchData {
   limit: number;
 }
 
+export interface Search {
+  search?: string;
+  page: number;
+  limit: number;
+}
+
 export interface PaginatedResponse<T> {
   status: string;
   data: T[];

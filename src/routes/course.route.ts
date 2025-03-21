@@ -22,7 +22,7 @@ courseRouter.get('/by-subject', async (req: ExpressRequest, res: Response) => {
   await courseController.getBySubject(req, res);
 })
 
-courseRouter.get('/all/:search', 
+courseRouter.get('/all', 
   // authentication, 
   // checkRole(['user', 'admin']), 
   async (req: ExpressRequest, res: Response) => {

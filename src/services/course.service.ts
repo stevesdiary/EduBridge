@@ -57,14 +57,23 @@ const courseService = {
 
   getCourses: async (Search: Search) => {
     try {
-      const courses = await Course.findAll( {
-        where : {[Op.or]: [
-          { title : { [Op.iLike]: `%${Search.search}%` } },
-          { category : { [Op.iLike]: `%${Search.search}%` } },
-          { subject : { [Op.iLike]: `%${Search.search}%` } },
-        ]}
+      const whereCondition: any = {};
+
+      if (Search.search) {
+        whereCondition[Op.or] = [
+          { title: { [Op.iLike]: `%${Search.search}%` } },
+          { description: { [Op.iLike]: `%${Search.search}%` } },
+        ];
+      }
+      
+      const courses = await Course.findAndCountAll({
+        where: whereCondition,
+        limit: Search.limit,
+        offset: (Search.page - 1) * Search.limit,
+        order: [['createdAt', 'DESC']] // Optional: sort by most recent
       });
-      if (! courses || courses.length === 0) {
+
+      if (!courses.rows.length) {
         return {
           statusCode: 404,
           status: 'fail',
@@ -72,11 +81,17 @@ const courseService = {
           data: null,
         };        
       }
+
       return {
         statusCode: 200,
         status: 'success',
         message: 'Courses fetched from database',
-        data: courses,
+        data: {
+          courses: courses.rows,
+          totalCourses: courses.count,
+          currentPage: Search.page,
+          totalPages: Math.ceil(courses.count / Search.limit)
+        },
       };      
     } catch (error) { 
       console.error('Error in get course service:', error);
