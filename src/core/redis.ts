@@ -33,14 +33,9 @@ async function initializeRedisConnection(): Promise<Redis> {
       }
     });
 
-    // Connection event handlers
     redisClient.on('connect', () => {
       console.log('Redis connected successfully');
     });
-
-    // redisClient.on('ready', () => {
-      
-    // });
 
     redisClient.on('error', (err) => {
       console.error('Redis client error:', err);
