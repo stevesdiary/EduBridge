@@ -58,6 +58,28 @@ export const userUpdateSchema = yup.object().shape({
 
 });
 
+export const passwordResetSchema = yup.object().shape({
+  email: yup
+    .string()
+    .trim()
+    .required('Email is required')
+    .email('Invalid email format'),
+  
+  password: yup
+    .string()
+    .required('Password is required')
+    .min(8, 'Password must be at least 8 characters')
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])[A-Za-z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,}$/,
+      'Password must include uppercase, lowercase, number, and special character'
+    ),
+  
+  confirm_password: yup
+    .string()
+    .required('Confirm Password is required')
+    .oneOf([yup.ref('password')], 'Passwords must match')
+});
+
 export const loginSchema = yup.object().shape({
   email: yup.string().email('Invalid email format').required('Email is required'),
   password: yup.string().required('Password is required'),
