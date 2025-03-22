@@ -63,15 +63,15 @@ courseRouter.get('/soft-skills',
 })
 
 courseRouter.put('/update/:id', 
-  authentication, 
-  checkRole(['professional', 'admin', 'moderator']), 
+  // authentication, 
+  // checkRole(['professional', 'admin', 'moderator']), 
   async (req: ExpressRequest, res: Response) => {
   await courseController.updateCourse(req, res);
 })
 
 courseRouter.delete('/delete', 
-  authentication, 
-  checkRole(['admin']), 
+  // authentication, 
+  // checkRole(['admin']), 
   async (req: ExpressRequest, res: Response) => {
   await courseController.deleteCourseRecord(req, res);
 })

@@ -129,14 +129,31 @@ const courseController = {
         page: parseInt(req.query.page as string) || 1,
         limit: parseInt(req.query.limit as string) || 10
       }
-      
+
       const courses = await courseService.getPrimaryCourses(searchData);
-      return {
-        statusCode: courses.statusCode,
-        status: courses.status,
-        message: courses.message,
-        data: courses.data
-      };
+      if (Array.isArray(courses)) {
+        const transformedCourses = courses.map(course => ({
+          ...course,
+          description: course.description || ''
+        }));
+        return res.status(200).json({
+          status: 'success',
+          message: 'Courses retrieved successfully',
+          data: transformedCourses
+        });
+      }
+      if (courses && typeof courses === 'object' && 'statusCode' in courses) {
+        return res.status(courses.statusCode).json({
+          status: courses.status,
+          message: courses.message,
+          data: courses.data
+        });
+      }
+      return res.status(500).json({
+        status: 'error',
+        message: 'Invalid response format',
+        data: null
+      });
   } catch (error) {
       console.error('Error', error);
       return res.status(500).json({
