@@ -245,7 +245,8 @@ const courseService = {
         data: getOne
       }
     } catch (error) {
-      
+      console.log('Error fetching course record', error);
+      throw error;
     }
   },
 

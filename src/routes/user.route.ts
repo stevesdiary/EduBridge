@@ -46,6 +46,13 @@ userRouter.put('/update/:id',
   await userController.updateUser(req, res);
 })
 
+userRouter.put('/update',
+  authentication,
+  // checkRole(['admin']),
+  async (req: ExpressRequest, res: Response) => {
+  await userController.updateUserRole(req, res);
+})
+
 userRouter.delete('/delete/:id', 
   authentication,
   checkRole(['admin']), 

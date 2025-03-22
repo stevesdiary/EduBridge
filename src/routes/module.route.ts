@@ -2,7 +2,7 @@ import { Router, Request as ExpressRequest, Response } from "express";
 
 import { checkRole } from "../middlewares/authorisation";
 import authentication from "../middlewares/authentication";
-import { moduleController } from '../controllers/module.controller';
+import moduleController from '../controllers/module.controller';
 const moduleRouter = Router()
 
 moduleRouter.post('/register',
@@ -25,14 +25,14 @@ moduleRouter.get('/one/:id',
   await moduleController.getModuleById(req, res);
 })
 moduleRouter.put('/update/:id', 
-  // authentication,
-  // checkRole(['admin']),
+  authentication,
+  checkRole(['admin']),
   async (req: ExpressRequest, res: Response) => {
   await moduleController.updateModule(req, res);
 })
 moduleRouter.delete('/delete/:id', 
-  // authentication,
-  // checkRole(['admin']),
+  authentication,
+  checkRole(['admin']),
   async (req: ExpressRequest, res: Response) => {
   await moduleController.deleteModule(req, res);
 })

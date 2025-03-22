@@ -8,7 +8,7 @@ const lessonService = {
       const existingLesson = await Lesson.findOne({
         where: {
           title: lessonData.title,
-          description: lessonData.description,
+          // description: lessonData.description,
           moduleId: lessonData.moduleId
         }
       });
