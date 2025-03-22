@@ -135,29 +135,12 @@ const courseController = {
         return ("category is required")
       }
       const courses = await courseService.getPrimaryCourses(searchData);
-      if (Array.isArray(courses)) {
-        const transformedCourses = courses.map(course => ({
-          ...course,
-          description: course.description || ''
-        }));
-        return res.status(200).json({
-          status: 'success',
-          message: 'Courses retrieved successfully',
-          data: transformedCourses
-        });
-      }
-      if (courses && typeof courses === 'object' && 'statusCode' in courses) {
-        return res.status(courses.statusCode).json({
-          status: courses.status,
-          message: courses.message,
-          data: courses.data
-        });
-      }
-      return res.status(500).json({
-        status: 'error',
-        message: 'Invalid response format',
-        data: null
-      });
+      return {
+        statusCode: courses.statusCode,
+        status: courses.status,
+        message: courses.message,
+        data: courses.data
+      };
   } catch (error) {
       console.error('Error', error);
       return res.status(500).json({
