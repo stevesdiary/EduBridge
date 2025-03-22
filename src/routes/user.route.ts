@@ -40,8 +40,8 @@ userRouter.get('/one/:id',
 });
 
 userRouter.put('/update/:id',
-  // authentication,
-  // checkRole(['admin']),
+  authentication,
+  checkRole(['admin']),
   async (req: ExpressRequest, res: Response) => {
   await userController.updateUser(req, res);
 })
