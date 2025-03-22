@@ -8,8 +8,8 @@ import authentication from '../middlewares/authentication';
 const courseRouter = Router();
 
 courseRouter.post('/create', 
-  // authentication, 
-  // checkRole(['professional', 'admin']), 
+  authentication, 
+  checkRole(['professional', 'admin']), 
   async (req: ExpressRequest, res: Response) => {
   await courseController.createCourse(req, res);
 })
@@ -23,29 +23,50 @@ courseRouter.get('/by-subject', async (req: ExpressRequest, res: Response) => {
 })
 
 courseRouter.get('/all', 
-  // authentication, 
-  // checkRole(['user', 'admin']), 
+  authentication, 
+  checkRole(['user', 'admin', 'student']), 
   async (req: ExpressRequest, res: Response) => {
   await courseController.getAllCourses(req, res);
 })
 
 courseRouter.get('/one/:id', 
-  // authentication, 
-  // checkRole(['user', 'admin']), 
+  authentication, 
+  checkRole(['user', 'admin', 'student']), 
   async (req: ExpressRequest, res: Response) => {
   await courseController.getOneCourse(req, res);
 })
 
-courseRouter.put('/update/:id', 
+courseRouter.get('/primary', 
+  authentication, 
+  checkRole(['user', 'admin', 'student']), 
+  async (req: ExpressRequest, res: Response) => {
+  await courseController.primaryCourses(req, res);
+})
+
+courseRouter.get('/secondary', 
   // authentication, 
-  // checkRole(['professional', 'admin']), 
+  // checkRole(['user', 'admin']), 
+  async (req: ExpressRequest, res: Response) => {
+  await courseController.secondaryCourses(req, res);
+})
+
+courseRouter.get('/soft-skills', 
+  // authentication, 
+  // checkRole(['user', 'admin']), 
+  async (req: ExpressRequest, res: Response) => {
+  await courseController.softSkills(req, res);
+})
+
+courseRouter.put('/update/:id', 
+  authentication, 
+  checkRole(['professional', 'admin', 'moderator']), 
   async (req: ExpressRequest, res: Response) => {
   await courseController.updateCourse(req, res);
 })
 
 courseRouter.delete('/delete', 
-  // authentication, 
-  // checkRole(['admin']), 
+  authentication, 
+  checkRole(['admin']), 
   async (req: ExpressRequest, res: Response) => {
   await courseController.deleteCourseRecord(req, res);
 })
