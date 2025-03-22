@@ -6,7 +6,7 @@ import { Course } from '../models/course.model';
 // import { CourseCreateDTO, CourseStatus, CourseResponse, ApiResponse, SearchData } from '../types/type';
 import { Profile } from '../models/profile.model';
 import { Sequelize, Model, DataTypes } from 'sequelize';
-import { ApiResponse, CourseCreationData, SearchData,  Search, CourseResponse } from '../types/type';
+import { ApiResponse, CourseCreationData, SearchData,  Search, CourseResponse, GetGroupedCourses } from '../types/type';
 import sequelize from '../core/database';
 
 
@@ -112,9 +112,89 @@ const courseService = {
           data: null,
         };        
       }
-      return categories;
+      return {
+        statusCode: 200,
+        status: 'success',
+        message: 'Courses retrieved ',
+        data: categories
+      };
     } catch (error) {
       console.error('Error fetching unique categories:', error);
+      throw error;
+    }
+  },
+
+  getPrimaryCourses: async (SearchData: GetGroupedCourses) => {
+    try {
+      const primary = await Course.findAll({
+        where : { category : { [Op.eq]: 'primary' } },
+      });
+      if (!primary || primary.length === 0) {
+        return {
+          statusCode: 404,
+          status: 'fail',
+          message: 'No course found',
+          data: null,
+        };        
+      }
+      return {
+        statusCode: 200,
+        status: 'success',
+        message: 'Primary courses retrieved ',
+        data: primary
+      };
+    } catch (error) {
+      console.error('Error fetching primary courses:', error);
+      throw error;
+    }
+  },
+
+  getSecondaryCourses: async (SearchData: GetGroupedCourses) => {
+    try {
+      const secondary = await Course.findAll({
+        where : { category : { [Op.eq]: 'secondary' } },
+      });
+      if (!secondary || secondary.length === 0) {
+        return {
+          statusCode: 404,
+          status: 'fail',
+          message: 'No course found',
+          data: null,
+        };        
+      }
+      return {
+        statusCode: 200,
+        status: 'success',
+        message: 'Secondary courses retrieved ',
+        data: secondary
+      };
+    } catch (error) {
+      console.error('Error fetching secondary courses:', error);
+      throw error;
+    }
+  },
+
+  getSoftSkills: async (SearchData: GetGroupedCourses) => {
+    try {
+      const softSkills = await Course.findAll({
+        where : { category : { [Op.eq]: 'soft_skill' } },
+      });
+      if (!softSkills || softSkills.length === 0) {
+        return {
+          statusCode: 404,
+          status: 'fail',
+          message: 'No course found',
+          data: null,
+        };        
+      }
+      return {
+        statusCode: 200,
+        status: 'success',
+        message: 'Soft skills retrieved ',
+        data: softSkills
+      };
+    } catch (error) {
+      console.error('Error fetching usoft skills:', error);
       throw error;
     }
   },
