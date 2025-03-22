@@ -33,22 +33,22 @@ userRouter.get('/all',
 });
 
 userRouter.get('/one/:id', 
-  authentication,
-  checkRole(['admin', 'user', 'student']), 
+  // authentication,
+  // checkRole(['admin', 'user', 'student']), 
   async (req: ExpressRequest, res: Response) => {
   await userController.getOneUser(req, res);
 });
 
 userRouter.put('/update/:id',
-  // authentication,
-  // checkRole(['admin']),
+  authentication,
+  checkRole(['admin']),
   async (req: ExpressRequest, res: Response) => {
   await userController.updateUser(req, res);
 })
 
 userRouter.delete('/delete/:id', 
-  // authentication,
-  // checkRole(['admin']), 
+  authentication,
+  checkRole(['admin']), 
   async (req: ExpressRequest, res: Response) => {
   await userController.deleteUser(req, res);
 })
