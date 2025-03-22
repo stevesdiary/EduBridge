@@ -171,6 +171,14 @@ export interface SearchData {
   limit: number;
 }
 
+export interface GetGroupedCourses {
+  primary?: string;
+  secondary?: string;
+  'soft_skill'?: string;
+  page: number;
+  limit: number;
+}
+
 export interface Search {
   search?: string;
   page: number;
