@@ -28,7 +28,7 @@ const lessonController = {
         content: validatedData.content || '',
         moduleId: validatedData.moduleId || '',
         instructor: validatedData.instructor,
-        resourceUrl:'resourceurl.com'
+        resourceUrl: validatedData.resourceUrl
       };
   
       const result = await lessonService.createLesson(lessonData);
