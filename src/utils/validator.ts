@@ -46,16 +46,13 @@ export const userRegistrationSchema = yup.object().shape({
 
 export const idSchema = yup.string().uuid().required('Id is required');
 
-export const userUpdateSchema = yup.object().shape({
-  // name: yup.string().optional(),
-  // email: yup.string().email('Invalid email format').optional(),
-  password: yup.string().trim()
-  .min(6, 'Password must be at least 6 characters')
-  .optional(),
-  confirm_password: yup.string()
-  .min(6, 'Password must be at least 6 characters')
-  .oneOf([yup.ref('password')], 'Passwords must match')
 
+
+export const userUpdateSchema = yup.object().shape({
+  role: yup.string().optional(),
+  first_name: yup.string().optional(),
+  last_name: yup.string().optional(),
+  username: yup.string().optional()
 });
 
 export const passwordResetSchema = yup.object().shape({
@@ -99,9 +96,8 @@ export const userVerificationSchema = yup.object().shape({
     .length(6, 'Verification code must be 6 digits')
 });
 
-export const emailSchema = yup.object().shape({
-  email: yup.string().email('Invalid email format').required('Email is required')
-});
+export const emailSchema = yup.string().email('Invalid email format').required('Email is required');
+
 
 export const courseCreationSchema = yup.object().shape({
   title: yup.string().required('Title is required'),
@@ -147,7 +143,7 @@ export const updateEnrollmentSchema = yup.object().shape({
 
 export const lessonCreationSchema = yup.object().shape({
   title: yup.string().required('Title is required'),
-  description: yup.string().min(5).required('Description is required'),
+  // description: yup.string().min(5).required('Description is required'),
   content: yup.string().min(3).required('Content is required'),
   moduleId: yup.string().required('Module Id is required'),
   courseId: yup.string(),

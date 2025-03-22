@@ -83,6 +83,39 @@ export const updateUser = async (
       };
     }
     const updatedUser = await user.update(userData);
+    const { password, ...data } = updatedUser.toJSON();
+    return {
+      statusCode: 200,
+      status: "success",
+      message: "User updated",
+      data: data
+    };
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateUserRole = async (
+  id: string,
+  userData: CreationAttributes<User>
+) => {
+  try {
+    const user = await User.findOne({
+      where: { email: userData.email },
+      attributes: {
+        exclude: ["password", "createdAt", "updatedAt"],
+      }
+    });
+
+    if (!user) {
+      return {
+        statusCode: 404,
+        status: "fail",
+        message: "User not found",
+        data: [],
+      };
+    }
+    const updatedUser = await user.update(userData);
     return {
       statusCode: 200,
       status: "success",

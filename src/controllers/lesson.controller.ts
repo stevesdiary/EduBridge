@@ -20,11 +20,10 @@ const lessonController = {
         abortEarly: false,
         stripUnknown: true
       });
-      // const validatedData = req.body;
       
       const lessonData: LessonCreationData = {
         title: validatedData.title,
-        description: validatedData.description,
+        // description: validatedData.description,
         content: validatedData.content || '',
         moduleId: validatedData.moduleId || '',
         instructor: validatedData.instructor,

@@ -4,7 +4,6 @@ import {
   Model, 
   DataType, 
   HasMany,
-  ForeignKey
 } from 'sequelize-typescript';
 import { Module } from '../models/module.model';
 import { Enrollment } from './enrollment.model';
@@ -26,7 +25,7 @@ export enum Category {
   soft_skill = 'soft_skill',
   primary = 'primary',
   secondary = 'secondary',
-  // exam_preparation = 'exam_preparation'
+  exam_preparation = 'exam_preparation'
 }
 
 @Table({

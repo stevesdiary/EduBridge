@@ -3,16 +3,17 @@ import { moduleService } from '../services/module.service';
 import { CreateModuleDto, UpdateModuleDto } from '../dtos/module.dto';
 import { ApiResponse } from '../types/type';
 
-export class ModuleController {
-  async createModule(req: Request, res: Response): Promise<void> {
+
+const moduleController = {
+  async createModule(req: Request, res: Response) {
     try {
       const moduleData: CreateModuleDto = req.body;
       const result = await moduleService.createModule(moduleData);
       
-      res.status(201).json({
-        status: 'success',
-        message: 'Module created successfully',
-        data: result
+      return res.status(result.statusCode).json({
+        status: result.status,
+        message: result.message,
+        data: result.data
       });
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
@@ -21,9 +22,9 @@ export class ModuleController {
         message: errorMessage 
       });
     }
-  }
+  },
 
-  async getAllModules(req: Request, res: Response): Promise<void> {
+  async getAllModules(req: Request, res: Response) {
     try {
       const page = Number(req.query.page) || 1;
       const limit = Number(req.query.limit) || 10;
@@ -31,7 +32,7 @@ export class ModuleController {
       
       const result = await moduleService.getAllModules(page, limit, course_id);
       
-      res.status(200).json(result);
+      res.status(result.statusCode).json(result);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
       res.status(500).json({ 
@@ -39,7 +40,7 @@ export class ModuleController {
         message: errorMessage 
       });
     }
-  }
+  },
 
   async getModuleById(req: Request, res: Response): Promise<void> {
     try {
@@ -65,7 +66,7 @@ export class ModuleController {
         message: errorMessage 
       });
     }
-  }
+  },
 
   async updateModule(req: Request, res: Response): Promise<void> {
     try {
@@ -82,10 +83,10 @@ export class ModuleController {
         return;
       }
       
-      res.status(200).json({
+      res.status(updatedModule.statusCode).json({
         status: 'success',
-        message: 'Module updated successfully',
-        data: updatedModule
+        message: updatedModule.message,
+        data: updatedModule.data
       });
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
@@ -94,7 +95,7 @@ export class ModuleController {
         message: errorMessage 
       });
     }
-  }
+  },
 
   async deleteModule(req: Request, res: Response): Promise<void> {
     try {
@@ -115,4 +116,4 @@ export class ModuleController {
   }
 }
 
-export const moduleController = new ModuleController();
+export default moduleController;

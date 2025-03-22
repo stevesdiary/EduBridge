@@ -74,9 +74,9 @@ const userRegistration = {
 
   resendCode: async (req: UserRequest, res: Response): Promise<Response> => {
     try {
-      const emailPayload = await emailSchema.validate(req.body, { abortEarly: false });
+      const emailPayload = await emailSchema.validate(req.body.email, { abortEarly: false });
       
-      const resend = await resendCode(emailPayload.email);
+      const resend = await resendCode(emailPayload);
       
       return res.status(resend.statusCode).send({ 
         status: 'success', 

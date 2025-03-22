@@ -1,5 +1,5 @@
-import { deleteUser, getAllUsers, getOneUser, updateUser } from '../services/user.service';
-import { idSchema, userUpdateSchema } from '../utils/validator';
+import { deleteUser, getAllUsers, getOneUser, updateUser, updateUserRole } from '../services/user.service';
+import { emailSchema, idSchema, userUpdateSchema } from '../utils/validator';
 import { UserResponseData } from '../types/type';
 import { Response, Request as ExpressRequest } from 'express';
 
@@ -47,6 +47,19 @@ const UserController = {
       const id = req.params.id;
       const validatedData = await userUpdateSchema.validate(req.body, req.params);
       const update = await updateUser( id, validatedData);
+      return res.status(update.statusCode).send({ status: (update.status), message: (update.message), data: (update.data)})
+    } catch (error) {
+      return res.status(500).send({
+        error: error
+      });
+    }
+  },
+
+  updateUserRole: async (req: ExpressRequest, res: Response): Promise<Response> => {
+    try {
+      const email = await emailSchema.validate(req.body.email);
+      const validatedData = await userUpdateSchema.validate(req.body, req.params);
+      const update = await updateUserRole(email, validatedData);
       return res.status(update.statusCode).send({ status: (update.status), message: (update.message), data: (update.data)})
     } catch (error) {
       return res.status(500).send({

@@ -20,7 +20,9 @@ class ModuleService {
         dateAdded: new Date(),
         resourceUrl: moduleData.resourceUrl || 'https://resourceurl.com'
       });
-      
+      if (!module) {
+        throw new Error('Module creation failed');
+      }
       return {
         statusCode: 201,
         status: 'success',

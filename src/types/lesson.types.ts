@@ -1,7 +1,7 @@
 import { Optional } from 'sequelize';
 export interface LessonCreationData {
   title: string;
-  description: string;
+  // description: string;
   content: string;
   moduleId: string;
   instructor?: string;
@@ -11,7 +11,7 @@ export interface LessonCreationData {
 export interface LessonAttributes {
   id: string;
   title: string;
-  description: string;
+  // description: string;
   content: string;
   moduleId: string;
   instructor?: string;
