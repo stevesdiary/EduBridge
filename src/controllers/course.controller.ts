@@ -125,15 +125,11 @@ const courseController = {
   },
   primaryCourses: async (req: ExpressRequest, res: Response) => {
     try {
-      const category = req.query.category as string;
       const searchData = {
         page: parseInt(req.query.page as string) || 1,
         limit: parseInt(req.query.limit as string) || 10
       }
       
-      if(!category) {
-        return ("category is required")
-      }
       const courses = await courseService.getPrimaryCourses(searchData);
       return {
         statusCode: courses.statusCode,

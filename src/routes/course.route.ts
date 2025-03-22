@@ -7,57 +7,57 @@ import authentication from '../middlewares/authentication';
 const courseRouter = Router();
 
 courseRouter.post('/create', 
-  authentication, 
-  checkRole(['professional', 'admin']), 
+  // authentication, 
+  // checkRole(['professional', 'admin']), 
   async (req: ExpressRequest, res: Response) => {
   await courseController.createCourse(req, res);
 })
 
 courseRouter.get('/by-category', 
-  authentication, 
-  checkRole(['professional', 'admin', 'moderator', 'student']),
+  // authentication, 
+  // checkRole(['professional', 'admin', 'moderator', 'student']),
   async (req: ExpressRequest, res: Response) => {
   await courseController.getByCategories(req, res);
 })
 
 courseRouter.get('/by-subject', 
-  authentication, 
-  checkRole(['professional', 'admin', 'moderator', 'student']),
+  // authentication, 
+  // checkRole(['professional', 'admin', 'moderator', 'student']),
   async (req: ExpressRequest, res: Response) => {
   await courseController.getBySubject(req, res);
 })
 
 courseRouter.get('/all', 
-  authentication, 
-  checkRole(['professional', 'admin', 'moderator', 'student']), 
+  // authentication, 
+  // checkRole(['professional', 'admin', 'moderator', 'student']), 
   async (req: ExpressRequest, res: Response) => {
   await courseController.getAllCourses(req, res);
 })
 
 courseRouter.get('/one/:id', 
-  authentication, 
-  checkRole(['professional', 'admin', 'moderator', 'student']), 
+  // authentication, 
+  // checkRole(['professional', 'admin', 'moderator', 'student']), 
   async (req: ExpressRequest, res: Response) => {
   await courseController.getOneCourse(req, res);
 })
 
 courseRouter.get('/primary', 
-  authentication, 
-  checkRole(['professional', 'admin', 'moderator', 'student']), 
+  // authentication, 
+  // checkRole(['professional', 'admin', 'moderator', 'student']), 
   async (req: ExpressRequest, res: Response) => {
   await courseController.primaryCourses(req, res);
 })
 
 courseRouter.get('/secondary', 
-  authentication, 
-  checkRole(['professional', 'admin', 'moderator', 'student']), 
+  // authentication, 
+  // checkRole(['professional', 'admin', 'moderator', 'student']), 
   async (req: ExpressRequest, res: Response) => {
   await courseController.secondaryCourses(req, res);
 })
 
 courseRouter.get('/soft-skills', 
-  authentication, 
-  checkRole(['professional', 'admin', 'moderator', 'student']), 
+  // authentication, 
+  // checkRole(['professional', 'admin', 'moderator', 'student']), 
   async (req: ExpressRequest, res: Response) => {
   await courseController.softSkills(req, res);
 })
