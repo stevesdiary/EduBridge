@@ -131,38 +131,6 @@ export const searchSchema = yup.object({
   search: yup.string().optional()
 });
 
-export const doctorRegistrationSchema = yup.object().shape({
-  first_name: yup.string()
-    .min(3, 'First name must be at least 3 characters')
-    .required('First name is required'),
-  last_name: yup.string()
-    .min(3, 'Last name must be at least 3 characters')
-    .required('Last name is required'),
-  email: yup.string()
-    .email('Invalid email format')
-    .required('Email is required'),
-  phone: yup.string().optional(),
-  specialty: yup.string()
-    .required('Specialty is required'),
-  hospital_email: yup.string()
-    .required('Hospital email is required'),
-});
-export const doctorUpdateSchema = yup.object().shape({
-  first_name: yup.string()
-    .min(3, 'First name must be at least 3 characters')
-    .required('First name is required'),
-  last_name: yup.string()
-    .min(3, 'Last name must be at least 3 characters')
-    .required('Last name is required'),
-  email: yup.string()
-    .email('Invalid email format')
-    .required('Email is required'),
-  phone: yup.string().optional(),
-  specialty: yup.string()
-    .required('Specialty is required'),
-  hospital_email: yup.string()
-    .required('Hospital email is required'),
-});
 
 export const createEnrollmentSchema = yup.object().shape({
   userId: yup.string().uuid().required(),
@@ -179,9 +147,10 @@ export const updateEnrollmentSchema = yup.object().shape({
 
 export const lessonCreationSchema = yup.object().shape({
   title: yup.string().required('Title is required'),
-  description: yup.string().required('Description is required'),
-  content: yup.string(),
-  moduleId: yup.string(),
+  description: yup.string().min(5).required('Description is required'),
+  content: yup.string().min(3).required('Content is required'),
+  moduleId: yup.string().required('Module Id is required'),
   courseId: yup.string(),
-  instructor: yup.string()
+  instructor: yup.string().required('Instructor is required'),
+  resourceUrl: yup.string().url().optional()
 });
