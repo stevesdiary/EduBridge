@@ -2,6 +2,7 @@ export interface CreateEnrollmentDto {
   userId: string;
   courseId: string;
   status: 'ENROLLED' | 'COMPLETED' | 'WITHDRAWN';
+  userEmail: string;
 }
 
 export interface UpdateEnrollmentDto {

@@ -12,6 +12,7 @@ export class EnrollmentController {
         return;
       }
       const id  = req.user.id;
+      const userEmail = req.user.email;
       const enrollmentCreationData = await createEnrollmentSchema.validate(req.body);
       // if (enrollment.error) {
       //   res.status(400).json({ error: enrollment.error });
@@ -19,7 +20,8 @@ export class EnrollmentController {
       // }
       const enrollmentData: CreateEnrollmentDto = {
         ...enrollmentCreationData,
-        userId: id
+        userId: id,
+        userEmail: userEmail
       };
       const enrollment = await enrollmentService.createEnrollment(enrollmentData);
       
@@ -39,7 +41,8 @@ export class EnrollmentController {
         return;
       }
       const id  = req.user.id;
-      const enrollmentData: UpdateEnrollmentDto = req.body;
+      const userEmail = req.user.email;
+      const enrollmentData: UpdateEnrollmentDto = { userEmail, ...req.body};
       
       const enrollment = await enrollmentService.updateEnrollment((id), enrollmentData);
       
