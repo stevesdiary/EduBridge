@@ -38,9 +38,22 @@ class EnrollmentService {
 
   async updateEnrollment(id: string, enrollmentData: UpdateEnrollmentDto) {
     try {
-      // Implementation for updating enrollment
-      // You'll need to add your database logic here
-      return { id, ...enrollmentData };
+      const updateEnrolment = await Enrollment.update(enrollmentData, {
+        where: { id }
+      });
+      if(updateEnrolment[0] === 0 || !updateEnrolment) {
+        return {
+          statusCode: 404,
+          status: 'fail',
+          message: 'Enrollment not found',
+          data: null
+        };
+      }
+      return { statusCode: 200, 
+        status: 'success', 
+        message: 'Enrollment updated successfully', 
+        data: updateEnrolment 
+      };
     } catch (error) {
       throw error;
     }
@@ -64,7 +77,7 @@ class EnrollmentService {
           },
           {
             model: Course,
-            attributes: ['id', 'title', 'description']
+            attributes: ['id', 'title', 'description', 'category']
           }
         ]
       });
@@ -75,7 +88,7 @@ class EnrollmentService {
         statusCode: 200,
         status: 'success',
         message: 'Enrollments retrieved successfully',
-        data: rows.map(enrollment => enrollment.toJSON() as EnrollmentResponse)
+        data: rows.map(enrollment => enrollment.toJSON() as EnrollmentResponse),
       };
     } catch (error) {
       throw error;
@@ -85,18 +98,18 @@ class EnrollmentService {
   async findOneEnrollment(id: string): Promise<ApiResponse<EnrollmentResponse>> {
     try {
       const enrollment = await Enrollment.findByPk(id,
-      //   {
-      //   include: [
-      //     {
-      //       model: 'course',
-      //       attributes: ['id', 'title', 'description']
-      //     },
-      //     {
-      //       model: 'user',
-      //       attributes: ['id', 'name', 'email']
-      //     }
-      //   ]
-      // }
+        {
+        include: [
+          {
+            model: User,
+            attributes: ['id', 'first_name', 'last_name', 'email']
+          },
+          {
+            model: Course,
+            attributes: ['id', 'title', 'description', 'category']
+          }
+        ]
+      }
       );
 
       if (!enrollment) {

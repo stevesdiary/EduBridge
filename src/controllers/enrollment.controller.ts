@@ -1,11 +1,26 @@
 import { Request, Response } from 'express';
 import { enrollmentService } from '../services/enrollment.service';
 import { CreateEnrollmentDto, UpdateEnrollmentDto } from '../dtos/enrollment.dto';
+import { abort } from 'process';
+import { createEnrollmentSchema } from '../utils/validator';
 
 export class EnrollmentController {
   async createEnrollment(req: Request, res: Response): Promise<void> {
     try {
-      const enrollmentData: CreateEnrollmentDto = req.body;
+      if (!req.user) {
+        res.status(401).json({ error: 'Unauthorized' });
+        return;
+      }
+      const id  = req.user.id;
+      const enrollmentCreationData = await createEnrollmentSchema.validate(req.body);
+      // if (enrollment.error) {
+      //   res.status(400).json({ error: enrollment.error });
+      //   return;
+      // }
+      const enrollmentData: CreateEnrollmentDto = {
+        ...enrollmentCreationData,
+        userId: id
+      };
       const enrollment = await enrollmentService.createEnrollment(enrollmentData);
       
       res.status(201).json({
@@ -19,7 +34,11 @@ export class EnrollmentController {
 
   async updateEnrollment(req: Request, res: Response): Promise<void> {
     try {
-      const { id } = req.params;
+      if (!req.user) {
+        res.status(401).json({ error: 'Unauthorized' });
+        return;
+      }
+      const id  = req.user.id;
       const enrollmentData: UpdateEnrollmentDto = req.body;
       
       const enrollment = await enrollmentService.updateEnrollment((id), enrollmentData);
