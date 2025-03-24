@@ -4,6 +4,7 @@ import { CreateEnrollmentDto, UpdateEnrollmentDto } from '../dtos/enrollment.dto
 import { Course } from '../models/course.model';
 import { User } from '../models/user.model';
 import { Enrollment } from '../models/enrollment.model';
+import sendEmail from './email.service';
 
 class EnrollmentService {
   deleteEnrollment: any;
@@ -24,13 +25,32 @@ class EnrollmentService {
           data: null
         };
       }
+      const getCourse =  await Course.findOne({
+        where: { id: enrollmentData.courseId }, 
+        attributes: ['title']
+      })
+      console.log(getCourse?.title);
       const result = await Enrollment.create({
         courseId: enrollmentData.courseId,
         userId: enrollmentData.userId,
         status: enrollmentData.status || 'ENROLLED',
         enrollmentDate: new Date()
       });
-      return result;
+      if (result) {
+        await sendEmail({
+          to: enrollmentData.userEmail,
+          subject: 'Successful Course Enrollment',
+          text: `We are happy to inform you that you have successfully enrolled in ${getCourse?.title} course. 
+            We are your success partners and we'll cheer you to success. Happy Learning!`
+        });
+      }
+      
+      return {
+        statusCode: 201,
+        status: 'success',
+        message: `You have  successfully enrolled for ${getCourse?.title} course`,
+        data: result.toJSON() as EnrollmentResponse
+      };
     } catch (error) {
       throw error;
     }
