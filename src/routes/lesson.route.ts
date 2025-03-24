@@ -1,12 +1,76 @@
-import { Router, Request as ExpressRequest, Response } from 'express';
+import express, { Router, Request as ExpressRequest, Response } from 'express';
 import authentication from '../middlewares/authentication';
 import { checkRole } from '../middlewares/authorisation';
 import lessonController from '../controllers/lesson.controller';
-import { upload } from '../middlewares/file.upload';
+// import { upload } from '../middlewares/file.upload';
 import { UploadApiErrorResponse, UploadApiResponse } from 'cloudinary';
 // import { uploadPdf, getPdfUrl } from '../services/upload.service';
 
+import multer from 'multer';
+import path from 'path';
+import { uploadToR2 } from '../services/upload.service';
+
 const lessonRouter = Router();
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
+});
+
+const upload = multer({ storage });
+
+import { Request, NextFunction } from 'express';
+import { ApiResponse } from '../types/type';
+
+export interface FileUploadResponse {
+  url: string;
+  key: string;
+  data: any;
+}
+
+lessonRouter.post('/upload', upload.single('file'), async (
+  req: Request,
+  res: Response<ApiResponse<FileUploadResponse>>,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    if (!req.file) {
+      res.status(400).json({ 
+        statusCode: 400,
+        status: 'error',
+        message: 'File not selected for upload',
+        data: null
+      });
+      return;
+    }
+
+    if (!req.file.path) {
+      res.status(500).json({
+        statusCode: 500,
+        status: 'error', 
+        message: 'File path is missing',
+        data: null
+      });
+      return;
+    }
+
+    const result = await uploadToR2(req.file.path, 'lesson');
+    if (result) {
+      res.json({
+        statusCode: 200,
+        status: 'success',
+        message: 'File uploaded successfully',
+        data: result as any
+      });
+      return;
+    }
+  } catch (error) {
+    next(error);
+  }
+});
 
 lessonRouter.post('/create', 
   // authentication, 
