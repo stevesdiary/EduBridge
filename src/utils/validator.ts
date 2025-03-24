@@ -129,7 +129,7 @@ export const searchSchema = yup.object({
 
 
 export const createEnrollmentSchema = yup.object().shape({
-  userId: yup.string().uuid().required(),
+  // userId: yup.string().uuid().required(),
   courseId: yup.string().uuid().required(),
   startDate: yup.date().default(() => new Date()),
   status: yup.string().oneOf(['ENROLLED', 'COMPLETED', 'WITHDRAWN']).default('ENROLLED')
