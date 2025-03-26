@@ -7,8 +7,8 @@ import authentication from '../middlewares/authentication';
 const courseRouter = Router();
 
 courseRouter.post('/create', 
-  // authentication, 
-  // checkRole(['professional', 'admin']), 
+  authentication, 
+  checkRole(['Teacher', 'Admin']), 
   async (req: ExpressRequest, res: Response) => {
   await courseController.createCourse(req, res);
 })
@@ -63,15 +63,15 @@ courseRouter.get('/soft-skills',
 })
 
 courseRouter.put('/update/:id', 
-  // authentication, 
-  // checkRole(['professional', 'admin', 'moderator']), 
+  authentication, 
+  checkRole(['Admin', 'Teacher']), 
   async (req: ExpressRequest, res: Response) => {
   await courseController.updateCourse(req, res);
 })
 
 courseRouter.delete('/delete', 
-  // authentication, 
-  // checkRole(['admin']), 
+  authentication, 
+  checkRole(['Admin']), 
   async (req: ExpressRequest, res: Response) => {
   await courseController.deleteCourseRecord(req, res);
 })
