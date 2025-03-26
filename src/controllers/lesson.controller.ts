@@ -1,36 +1,42 @@
-import { Response, Request as ExpressRequest } from 'express';
+import { Response, Request } from 'express';
+import { uploadService } from '../services/upload.service';
 import { lessonCreationSchema, idSchema } from '../utils/validator';
-import { LessonCreationData } from '../types/lesson.types';
 import lessonService from '../services/lesson.service';
-// import { uploadPdf } from '../services/upload.service';
-import { error } from 'console';
+// import { idSchema,  } from '../utils/validator';
 
 const lessonController = {
-  createLesson: async (req: ExpressRequest, res: Response) => {
+  createLesson: async (req: Request, res: Response) => {
     try {
-      // if (!req.file){
-      //   return ('File not selected for upload');
-      // }
+      // Validate file
+      if (!req.file) {
+        return res.status(400).json({
+          status: 'error',
+          message: 'File not selected for upload',
+          data: null
+        });
+      }
 
-      // const resource_url = uploadPdf(
-      //   req.file.filename );
-      // console.log('resource_url', resource_url);
+      // Upload file to S3
+      const uploadResult = await uploadService.uploadFile(req.file, 'lessons');
 
+      // Validate lesson data
       const validatedData = await lessonCreationSchema.validate(req.body, {
         abortEarly: false,
         stripUnknown: true
       });
       
-      const lessonData: LessonCreationData = {
+      // Prepare lesson data
+      const lessonData = {
         title: validatedData.title,
-        // description: validatedData.description,
         content: validatedData.content || '',
         moduleId: validatedData.moduleId || '',
         instructor: validatedData.instructor,
-        resourceUrl: validatedData.resourceUrl
+        resourceUrl: uploadResult.url // Use S3 URL
       };
   
+      // Create lesson
       const result = await lessonService.createLesson(lessonData);
+      
       return res.status(result.statusCode).json({
         status: result.status,
         message: result.message,
@@ -46,7 +52,7 @@ const lessonController = {
     }
   },
 
-  getAllLessons: async (req: ExpressRequest, res: Response) => {
+  getAllLessons: async (req: Request, res: Response) => {
     try {
       const lessons = await lessonService.getLessons();
       return res.status(lessons.statusCode).json({
@@ -63,7 +69,7 @@ const lessonController = {
     }
   },
 
-  getOneLesson: async (req: ExpressRequest, res: Response) => {
+  getOneLesson: async (req: Request, res: Response) => {
     try {
       const id = await idSchema.validate(req.params.id, {abortEarly: false});
       const lesson = await lessonService.getOneLessonRecord(id);
@@ -90,7 +96,7 @@ const lessonController = {
     }
   },
 
-  updateLesson: async (req: ExpressRequest, res: Response) => {
+  updateLesson: async (req: Request, res: Response) => {
     try {
       const id = await idSchema.validate(req.params.id, {abortEarly: false});
       const updateData = req.body;
@@ -111,7 +117,7 @@ const lessonController = {
     }
   },
 
-  deleteLesson: async (req: ExpressRequest, res: Response) => {
+  deleteLesson: async (req: Request, res: Response) => {
     try {
       const id = await idSchema.validate(req.params.id, {abortEarly: false});
       const deletedLesson = await lessonService.deleteLesson(id);

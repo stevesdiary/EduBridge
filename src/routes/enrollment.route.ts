@@ -8,27 +8,23 @@ import authentication from '../middlewares/authentication';
 
 const enrollmentRouter = Router();
 
-enrollmentRouter.get('/health', (req: ExpressRequest, res: Response) => {
-  res.status(200).json({ message: "Healthy!"})
-})
-
 enrollmentRouter.post("/register", 
   authentication, 
-  checkRole(['professional', 'admin', 'moderator', 'student']),
+  checkRole(['Teacher', 'Admin', 'Student']),
   async (req: ExpressRequest, res: Response) => {
   await enrollmentController.createEnrollment(req, res);
 });
 
 enrollmentRouter.get('/all', 
   authentication, 
-  checkRole(['professional', 'admin', 'moderator', 'student']),
+  checkRole(['Teacher', 'Admin', 'Student']),
   async (req: ExpressRequest, res: Response) => {
   await enrollmentController.getAllEnrollments(req, res)
 });
 
 enrollmentRouter.get('/one/:id', 
   authentication, 
-  checkRole(['professional', 'admin', 'moderator', 'student']),
+  checkRole(['Teacher', 'Admin', 'Student']),
   async (req: ExpressRequest, res: Response) => {
   await enrollmentController.getOneEnrollment(req, res);
 });
@@ -42,7 +38,7 @@ enrollmentRouter.put('/enrollment/:id',
 
 enrollmentRouter.delete('/remove/:id', 
   authentication,
-  checkRole(['admin']),
+  checkRole(['Admin']),
   async (req: ExpressRequest, res: Response) => {
   await enrollmentController.deleteEnrollment(req, res);
 })

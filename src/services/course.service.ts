@@ -7,9 +7,11 @@ import { Course } from '../models/course.model';
 import { Profile } from '../models/profile.model';
 import { Sequelize, Model, DataTypes } from 'sequelize';
 import { ApiResponse, CourseCreationData, SearchData,  Search, CourseResponse, GetGroupedCourses } from '../types/type';
-import sequelize from '../core/database';
+import { RedisOptions } from '../types/type';
+import { saveToRedis, getFromRedis } from '../core/redis';
 
-
+const CACHE_KEY = 'courses';
+const CACHE_TTL = 3900;
 
 const courseService = {
   createCourse: async (courseData: CourseCreationData): Promise<ApiResponse<CourseResponse>> => {
@@ -57,6 +59,17 @@ const courseService = {
 
   getCourses: async (Search: Search) => {
     try {
+
+      const cachedCourses = await getFromRedis('courses');
+      if (cachedCourses) {  
+        const courses = JSON.parse(cachedCourses);
+        return {
+          statusCode: 200,
+          status: 'success',
+          message: 'Courses fetched from cache',
+          data: courses
+        };
+      }
       const whereCondition: any = {};
 
       if (Search.search) {
@@ -70,7 +83,7 @@ const courseService = {
         where: whereCondition,
         limit: Search.limit,
         offset: (Search.page - 1) * Search.limit,
-        order: [['createdAt', 'DESC']] // Optional: sort by most recent
+        order: [['createdAt', 'DESC']]
       });
 
       if (!courses.rows.length) {
@@ -81,7 +94,7 @@ const courseService = {
           data: null,
         };        
       }
-
+      await saveToRedis('courses', JSON.stringify(courses), CACHE_TTL);
       return {
         statusCode: 200,
         status: 'success',
@@ -229,6 +242,16 @@ const courseService = {
 
   getOneCourseRecord: async (id: string) => {
     try {
+      const cachedCourse = await getFromRedis('oneCourse');
+      if (cachedCourse) {
+        const lessons = JSON.parse(cachedCourse);
+        return {
+          statusCode: 200,
+          status: 'success',
+          message: 'Course fetched from cache',
+          data: lessons
+        };
+      }
       const getOne = await Course.findByPk(id);
       if (!getOne) {
         return {
@@ -238,6 +261,7 @@ const courseService = {
           data: null
         }
       }
+      await saveToRedis('oneCourse', JSON.stringify(getOne), CACHE_TTL);
       return {
         statusCode: 200,
         status: 'success',

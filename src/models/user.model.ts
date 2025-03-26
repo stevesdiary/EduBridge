@@ -13,15 +13,17 @@ import { Profile } from './profile.model';
 import { UserBadge } from './user-badge.model';
 
 export enum Role {
-  STUDENT = 'student',
-  ADMIN = 'admin',
-  INSTRUCTOR = 'instructor',
+  STUDENT = 'Student',
+  ADMIN = 'Admin',
+  INSTRUCTOR = 'Instructor',
+  TEACHER = 'Teacher'
 }
 
 @Table({
   tableName: 'users',
   timestamps: true,
-  underscored: true
+  underscored: true,
+  paranoid: true
 })
 export class User extends Model {
   @Column({
@@ -74,13 +76,6 @@ export class User extends Model {
     defaultValue: false
   })
   verified?: boolean;
-
-  // @Column({
-  //   type: DataType.BOOLEAN,
-  //   allowNull: false,
-  //   defaultValue: true
-  // })
-  // is_active?: boolean;
 
   @HasOne(() => Profile)
   profile?: Profile;

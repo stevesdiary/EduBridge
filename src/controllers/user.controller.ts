@@ -34,7 +34,11 @@ const UserController = {
   getOneUser: async (req: ExpressRequest, res: Response): Promise<Response> => {
     try {
       const user = await getOneUser(req.params.id);
-      return res.status(user.statusCode).send({ status: (user.status), message: (user.message), data: (user.data)})
+      return res.status(user.statusCode).send({ 
+        status: (user.status), 
+        message: (user.message), 
+        data: (user.data)
+      })
     } catch (error) {
       return res.status(500).send({
         error: error
@@ -44,10 +48,18 @@ const UserController = {
 
   updateUser: async (req: ExpressRequest, res: Response): Promise<Response> => {
     try {
-      const id = req.params.id;
-      const validatedData = await userUpdateSchema.validate(req.body, req.params);
-      const update = await updateUser( id, validatedData);
-      return res.status(update.statusCode).send({ status: (update.status), message: (update.message), data: (update.data)})
+      const id = await idSchema.validate(req.params.id);
+      const validatedData = await userUpdateSchema.validate(req.body);
+      const userValidatedData = {
+        role: validatedData.role?.toLocaleLowerCase(), ...validatedData
+      }
+      console.log(userValidatedData);
+      const update = await updateUser( id, userValidatedData);
+      return res.status(update.statusCode).send({ 
+        status: (update.status), 
+        message: (update.message), 
+        data: (update.data)
+      })
     } catch (error) {
       return res.status(500).send({
         error: error

@@ -1,5 +1,10 @@
+import { getFromRedis, saveToRedis } from '../core/redis';
 import { Lesson } from '../models/lesson.model';
 import { ApiResponse, LessonCreationAttributes, LessonCreationData, LessonResponse } from '../types/lesson.types';
+import { RedisOptions, RedisCacheService } from '../types/type';
+
+const CACHE_KEY = 'lessons';
+const CACHE_TTL = 3900;
 
 const lessonService = {
   createLesson: async (lessonData: LessonCreationAttributes): Promise<ApiResponse<LessonResponse>> => {
@@ -46,7 +51,18 @@ const lessonService = {
 
   getLessons: async () => {
     try {
+      const cachedLessons = await getFromRedis(CACHE_KEY);
+      if (cachedLessons) {
+        const lessons = JSON.parse(cachedLessons);
+        return {
+          statusCode: 200,
+          status: 'success',
+          message: 'Lessons fetched from cache',
+          data: lessons
+        };
+      }
       const lessons = await Lesson.findAll();
+      
       if (!lessons || lessons.length === 0) {
         return {
           statusCode: 404,
@@ -55,6 +71,7 @@ const lessonService = {
           data: null,
         };        
       }
+      saveToRedis(CACHE_KEY, JSON.stringify(lessons), CACHE_TTL);
       return {
         statusCode: 200,
         status: 'success',
@@ -69,6 +86,16 @@ const lessonService = {
 
   getOneLessonRecord: async (id: string) => {
     try {
+      const cachedLesson = await getFromRedis('oneLesson');
+      if (cachedLesson) {
+        const lesson = JSON.parse(cachedLesson);
+        return {
+          statusCode: 200,
+          status: 'success',
+          message: 'Lesson fetched from cache',
+          data: lesson
+        };
+      }
       const lesson = await Lesson.findByPk(id);
       if (!lesson) {
         return {
@@ -78,6 +105,7 @@ const lessonService = {
           data: null
         }
       }
+      saveToRedis('oneLesson', JSON.stringify(lesson), CACHE_TTL);
       return {
         statusCode: 200,
         status: 'success',
@@ -129,7 +157,7 @@ const lessonService = {
           statusCode: 200,
           status: 'success',
           message: 'Lesson deleted',
-          data: null
+          data: deletedRowsCount
         }
       }
 

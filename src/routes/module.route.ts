@@ -6,15 +6,15 @@ import moduleController from '../controllers/module.controller';
 const moduleRouter = Router()
 
 moduleRouter.post('/register',
-  // authentication,
-  // checkRole(['admin']), 
+  authentication,
+  checkRole(['Admin', 'Teacher']), 
   async (req: ExpressRequest, res: Response) => {
   await moduleController.createModule(req, res);
 });
 
 moduleRouter.get('/all', 
-  // authentication,
-  // checkRole(['admin']),
+  authentication,
+  checkRole(['admin']),
   async (req: ExpressRequest, res: Response) => {
   await moduleController.getAllModules(req, res);
 })

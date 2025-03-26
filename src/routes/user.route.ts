@@ -19,43 +19,41 @@ userRouter.post("/verify",
 });
 
 userRouter.post("/resendcode", 
-  // authentication,
-  // checkRole(['admin']), 
   async (req: ExpressRequest, res: Response) => {
   await userRegistration.resendCode(req, res);
 });
 
 userRouter.get('/all',
-  // authentication,
-  // checkRole(['admin', 'user', 'student']), 
+  authentication,
+  checkRole(['Admin', 'Student', 'Teacher']), 
   async (req: ExpressRequest, res: Response) => {
   await userController.getAllUsers(req, res)
 });
 
 userRouter.get('/one/:id', 
-  // authentication,
-  // checkRole(['admin', 'user', 'student']), 
+  authentication,
+  checkRole(['Admin', 'User', 'Student']), 
   async (req: ExpressRequest, res: Response) => {
   await userController.getOneUser(req, res);
 });
 
 userRouter.put('/update/:id',
   authentication,
-  checkRole(['admin']),
+  checkRole(['Admin']),
   async (req: ExpressRequest, res: Response) => {
   await userController.updateUser(req, res);
 })
 
-userRouter.put('/update',
+userRouter.put('/update-role',
   authentication,
-  // checkRole(['admin']),
+  checkRole(['Admin']),
   async (req: ExpressRequest, res: Response) => {
   await userController.updateUserRole(req, res);
 })
 
 userRouter.delete('/delete/:id', 
   authentication,
-  checkRole(['admin']), 
+  checkRole(['Admin']), 
   async (req: ExpressRequest, res: Response) => {
   await userController.deleteUser(req, res);
 })

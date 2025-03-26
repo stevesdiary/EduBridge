@@ -2,13 +2,10 @@ import express, { Router, Request as ExpressRequest, Response } from 'express';
 import authentication from '../middlewares/authentication';
 import { checkRole } from '../middlewares/authorisation';
 import lessonController from '../controllers/lesson.controller';
-// import { upload } from '../middlewares/file.upload';
-import { UploadApiErrorResponse, UploadApiResponse } from 'cloudinary';
-// import { uploadPdf, getPdfUrl } from '../services/upload.service';
 
 import multer from 'multer';
 import path from 'path';
-import { uploadToR2 } from '../services/upload.service';
+import { uploadService } from '../services/upload.service';
 
 const lessonRouter = Router();
 const storage = multer.diskStorage({
@@ -57,7 +54,7 @@ lessonRouter.post('/upload', upload.single('file'), async (
       return;
     }
 
-    const result = await uploadToR2(req.file.path, 'lesson');
+    const result = await uploadService.uploadFile(req.file, 'lesson');
     if (result) {
       res.json({
         statusCode: 200,
@@ -73,8 +70,8 @@ lessonRouter.post('/upload', upload.single('file'), async (
 });
 
 lessonRouter.post('/create', 
-  // authentication, 
-  // checkRole(['professional', 'admin']),
+  authentication, 
+  checkRole(['Teacher', 'Admin']),
   upload.single('file'), 
   async (req: ExpressRequest, res: Response) => {
     await lessonController.createLesson(req, res);
@@ -131,6 +128,13 @@ lessonRouter.get('/:id',
 //   async (req: ExpressRequest, res: Response) => {
 //   lessonController.updateLessonResource(req, res);
 // });
+
+lessonRouter.delete('/delete/:id', 
+  authentication,
+  checkRole(['Admin']),
+  async (req: ExpressRequest, res: Response) => {
+    await lessonController.deleteLesson(req, res);
+});
 
 export default lessonRouter;
 
