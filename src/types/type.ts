@@ -84,6 +84,15 @@ export interface VerifyRequest extends Request {
     code: string;
   }
 }
+export interface RedisOptions {
+  key: string;
+  expireTime?: number;
+}
+
+export interface RedisCacheService {
+  get(key: string): Promise<string | null>;
+  set(key: string, value: string, expireTime?: number): Promise<void>;
+}
 
 export interface UserData {
   name?: string;
