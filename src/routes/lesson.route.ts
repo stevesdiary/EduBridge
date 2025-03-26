@@ -132,6 +132,13 @@ lessonRouter.get('/:id',
 //   lessonController.updateLessonResource(req, res);
 // });
 
+lessonRouter.delete('/delete/:id', 
+  authentication,
+  checkRole(['Admin']),
+  async (req: ExpressRequest, res: Response) => {
+    await lessonController.deleteLesson(req, res);
+});
+
 export default lessonRouter;
 
 
