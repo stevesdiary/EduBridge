@@ -244,6 +244,88 @@ const courseController = {
     }
   },
 
+  examPrep: async (req: ExpressRequest, res: Response) => {
+    try {
+      const searchData = {
+        page: parseInt(req.query.page as string) || 1,
+        limit: parseInt(req.query.limit as string) || 10
+      }
+      
+      const courses = await courseService.getExamPrep(searchData);
+      
+      if (Array.isArray(courses)) {
+        const transformedCourses = courses.map(course => ({
+          ...course,
+          description: course.description || ''
+        }));
+        return res.status(200).json({
+          status: 'success',
+          message: 'Exam preparation questions retrieved successfully',
+          data: transformedCourses
+        });
+      }
+      if (courses && typeof courses === 'object' && 'statusCode' in courses) {
+        return res.status(courses.statusCode).json({
+          status: courses.status,
+          message: courses.message,
+          data: courses.data
+        });
+      }
+      return res.status(500).json({
+        status: 'error',
+        message: 'Invalid response format',
+        data: null
+      });
+    } catch (error) {
+        console.error('Error', error);
+        return res.status(500).json({
+          status: 'error',
+          message: 'Internal server error'
+        });
+    }
+  },
+  
+  // examPrep: async (req: ExpressRequest, res: Response) => {
+  //   try {
+  //     const searchData = {
+  //       page: parseInt(req.query.page as string) || 1,
+  //       limit: parseInt(req.query.limit as string) || 10
+  //     }
+      
+  //     const courses = await courseService.getExamPrep(searchData);
+      
+  //     if (Array.isArray(courses)) {
+  //       const transformedCourses = courses.map(course => ({
+  //         ...course,
+  //         description: course.description || ''
+  //       }));
+  //       return res.status(200).json({
+  //         status: 'success',
+  //         message: 'Courses retrieved successfully',
+  //         data: transformedCourses
+  //       });
+  //     }
+  //     if (courses && typeof courses === 'object' && 'statusCode' in courses) {
+  //       return res.status(courses.statusCode).json({
+  //         status: courses.status,
+  //         message: courses.message,
+  //         data: courses.data
+  //       });
+  //     }
+  //     return res.status(500).json({
+  //       status: 'error',
+  //       message: 'Invalid response format',
+  //       data: null
+  //     });
+  //   } catch (error) {
+  //       console.error('Error', error);
+  //       return res.status(500).json({
+  //         status: 'error',
+  //         message: 'Internal server error'
+  //       });
+  //   }
+  // },
+
   getBySubject: async (req: ExpressRequest, res: Response) => {
     try {
       const coursesData = await courseService.getCoursesBySubject();
