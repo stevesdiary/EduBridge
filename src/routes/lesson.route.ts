@@ -28,46 +28,46 @@ export interface FileUploadResponse {
   data: any;
 }
 
-lessonRouter.post('/upload', upload.single('file'), async (
-  req: Request,
-  res: Response<ApiResponse<FileUploadResponse>>,
-  next: NextFunction
-): Promise<void> => {
-  try {
-    if (!req.file) {
-      res.status(400).json({ 
-        statusCode: 400,
-        status: 'error',
-        message: 'File not selected for upload',
-        data: null
-      });
-      return;
-    }
+// lessonRouter.post('/upload', upload.single('file'), async (
+//   req: Request,
+//   res: Response<ApiResponse<FileUploadResponse>>,
+//   next: NextFunction
+// ): Promise<void> => {
+//   try {
+//     if (!req.file) {
+//       res.status(400).json({ 
+//         statusCode: 400,
+//         status: 'error',
+//         message: 'File not selected for upload',
+//         data: null
+//       });
+//       return;
+//     }
 
-    if (!req.file.path) {
-      res.status(500).json({
-        statusCode: 500,
-        status: 'error', 
-        message: 'File path is missing',
-        data: null
-      });
-      return;
-    }
+//     if (!req.file.path) {
+//       res.status(500).json({
+//         statusCode: 500,
+//         status: 'error', 
+//         message: 'File path is missing',
+//         data: null
+//       });
+//       return;
+//     }
 
-    const result = await uploadService.uploadFile(req.file, 'lesson');
-    if (result) {
-      res.json({
-        statusCode: 200,
-        status: 'success',
-        message: 'File uploaded successfully',
-        data: result as any
-      });
-      return;
-    }
-  } catch (error) {
-    next(error);
-  }
-});
+//     const result = await uploadService.uploadFile(req.file, 'lesson');
+//     if (result) {
+//       res.json({
+//         statusCode: 200,
+//         status: 'success',
+//         message: 'File uploaded successfully',
+//         data: result as any
+//       });
+//       return;
+//     }
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 lessonRouter.post('/create', 
   authentication, 
