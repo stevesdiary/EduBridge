@@ -6,15 +6,15 @@ import moduleController from '../controllers/module.controller';
 const moduleRouter = Router()
 
 moduleRouter.post('/register',
-  authentication,
-  checkRole(['Admin', 'Teacher']), 
+  // authentication,
+  // checkRole(['Admin', 'Teacher']), 
   async (req: ExpressRequest, res: Response) => {
   await moduleController.createModule(req, res);
 });
 
 moduleRouter.get('/all', 
-  authentication,
-  checkRole(['admin']),
+  // authentication,
+  // checkRole(['admin']),
   async (req: ExpressRequest, res: Response) => {
   await moduleController.getAllModules(req, res);
 })
@@ -25,18 +25,16 @@ moduleRouter.get('/one/:id',
   await moduleController.getModuleById(req, res);
 })
 moduleRouter.put('/update/:id', 
-  authentication,
-  checkRole(['admin']),
+  // authentication,
+  // checkRole(['admin']),
   async (req: ExpressRequest, res: Response) => {
   await moduleController.updateModule(req, res);
 })
 moduleRouter.delete('/delete/:id', 
   authentication,
-  checkRole(['admin']),
+  checkRole(['Admin', 'Teacher']),
   async (req: ExpressRequest, res: Response) => {
   await moduleController.deleteModule(req, res);
 })
-
-
 
 export default moduleRouter;
