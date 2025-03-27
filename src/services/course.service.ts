@@ -212,6 +212,31 @@ const courseService = {
     }
   },
 
+  getExamPrep: async (SearchData: GetGroupedCourses) => {
+    try {
+      const examPrep = await Course.findAll({
+        where : { category : { [Op.eq]: 'exam_preparation' } },
+      });
+      if (!examPrep || examPrep.length === 0) {
+        return {
+          statusCode: 404,
+          status: 'fail',
+          message: 'No course found',
+          data: null,
+        };        
+      }
+      return {
+        statusCode: 200,
+        status: 'success',
+        message: 'Exam prep questions retrieved ',
+        data: examPrep
+      };
+    } catch (error) {
+      console.error('Error fetching exam prep questios:', error);
+      throw error;
+    }
+  },
+
   getCoursesBySubject: async () => {
     try {
       // const subjects = await Course.findAll({

@@ -45,22 +45,31 @@ courseRouter.get('/primary',
   // authentication, 
   // checkRole(['professional', 'admin', 'moderator', 'student']), 
   async (req: ExpressRequest, res: Response) => {
-  await courseController.primaryCourses(req, res);
-})
+    await courseController.primaryCourses(req, res);
+  }
+)
 
 courseRouter.get('/secondary', 
   // authentication, 
   // checkRole(['professional', 'admin', 'moderator', 'student']), 
   async (req: ExpressRequest, res: Response) => {
-  await courseController.secondaryCourses(req, res);
-})
+    await courseController.secondaryCourses(req, res);
+  }
+)
 
 courseRouter.get('/soft-skills', 
   // authentication, 
   // checkRole(['professional', 'admin', 'moderator', 'student']), 
   async (req: ExpressRequest, res: Response) => {
-  await courseController.softSkills(req, res);
-})
+    await courseController.softSkills(req, res);
+  }
+)
+
+courseRouter.get('/exam-prep',
+  async (req: ExpressRequest, res: Response) => {
+    await courseController.examPrep(req, res);
+  }
+)
 
 courseRouter.put('/update/:id', 
   authentication, 
