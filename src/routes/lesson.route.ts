@@ -70,10 +70,11 @@ export interface FileUploadResponse {
 // });
 
 lessonRouter.post('/create', 
-  authentication, 
-  checkRole(['Teacher', 'Admin']),
-  upload.single('file'), 
+  // authentication, 
+  // checkRole(['Teacher', 'Admin']),
+  // upload.single('file'),
   async (req: ExpressRequest, res: Response) => {
+    // console.log(req.body)
     await lessonController.createLesson(req, res);
 });
 
