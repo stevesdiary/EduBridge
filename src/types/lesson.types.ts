@@ -11,7 +11,7 @@ export interface LessonCreationData {
 export interface LessonAttributes {
   id: string;
   title: string;
-  // description: string;
+  category: string;
   content: string;
   moduleId: string;
   instructor?: string;
@@ -26,6 +26,7 @@ export interface LessonResponse {
   description: string;
   content: string;
   moduleId: string;
+  category: string;
   instructor?: string;
   resourceUrl?: string;
 }

@@ -13,7 +13,7 @@ const lessonService = {
       const existingLesson = await Lesson.findOne({
         where: {
           title: lessonData.title,
-          // description: lessonData.description,
+          // content: lessonData.content,
           moduleId: lessonData.moduleId
         }
       });
@@ -26,6 +26,7 @@ const lessonService = {
           data: null
         };
       }
+      console.log(lessonData);
       const lesson = await Lesson.create(lessonData);
       
       const lessonResponse: LessonResponse = {
@@ -34,7 +35,8 @@ const lessonService = {
         description: lesson.description,
         content: lesson.content,
         moduleId: lesson.moduleId,
-        instructor: lesson.instructor
+        instructor: lesson.instructor,
+        category: lesson.category as string
       };
 
       return {
