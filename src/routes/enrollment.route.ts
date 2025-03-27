@@ -16,8 +16,8 @@ enrollmentRouter.post("/register",
 });
 
 enrollmentRouter.get('/all', 
-  authentication, 
-  checkRole(['Teacher', 'Admin', 'Student']),
+  // authentication, 
+  // checkRole(['Teacher', 'Admin', 'Student']),
   async (req: ExpressRequest, res: Response) => {
   await enrollmentController.getAllEnrollments(req, res)
 });

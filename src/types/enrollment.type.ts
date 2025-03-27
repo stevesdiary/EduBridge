@@ -19,6 +19,11 @@ export interface EnrollmentResponse {
     name: string;
     email: string;
   };
+  totalEnrollments?: number;
+  currentPage?: number;
+  totalPages?: number;
+  hasNextPage?: boolean;
+  hasPreviousPage?: boolean;
 }
 
 export enum EnrollmentStatus {

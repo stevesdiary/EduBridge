@@ -9,8 +9,15 @@ import {
   BelongsTo,
   IsUUID
 } from 'sequelize-typescript';
-import { Course } from './course.model';
+// import { Category, Course } from './course.model';
 import { Module } from './module.model';
+
+export enum Category {
+  soft_skill = 'soft_skill',
+  primary = 'primary',
+  secondary = 'secondary',
+  exam_preparation = 'exam_preparation'
+}
 
 @Table({
   tableName: 'lessons',
@@ -43,10 +50,10 @@ export class Lesson extends Model {
   moduleId!: string;
 
   @Column({
-    type: DataType.INTEGER,
-    allowNull: true
+    type: DataType.ENUM(...Object.values(Category)),
+    allowNull: false
   })
-  duration?: string;
+  category?: string;
 
   @Column({
     type: DataType.STRING
@@ -55,7 +62,4 @@ export class Lesson extends Model {
   description!: string;
   // courseId!: string;
   instructor?: string;
-
-  // @Column(DataType.DATE)
-  // dateAdded?: Date;
 }

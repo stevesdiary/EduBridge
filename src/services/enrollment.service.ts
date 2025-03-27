@@ -101,14 +101,22 @@ class EnrollmentService {
           }
         ]
       });
+      const totalPages = Math.ceil(count / limit);
+      const hasNextPage = page < totalPages;
+      const hasPreviousPage = page > 1;
 
-      
-  
       return {
         statusCode: 200,
         status: 'success',
         message: 'Enrollments retrieved successfully',
-        data: rows.map(enrollment => enrollment.toJSON() as EnrollmentResponse),
+        data: rows.map(enrollment => ({
+          ...enrollment.toJSON(),
+          totalEnrollments: count,
+          currentPage: page,
+          totalPages,
+          hasNextPage,
+          hasPreviousPage
+        })) as EnrollmentResponse[],
       };
     } catch (error) {
       throw error;
