@@ -8,16 +8,16 @@ const lessonController = {
   createLesson: async (req: Request, res: Response) => {
     try {
       // Validate file
-      if (!req.file) {
-        return res.status(400).json({
-          status: 'error',
-          message: 'File not selected for upload',
-          data: null
-        });
-      }
+      // if (!req.file) {
+      //   return res.status(400).json({
+      //     status: 'error',
+      //     message: 'File not selected for upload',
+      //     data: null
+      //   });
+      // }
 
       // Upload file to S3
-      const uploadResult = await uploadService.uploadFile(req.file, 'lessons');
+      // const uploadResult = await uploadService.uploadFile(req.file, 'lessons');
 
       // Validate lesson data
       const validatedData = await lessonCreationSchema.validate(req.body, {
@@ -31,7 +31,7 @@ const lessonController = {
         content: validatedData.content || '',
         moduleId: validatedData.moduleId || '',
         instructor: validatedData.instructor,
-        resourceUrl: uploadResult.url // Use S3 URL
+        resourceUrl: validatedData.resourceUrl
       };
   
       // Create lesson
