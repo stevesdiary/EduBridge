@@ -1,11 +1,11 @@
 import { Optional } from 'sequelize';
 export interface LessonCreationData {
   title: string;
-  // description: string;
   content: string;
   moduleId: string;
-  instructor?: string;
-  resourceUrl?: string;
+  instructor: string;
+  resourceUrl: string;
+  category: string;
 }
 
 export interface LessonAttributes {
@@ -27,8 +27,8 @@ export interface LessonResponse {
   content: string;
   moduleId: string;
   category: string;
-  instructor?: string;
-  resourceUrl?: string;
+  instructor: string;
+  resourceUrl: string;
 }
 
 export interface ApiResponse<T> {

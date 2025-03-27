@@ -9,8 +9,6 @@ import { LessonCreationAttributes } from '../types/lesson.types';
 const lessonController = {
   createLesson: async (req: ExpressRequest, res: Response) => {
     try {
-
-      console.log('Got here')
       // Validate file
       // if (!req.file) {
       //   return res.status(400).json({

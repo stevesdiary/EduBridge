@@ -35,8 +35,9 @@ const lessonService = {
         description: lesson.description,
         content: lesson.content,
         moduleId: lesson.moduleId,
-        instructor: lesson.instructor,
-        category: lesson.category as string
+        instructor: lesson.instructor as string,
+        category: lesson.category as string,
+        resourceUrl: lesson.resourceUrl as string
       };
 
       return {
