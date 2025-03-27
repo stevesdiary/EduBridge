@@ -342,14 +342,14 @@ const courseService = {
   deleteCourseRecord: async (id: string) => {
     try {
       const deleteRecord = await Course.destroy(
-        {where: {id}},
+        { where: {id} },
       )
       if (deleteRecord > 0) {
         return {
           statusCode: 200,
           status: 'success',
           message: 'Course record deleted',
-          data: null
+          data: deleteRecord
         }
       }
 

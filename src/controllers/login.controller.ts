@@ -19,19 +19,19 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
   } catch (error: unknown) {
     console.error('Login error:', error);
   
-    if (error instanceof Error) {
-      if (error.name === 'ValidationError') {
-        console.log('VALIDATION ERROR:', error, error.message)
-        return res.status(400).json({
-          status: 'error',
-          message: error.message
-        });
-      }
-      return res.status(500).json({
-        status: 'error',
-        message: error.message
-      });
-    }
+    // if (error instanceof Error) {
+    //   if (error.name === 'ValidationError') {
+    //     console.log('VALIDATION ERROR:', error, error.message)
+    //     return res.status(400).json({
+    //       status: 'error',
+    //       message: error.message
+    //     });
+    //   }
+    //   return res.status(500).json({
+    //     status: 'error',
+    //     message: error
+    //   });
+    // }
     
     return res.status(500).json({
       status: 'error',

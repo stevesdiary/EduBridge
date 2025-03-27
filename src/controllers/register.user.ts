@@ -22,19 +22,19 @@ const userRegistration = {
           data: user.data
         });
       } catch (error: unknown) {
-        if (error instanceof yup.ValidationError) {
-          console.log('ERROR DUE TO VALIDATION', error)
-          const errors: ValidationErrorResponse[] = error.inner.map(err => ({
-            field: err.path || 'unknown',
-            message: err.message
-          }));
+        // if (error instanceof yup.ValidationError) {
+        //   console.log('ERROR DUE TO VALIDATION', error)
+        //   const errors: ValidationErrorResponse[] = error.inner.map(err => ({
+        //     field: err.path || 'unknown',
+        //     message: err.message
+        //   }));
           
-          return res.status(400).json({
-            status: 'error',
-            message: 'Validation failed',
-            errors
-          });
-        }
+        //   return res.status(400).json({
+        //     status: 'error',
+        //     message: 'Validation failed',
+        //     errors
+        //   });
+        // }
         const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
         return res.status(500).json({
           status: 'error',
@@ -53,15 +53,15 @@ const userRegistration = {
 
       return res.status(verificationResult.statusCode).json(verificationResult);
     } catch (error: unknown) {
-      if (error instanceof yup.ValidationError) {
-        return res.status(400).json({
-          status: 'error',
-          message: 'Validation failed',
-          errors: error.errors.map(errorMsg => ({
-            message: errorMsg
-          }))
-        });
-      }
+      // if (error instanceof yup.ValidationError) {
+      //   return res.status(400).json({
+      //     status: 'error',
+      //     message: 'Validation failed',
+      //     errors: error.errors.map(errorMsg => ({
+      //       message: errorMsg
+      //     }))
+      //   });
+      // }
       const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
       
       return res.status(500).json({
@@ -84,12 +84,12 @@ const userRegistration = {
         data: resend.data
       });
     } catch (error) {
-      if (error instanceof yup.ValidationError) {
-        return res.status(400).send({
-          status: 'error',
-          errors: error.errors
-        });
-      }
+      // if (error instanceof yup.ValidationError) {
+      //   return res.status(400).send({
+      //     status: 'error',
+      //     errors: error.errors
+      //   });
+      // }
       
       return res.status(500).send({
         status: 'error',
