@@ -8,6 +8,8 @@ import enrollmentRouter from "./routes/enrollment.route";
 import lessonRouter from "./routes/lesson.route";
 import forgotPasswordRouter from "./routes/forgot.password";
 // import badgeRouter from "./routes/badge.route";
+// import progressRouter from './routes/progress.route';
+// import externalRouter from './routes/exteral.route';
 import verifyRouter from "./routes/verify.email";
 // import profileRouter from "./routes/profile.route";
 // import certificateRouter from "./routes/certificate.route";
@@ -42,7 +44,12 @@ const corsOptions = {
 };
 
 router.use(cors(corsOptions));
-
+// router.use((req, res, next) => {
+//   console.log('Request Headers:', req.headers);
+//   console.log('Request Body:', req.body);
+//   console.log('Request Query:', req.query);
+//   next();
+// });
 
 router.use("/user", userRouter);
 router.use("/log", loginRouter);
@@ -52,6 +59,8 @@ router.use('/lesson', lessonRouter);
 router.use('/module', moduleRouter);
 router.use('/enrollment', enrollmentRouter);
 router.use('/password', forgotPasswordRouter);
+// router.use('/progress', progressRouter);
+// router.use('/external', externalRouter);
 // router.use('/badge', badgeRouter);
 // router.use('/profile', profileRouter);
 // router.use('/certificate', certificateRouter);

@@ -22,26 +22,26 @@ const forgotPassword = {
         data: user.data
       });
     } catch (error: unknown) {
-      if (error instanceof yup.ValidationError) {
-        console.log('ERROR DUE TO VALIDATION', error)
-        const validationError = error as yup.ValidationError;
-        const errors: ValidationErrorResponse[] = validationError.inner.map(err => ({
-          field: err.path || 'unknown',
-          message: err.message
-        }));
+      // if (error instanceof yup.ValidationError) {
+      //   console.log('ERROR DUE TO VALIDATION', error)
+      //   const validationError = error as yup.ValidationError;
+      //   const errors: ValidationErrorResponse[] = validationError.inner.map(err => ({
+      //     field: err.path || 'unknown',
+      //     message: err.message
+      //   }));
         
         return res.status(400).json({
           status: 'error',
           message: 'Validation failed',
-          errors
+          error
         });
-      }
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-      return res.status(500).json({
-        status: 'error',
-        message: 'Internal server error',
-        error: errorMessage
-      });
+      // }
+      // const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      // return res.status(500).json({
+      //   status: 'error',
+      //   message: 'Internal server error',
+      //   error: errorMessage
+      // });
     }
   } 
 }

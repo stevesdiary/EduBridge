@@ -377,13 +377,13 @@ const courseController = {
         data: getOneRecord.data
       }
     } catch (error) {
-      if (error instanceof yup.ValidationError) {
-        return res.status(400).json({
-          status: 'error',
-          message: 'Validation failed',
-          errors: error.errors
-        });
-      }
+      // if (error instanceof yup.ValidationError) {
+      //   return res.status(400).json({
+      //     status: 'error',
+      //     message: 'Validation failed',
+      //     errors: error.errors
+      //   });
+      // }
       
       console.error('Error: ', error);
       return res.status(500).json({
@@ -431,7 +431,8 @@ const courseController = {
 
   deleteCourseRecord: async (req: ExpressRequest, res: Response) => {
     try {
-      const id = await idSchema.validate(req.params.id, {abortEarly: false});
+      console.log(req.params.id)
+      const id = await idSchema.validate(req.params.id);
       const deleteCourse = await courseService.deleteCourseRecord(id);
       return {
         statusCode: deleteCourse.statusCode,
@@ -440,13 +441,13 @@ const courseController = {
         data: deleteCourse.data
       }
     } catch (error) {
-      if (error instanceof yup.ValidationError) {
-        return res.status(400).json({
-          status: 'error',
-          message: 'Validation failed',
-          errors: error.errors
-        });
-      }
+      // if (error instanceof yup.ValidationError) {
+      //   return res.status(400).json({
+      //     status: 'error',
+      //     message: 'Validation failed',
+      //     errors: error.errors
+      //   });
+      // }
       
       console.error('Error: ', error);
       return res.status(500).json({
@@ -467,13 +468,13 @@ const courseController = {
         data: cancelAppoinntmet?.data
       }
     } catch (error) {
-      if (error instanceof yup.ValidationError) {
-        return res.status(400).json({
-          status: 'error',
-          message: 'Validation failed',
-          errors: error.errors
-        });
-      }
+      // if (error instanceof yup.ValidationError) {
+      //   return res.status(400).json({
+      //     status: 'error',
+      //     message: 'Validation failed',
+      //     errors: error.errors
+      //   });
+      // }
       
       console.error('Error: ', error);
       return res.status(500).json({

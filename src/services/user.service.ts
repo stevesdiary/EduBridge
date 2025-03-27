@@ -134,7 +134,7 @@ export const deleteUser = async (id: string) => {
       return {
         statusCode: 404,
         status: "fail",
-        message: "User not found",
+        message: "User not found or already deleted",
         data: [],
       };
     }

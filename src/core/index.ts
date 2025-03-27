@@ -18,19 +18,19 @@ server.use(express.urlencoded({ extended: true }));
 
 const port = process.env.LOCAL_PORT || 3001;
 
-const limiter = rateLimit ({
-  windowMs: 10 * 60 * 1000,
-  max: 15,
-  standardHeaders: true,
-  legacyHeaders: false,
-  message: 'Too many request from this IP, try again after 10 minutes'
-})
+// const limiter = rateLimit ({
+//   windowMs: 10 * 60 * 1000,
+//   max: 15,
+//   standardHeaders: true,
+//   legacyHeaders: false,
+//   message: 'Too many request from this IP, try again after 10 minutes'
+// })
 
 server.get("/", (req, res) => {
   res.json({ message: "Welcome to EduBridge!." });
 });
 
-server.use(limiter);
+// server.use(limiter);
 server.use('/api/v1', router);
 
 const startServer = async () => {

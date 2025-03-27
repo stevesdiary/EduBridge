@@ -267,16 +267,16 @@ const courseService = {
 
   getOneCourseRecord: async (id: string) => {
     try {
-      const cachedCourse = await getFromRedis('oneCourse');
-      if (cachedCourse) {
-        const lessons = JSON.parse(cachedCourse);
-        return {
-          statusCode: 200,
-          status: 'success',
-          message: 'Course fetched from cache',
-          data: lessons
-        };
-      }
+      // const cachedCourse = await getFromRedis('oneCourse');
+      // if (cachedCourse) {
+        // const lessons = JSON.parse(cachedCourse);
+      //   return {
+      //     statusCode: 200,
+      //     status: 'success',
+      //     message: 'Course fetched from cache',
+      //     data: course
+      //   };
+      // }
       const getOne = await Course.findByPk(id);
       if (!getOne) {
         return {
@@ -286,7 +286,7 @@ const courseService = {
           data: null
         }
       }
-      await saveToRedis('oneCourse', JSON.stringify(getOne), CACHE_TTL);
+      // await saveToRedis('oneCourse', JSON.stringify(getOne), CACHE_TTL);
       return {
         statusCode: 200,
         status: 'success',
@@ -342,14 +342,14 @@ const courseService = {
   deleteCourseRecord: async (id: string) => {
     try {
       const deleteRecord = await Course.destroy(
-        {where: {id}},
+        { where: {id} },
       )
       if (deleteRecord > 0) {
         return {
           statusCode: 200,
           status: 'success',
           message: 'Course record deleted',
-          data: null
+          data: deleteRecord
         }
       }
 
