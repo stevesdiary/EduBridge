@@ -1,12 +1,16 @@
-import { Response, Request } from 'express';
+import { Response, Request as ExpressRequest } from 'express';
+
 import { uploadService } from '../services/upload.service';
 import { lessonCreationSchema, idSchema } from '../utils/validator';
 import lessonService from '../services/lesson.service';
+import { LessonCreationAttributes } from '../types/lesson.types';
 // import { idSchema,  } from '../utils/validator';
 
 const lessonController = {
-  createLesson: async (req: Request, res: Response) => {
+  createLesson: async (req: ExpressRequest, res: Response) => {
     try {
+
+      console.log('Got here')
       // Validate file
       // if (!req.file) {
       //   return res.status(400).json({
@@ -25,16 +29,15 @@ const lessonController = {
         stripUnknown: true
       });
       
-      // Prepare lesson data
-      const lessonData = {
+      const lessonData: LessonCreationAttributes = {
         title: validatedData.title,
         content: validatedData.content || '',
         moduleId: validatedData.moduleId || '',
         instructor: validatedData.instructor,
-        resourceUrl: validatedData.resourceUrl
+        resourceUrl: validatedData.resourceUrl,
+        category: validatedData.category as string
       };
-  
-      // Create lesson
+      
       const result = await lessonService.createLesson(lessonData);
       
       return res.status(result.statusCode).json({
@@ -52,7 +55,7 @@ const lessonController = {
     }
   },
 
-  getAllLessons: async (req: Request, res: Response) => {
+  getAllLessons: async (req: ExpressRequest, res: Response) => {
     try {
       const lessons = await lessonService.getLessons();
       return res.status(lessons.statusCode).json({
@@ -69,7 +72,7 @@ const lessonController = {
     }
   },
 
-  getOneLesson: async (req: Request, res: Response) => {
+  getOneLesson: async (req: ExpressRequest, res: Response) => {
     try {
       const id = await idSchema.validate(req.params.id, {abortEarly: false});
       const lesson = await lessonService.getOneLessonRecord(id);
@@ -96,7 +99,7 @@ const lessonController = {
     }
   },
 
-  updateLesson: async (req: Request, res: Response) => {
+  updateLesson: async (req: ExpressRequest, res: Response) => {
     try {
       const id = await idSchema.validate(req.params.id, {abortEarly: false});
       const updateData = req.body;
@@ -117,7 +120,7 @@ const lessonController = {
     }
   },
 
-  deleteLesson: async (req: Request, res: Response) => {
+  deleteLesson: async (req: ExpressRequest, res: Response) => {
     try {
       const id = await idSchema.validate(req.params.id, {abortEarly: false});
       const deletedLesson = await lessonService.deleteLesson(id);

@@ -143,10 +143,10 @@ export const updateEnrollmentSchema = yup.object().shape({
 
 export const lessonCreationSchema = yup.object().shape({
   title: yup.string().required('Title is required'),
-  // description: yup.string().min(5).required('Description is required'),
   content: yup.string().min(3).required('Content is required'),
   moduleId: yup.string().required('Module Id is required'),
-  courseId: yup.string(),
+  courseId: yup.string().required('Course Id is required'),
   instructor: yup.string().required('Instructor is required'),
-  resourceUrl: yup.string().url().optional()
+  resourceUrl: yup.string().url(),
+  category: yup.string()
 });
