@@ -29,14 +29,10 @@ export const userRegistrationSchema = yup.object().shape({
     .required('Email is required')
     .email('Invalid email format'),
   
-  password: yup
+    password: yup
     .string()
     .required('Password is required')
-    .min(8, 'Password must be at least 8 characters')
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])[A-Za-z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,}$/,
-      'Password must include uppercase, lowercase, number, and special character'
-    ),
+    .min(6, 'Password must be at least 6 characters'),
   
   confirm_password: yup
     .string()
