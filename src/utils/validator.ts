@@ -92,8 +92,8 @@ export const emailSchema = yup.string().email('Invalid email format').required('
 
 
 export const courseCreationSchema = yup.object().shape({
-  title: yup.string().required('Title is required'),
-  description: yup.string().required('Description is required'),
+  title: yup.string().min(3).required('Title is required'),
+  description: yup.string().min(3).required('Description is required'),
   category: yup.string().required('Category is required'),
   // difficulty_level: yup.string().required('Difficulty level is required').oneOf(Object.values(DifficultyLevel)),
   available_offline: yup.boolean().optional(),
@@ -101,8 +101,8 @@ export const courseCreationSchema = yup.object().shape({
 });
 
 export const courseUpdateSchema = yup.object().shape({
-  title: yup.string().required('Title is required'),
-  description: yup.string().required('Description is required'),
+  title: yup.string().min(3).required('Title is required'),
+  description: yup.string().min(3).required('Description is required'),
   category: yup.string().required('Category is required'),
   difficulty_level: yup.string().required('Difficulty level is required'),
   available_offline: yup.boolean().optional(),
@@ -134,9 +134,10 @@ export const updateEnrollmentSchema = yup.object().shape({
 });
 
 export const lessonCreationSchema = yup.object().shape({
-  title: yup.string().required('Title is required'),
+  title: yup.string().min(3).required('Title is required'),
   content: yup.string().min(3).required('Content is required'),
   moduleId: yup.string().required('Module Id is required'),
+  courseId: yup.string().optional(),
   instructor: yup.string().required('Instructor is required'),
   resourceUrl: yup.string().url(),
   category: yup.string()
