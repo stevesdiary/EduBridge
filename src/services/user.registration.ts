@@ -2,7 +2,7 @@ import { customAlphabet } from "nanoid";
 import bcrypt from "bcrypt";
 import {Op} from 'sequelize'
 
-import { getFromRedis, saveToRedis } from "../core/redis";
+import { getFromRedis, saveToRedis, deleteFromRedis } from "../core/redis";
 import { CreationAttributes } from "sequelize";
 import { User } from "../models/user.model";
 import sendEmail from "./email.service";
@@ -39,9 +39,9 @@ export const registerUser = async (userData: CreationAttributes<User>) => {
     const { password: _, ...userRegistrationData } = userCreationData;
     const user = await User.create(userCreationData);
     if (user) {
-      const nanoid = customAlphabet("1234567890", 6)();
-      const verificationCode = nanoid;
-      await saveToRedis(`"verify" + ${user.email}`, verificationCode, 600);
+      const nanoid = customAlphabet("1234567890");
+      const verificationCode = nanoid(6);
+      await saveToRedis(`verify:${user.email}`, verificationCode, 600);
       const emailPayload = {
         to: user.email as string,
         subject: "Email Verification",
@@ -64,12 +64,27 @@ export const registerUser = async (userData: CreationAttributes<User>) => {
 
 export const verifyUser = async ({email, code}: {email: string, code: string}) => {
   try {
-    const verificationCode = await getFromRedis(`"verify" + ${email}`);
-    if (verificationCode === code) {
+    console.log(`Verification attempt for ${email}`);
+    
+    const verificationCode = await getFromRedis(`verify:${email}`);
+    
+    if (!verificationCode) {
+      return {
+        statusCode: 404,
+        status: "fail",
+        message: "Verification code expired",
+        data: null
+      };
+    }
+    
+    if (verificationCode.trim().toLowerCase() === code.trim().toLowerCase()) {
       await User.update(
         { verified: true },
-        { where: { email } },
+        { where: { email } }
       );
+
+      await deleteFromRedis(`verify:${email}`);
+
       return {
         statusCode: 200,
         status: "success",
@@ -77,14 +92,16 @@ export const verifyUser = async ({email, code}: {email: string, code: string}) =
         data: null
       };
     }
-    const verifiedUser = await User.findOne(
-      { where: {
-        [Op.and]:[
+    
+    const verifiedUser = await User.findOne({
+      where: {
+        [Op.and]: [
           { email: email },
           { verified: true }
-        ],
-      } }
-    );
+        ]
+      }
+    });
+
     if (verifiedUser) {
       return {
         statusCode: 200,
@@ -93,14 +110,22 @@ export const verifyUser = async ({email, code}: {email: string, code: string}) =
         data: null
       };
     }
+
     return {
       statusCode: 400,
       status: "fail",
       message: "Invalid verification code",
       data: null
     };
+
   } catch (error) {
-    throw error;
+    console.error('Verification error:', error);
+    return {
+      statusCode: 500,
+      status: "error",
+      message: "Verification process failed",
+      data: null
+    };
   }
 };
 
