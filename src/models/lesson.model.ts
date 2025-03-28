@@ -11,6 +11,7 @@ import {
 } from 'sequelize-typescript';
 // import { Category, Course } from './course.model';
 import { Module } from './module.model';
+import { Course } from './course.model';
 
 export enum Category {
   soft_skill = 'soft_skill',
@@ -48,6 +49,13 @@ export class Lesson extends Model {
     allowNull: false
   })
   moduleId!: string;
+
+  @ForeignKey(() => Course)
+  @Column({
+    type: DataType.UUID,
+    allowNull: false
+  })
+  courseId!: string;
 
   @Column({
     type: DataType.ENUM(...Object.values(Category)),

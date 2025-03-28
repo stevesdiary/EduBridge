@@ -7,6 +7,7 @@ import {
 } from 'sequelize-typescript';
 import { Module } from '../models/module.model';
 import { Enrollment } from './enrollment.model';
+import { Lesson } from './lesson.model';
 
 export enum DifficultyLevel {
   beginner = 'beginner', 
@@ -107,4 +108,7 @@ export class Course extends Model {
 
   @HasMany(() => Enrollment)
   enrollments?: Enrollment[];
+
+  @HasMany(() => Lesson)
+  lessons?: Lesson[];
 }

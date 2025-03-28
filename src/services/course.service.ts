@@ -9,6 +9,7 @@ import { Sequelize, Model, DataTypes } from 'sequelize';
 import { ApiResponse, CourseCreationData, SearchData,  Search, CourseResponse, GetGroupedCourses } from '../types/type';
 import { RedisOptions } from '../types/type';
 import { saveToRedis, getFromRedis } from '../core/redis';
+import { Lesson } from '../models/lesson.model';
 
 const CACHE_KEY = 'courses';
 const CACHE_TTL = 3900;
@@ -81,6 +82,16 @@ const courseService = {
       
       const courses = await Course.findAndCountAll({
         where: whereCondition,
+        include: [
+        //   {
+        //     model: Module,
+        //     attributes: ['id', 'title', 'description']
+        // },
+        {
+          model: Lesson,
+          attributes: ['id', 'title', 'content', 'resourceUrl']
+        }
+      ],
         limit: Search.limit,
         offset: (Search.page - 1) * Search.limit,
         order: [['createdAt', 'DESC']]
