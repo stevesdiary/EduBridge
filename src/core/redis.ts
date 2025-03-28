@@ -92,6 +92,19 @@ async function getFromRedis(key: string): Promise<string | null> {
   }
 }
 
+async function deleteFromRedis (key: string): Promise<boolean> {
+  try {
+    if (!redisClient) {
+      throw new Error('Redis client not initialized');
+    }
+    const result = await redisClient.del(key);
+    return result === 1; // Returns true if key was deleted, false if key didn't exist
+  } catch (error) {
+    console.error(`Failed to delete key ${key} from Redis:`, error);
+    return false;
+  }
+};
+
 async function gracefulShutdown(): Promise<void> {
   if (redisClient) {
     try {
@@ -113,4 +126,4 @@ initializeRedisConnection().catch(err => {
   process.exit(1);
 });
 
-export { getFromRedis, saveToRedis };
+export { getFromRedis, saveToRedis, deleteFromRedis };
