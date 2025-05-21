@@ -88,7 +88,7 @@ npm run test
 
 Example:
 ```bash
-git commit -m "feat: add patient appointment booking feature"
+git commit -m "add secondary school curriculum schedule"
 ```
 
 #### 4. Pull Request Process
