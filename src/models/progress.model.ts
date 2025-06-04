@@ -30,33 +30,56 @@ export class Progress extends Model {
     type: DataType.UUID,
     allowNull: false
   })
-  user_i!: string;
+  userId!: string;
 
+  @ForeignKey(() => Enrollment)
   @Column({
     type: DataType.UUID,
     allowNull: false
   })
-  course_enrollment_id?: string;
+  courseEnrollmentId!: string;
   
+  @ForeignKey(() => Lesson)
   @Column({
     type: DataType.UUID
   })
-  last_completed_lesson_id?: string;
+  lastCompletedLessonId?: string;
 
   @Column({
-    type: DataType.NUMBER
+    type: DataType.FLOAT,
+    defaultValue: 0,
+    validate: {
+      min: 0,
+      max: 100
+    }
   })
-  completion_percentage?: number;
+  completionPercentage!: number;
 
   @Column({
     type: DataType.DATE,
-    allowNull: false
+    allowNull: false,
+    defaultValue: DataType.NOW
   })
-  last_accessed_at?: Date
+  lastAccessedAt!: Date;
 
-  @BelongsTo (()=> User )
-  users?: User
+  @Column({
+    type: DataType.ENUM('NOT_STARTED', 'IN_PROGRESS', 'COMPLETED'),
+    defaultValue: 'NOT_STARTED'
+  })
+  status!: 'NOT_STARTED' | 'IN_PROGRESS' | 'COMPLETED';
 
-  // @BelongsTo(() => Enrollment)
-  // enrollments?: Enrollment[];
+  @Column({
+    type: DataType.INTEGER,
+    defaultValue: 0
+  })
+  totalLessonsCompleted!: number;
+
+  @BelongsTo(() => User)
+  user?: User;
+
+  @BelongsTo(() => Enrollment)
+  enrollment?: Enrollment;
+
+  @BelongsTo(() => Lesson)
+  lastCompletedLesson?: Lesson;
 }
