@@ -35,11 +35,10 @@ const courseService = {
       }
       const course = await Course.create(courseData);
       
-      // Transform the course data to ensure all required fields are present
       const courseResponse: CourseResponse = {
         id: course.id,
         title: course.title || '',
-        description: course.description || '',  // Provide default value if undefined
+        description: course.description || '',
         category: course.category || '',
         subject: course.subject || '',
         instructor: course.instructor || '',

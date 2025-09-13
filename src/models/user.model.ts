@@ -31,26 +31,26 @@ export class User extends Model {
     defaultValue: DataType.UUIDV4,
     primaryKey: true
   })
-  id?: string;
+  id!: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: false
   })
-  first_name?: string;
+  first_name!: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: false
   })
-  last_name?: string;
+  last_name!: string;
 
   @Column({
     type: DataType.STRING,
     unique: true,
     allowNull: false
   })
-  email?: string;
+  email!: string;
 
   @Column({
     type: DataType.STRING,
@@ -62,26 +62,26 @@ export class User extends Model {
     type: DataType.STRING,
     allowNull: false
   })
-  password?: string;
+  password!: string;
 
   @Column({
     type: DataType.ENUM(...Object.values(Role)),
     defaultValue: Role.STUDENT
   })
-  role?: Role;
+  role!: Role;
 
   @Column({
     type: DataType.BOOLEAN,
     allowNull: false,
     defaultValue: false
   })
-  verified?: boolean;
+  verified!: boolean;
 
   @HasOne(() => Profile)
   profile?: Profile;
 
   @HasMany(() => Enrollment)
-  enrollments: Enrollment[] = [];
+  enrollments?: Enrollment[] = [];
 
   @HasMany(() => Progress)
   progresses?: Progress[] = [];
